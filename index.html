@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MLB Scorecard</title>
+  </head>
+  <body class="font-mono bg-stone-900 text-stone-200 min-h-screen">
+    <div x-data="scorecardApp" class="md:grid md:grid-cols-3 min-h-screen">
+      <!-- ===== Form column (1/3) ===== -->
+      <aside class="md:col-span-1 p-6 md:sticky md:top-0 md:h-screen md:overflow-y-auto border-b md:border-b-0 md:border-r border-stone-700">
+        <h1 class="text-lg font-bold tracking-wide">MLB SCORECARD</h1>
+        <p class="text-xs text-stone-400 mt-1 mb-6">
+          Pick a date and team; the game is drawn as a traditional scorecard.
+        </p>
+
+        <div class="space-y-5 text-sm">
+          <label class="block">
+            <span class="block text-xs text-stone-400 mb-1">1 · DATE</span>
+            <input type="date" x-model="date"
+              class="w-full bg-stone-800 border border-stone-600 rounded px-2 py-1.5 text-stone-100" />
+          </label>
+
+          <label class="block">
+            <span class="block text-xs text-stone-400 mb-1">
+              2 · TEAM <span x-text="`(${teams.length} teams in ${season})`"></span>
+            </span>
+            <select x-model="teamId"
+              class="w-full bg-stone-800 border border-stone-600 rounded px-2 py-1.5 text-stone-100">
+              <option value="">— select —</option>
+              <template x-for="t in teams" :key="t.id">
+                <option :value="t.id" x-text="t.name"></option>
+              </template>
+            </select>
+          </label>
+
+          <fieldset>
+            <legend class="text-xs text-stone-400 mb-1">3 · STYLE</legend>
+            <div class="flex gap-4">
+              <label class="cursor-pointer">
+                <input type="radio" value="classic" x-model="theme" class="mr-1" />Classic
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" value="mono" x-model="theme" class="mr-1" />Monochrome
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="text-xs text-stone-400 mb-1">4 · PLAYER LABELS</legend>
+            <div class="flex gap-4">
+              <label class="cursor-pointer">
+                <input type="radio" value="names" x-model="labelMode" class="mr-1" />Names
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" value="numbers" x-model="labelMode" class="mr-1" />Numbers
+              </label>
+            </div>
+          </fieldset>
+
+          <button @click="load()" :disabled="loading"
+            class="w-full bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50 rounded px-3 py-2 font-bold tracking-wide">
+            <span x-show="!loading">LOAD SCORECARD</span>
+            <span x-show="loading">LOADING…</span>
+          </button>
+
+          <p x-show="error" x-text="error" class="text-red-400 text-xs"></p>
+
+          <!-- Doubleheader picker: only shows when the date has 2+ games -->
+          <div x-show="games.length > 1" class="space-y-1">
+            <span class="block text-xs text-stone-400">GAMES THAT DAY</span>
+            <template x-for="g in games" :key="g.gamePk">
+              <button @click="loadGame(g.gamePk)"
+                class="block w-full text-left text-xs px-2 py-1 rounded border"
+                :class="g.gamePk === gamePk ? 'border-emerald-500 text-emerald-400' : 'border-stone-600 text-stone-300'"
+                x-text="`${g.label} (${g.status})`"></button>
+            </template>
+          </div>
+
+          <div class="pt-4 border-t border-stone-700">
+            <span class="block text-xs text-stone-400 mb-2">PRESETS</span>
+            <template x-for="p in presets" :key="p.label">
+              <button @click="applyPreset(p)"
+                class="block w-full text-left text-xs text-stone-300 hover:text-emerald-400 py-1"
+                x-text="`[ ] ${p.label}`"></button>
+            </template>
+          </div>
+
+          <details class="text-xs text-stone-500">
+            <summary class="cursor-pointer hover:text-stone-300">ABOUT THIS TOOL</summary>
+            <p class="mt-2 leading-relaxed">
+              Data comes live from the public MLB Stats API. Team lists are
+              era-correct for the chosen season. Hits show 1B/2B/3B/HR; outs
+              show fielding credits (6-3, F7). Runner advancement caused by
+              later batters is not back-filled onto earlier cells.
+            </p>
+          </details>
+        </div>
+      </aside>
+
+      <!-- ===== Preview pane (2/3) ===== -->
+      <main class="md:col-span-2 scorecard-theme" :data-theme="theme === 'mono' ? 'mono' : null"
+        style="background: var(--sc-paper)">
+        <div class="p-6 min-h-screen flex flex-col" style="color: var(--sc-ink)">
+          <div x-show="!svg" class="flex-1 flex items-center justify-center opacity-40 text-sm">
+            <p>No game loaded — pick a date and team.</p>
+          </div>
+
+          <div x-show="svg" class="flex-1">
+            <div x-html="svg"></div>
+
+            <!-- Game notes: scoring plays along the bottom, recap beside them -->
+            <div class="mt-6 pt-4 grid md:grid-cols-2 gap-6 text-xs"
+              style="border-top: 1px solid var(--sc-line)">
+              <div>
+                <h2 class="font-bold mb-2 tracking-wide">SCORING PLAYS</h2>
+                <ul class="space-y-1.5">
+                  <template x-for="(s, i) in scoring" :key="i">
+                    <li class="flex gap-2">
+                      <span class="font-bold shrink-0" x-text="s.inning"></span>
+                      <span x-text="s.desc"></span>
+                    </li>
+                  </template>
+                </ul>
+                <p x-show="!scoring.length" class="opacity-50">No scoring plays recorded.</p>
+              </div>
+              <div>
+                <h2 class="font-bold mb-2 tracking-wide">GAME RECAP</h2>
+                <p class="font-bold mb-1" x-text="notes.headline"></p>
+                <p class="leading-relaxed" x-text="notes.blurb"></p>
+                <p x-show="!notes.headline && !notes.blurb" class="opacity-50">
+                  No editorial recap available for this game.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

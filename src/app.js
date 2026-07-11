@@ -1,0 +1,106 @@
+import { fetchTeams, fetchSchedule, fetchFeed, fetchNotes } from "./api.js";
+import { normalizeGame } from "./normalize.js";
+import { renderScorecard } from "./scorecard.js";
+
+const PRESETS = [
+  { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
+  { label: "SD @ CHC · 2025-10-01", date: "2025-10-01", team: 112 },
+  { label: "Opening Day LAD · 2025-03-18", date: "2025-03-18", team: 119 },
+];
+
+export function scorecardApp() {
+  return {
+    // form state
+    date: "2025-10-01",
+    teams: [],
+    teamId: "",
+    games: [],
+    gamePk: null,
+    presets: PRESETS,
+
+    // settings
+    theme: "classic",
+    labelMode: "names",
+
+    // output state
+    loading: false,
+    error: "",
+    svg: "",
+    norm: null,
+    notes: { headline: "", blurb: "" },
+    scoring: [],
+
+    teamCache: {},
+
+    async init() {
+      await this.loadTeams();
+      this.$watch("date", () => this.loadTeams());
+      this.$watch("labelMode", () => this.redraw());
+    },
+
+    get season() {
+      return (this.date || "").slice(0, 4);
+    },
+
+    async loadTeams() {
+      if (!/^\d{4}$/.test(this.season)) return;
+      try {
+        if (!this.teamCache[this.season]) {
+          this.teamCache[this.season] = await fetchTeams(this.season);
+        }
+        this.teams = this.teamCache[this.season];
+        // Keep selection if the franchise still exists that season.
+        if (!this.teams.some((t) => t.id === Number(this.teamId))) this.teamId = "";
+      } catch (e) {
+        this.error = `Could not load teams: ${e.message}`;
+      }
+    },
+
+    applyPreset(p) {
+      this.date = p.date;
+      this.teamId = String(p.team);
+      this.load();
+    },
+
+    async load() {
+      if (!this.teamId) {
+        this.error = "Pick a team first.";
+        return;
+      }
+      this.loading = true;
+      this.error = "";
+      this.games = [];
+      try {
+        const games = await fetchSchedule(this.teamId, this.date);
+        if (!games.length) {
+          throw new Error("No game found for that team on that date.");
+        }
+        this.games = games;
+        await this.loadGame(games[0].gamePk);
+      } catch (e) {
+        this.error = e.message;
+        this.svg = "";
+        this.norm = null;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async loadGame(gamePk) {
+      this.gamePk = gamePk;
+      const [feed, notes] = await Promise.all([
+        fetchFeed(gamePk),
+        fetchNotes(gamePk),
+      ]);
+      this.norm = normalizeGame(feed);
+      this.notes = notes;
+      this.scoring = this.norm.scoring;
+      this.redraw();
+    },
+
+    redraw() {
+      if (!this.norm) return;
+      this.svg = renderScorecard(this.norm, { labelMode: this.labelMode });
+    },
+  };
+}
