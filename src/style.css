@@ -2,6 +2,22 @@
 @import "@fontsource/ibm-plex-mono/400.css";
 @import "@fontsource/ibm-plex-mono/600.css";
 @import "@fontsource/ibm-plex-mono/700.css";
+/* display faces for the poster styles */
+@import "@fontsource/jost/500.css";
+@import "@fontsource/jost/700.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/oswald/500.css";
+@import "@fontsource/oswald/700.css";
+@import "@fontsource/barlow/500.css";
+@import "@fontsource/barlow/600.css";
+@import "@fontsource/outfit/600.css";
+@import "@fontsource/outfit/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/archivo/500.css";
+@import "@fontsource/archivo/600.css";
 
 /* All scorecard presentation + design-preset variables. Kept as a separate
  * plain-CSS file so the export path can embed it inside the SVG. */

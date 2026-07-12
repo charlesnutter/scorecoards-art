@@ -463,7 +463,7 @@
       {
        "inning": 7,
        "code": "BB",
-       "base": 1,
+       "base": 3,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -489,11 +489,11 @@
       {
        "inning": 3,
        "code": "1B",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Jarren Duran singles on a sharp line drive to center fielder Trent Grisham."
       }
      ],
@@ -513,7 +513,7 @@
       {
        "inning": 7,
        "code": "HBP",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -539,11 +539,11 @@
       {
        "inning": 3,
        "code": "BB",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Ceddanne Rafaela walks. Jarren Duran to 2nd."
       }
      ],
@@ -589,7 +589,7 @@
       {
        "inning": 3,
        "code": "SAC",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -734,7 +734,7 @@
       {
        "inning": 3,
        "code": "4-6",
-       "base": 1,
+       "base": 3,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -746,11 +746,11 @@
       {
        "inning": 5,
        "code": "BB",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Trent Grisham walks."
       }
      ],
@@ -796,7 +796,7 @@
       {
        "inning": 3,
        "code": "1B",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -834,11 +834,11 @@
       {
        "inning": 1,
        "code": "1B",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Cody Bellinger singles on a ground ball to right fielder Nate Eaton."
       }
      ],
@@ -908,7 +908,7 @@
       {
        "inning": 6,
        "code": "1B",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -1020,11 +1020,11 @@
       {
        "inning": 8,
        "code": "BB",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Jazz Chisholm Jr. walks."
       }
      ]
@@ -1070,7 +1070,7 @@
       {
        "inning": 8,
        "code": "1B",
-       "base": 1,
+       "base": 3,
        "out": false,
        "outNumber": null,
        "rbi": 1,
@@ -1120,7 +1120,7 @@
       {
        "inning": 8,
        "code": "1B",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,

@@ -1,15 +1,18 @@
 // Entry for design.html: renders checked-in fixture games (no network)
-// with a preset/label switcher. The fast loop for scorecard design work —
-// edits to scorecard.css, presets.js, or scorecard.js hot-reload here.
+// with layout/style/label switchers. The fast loop for scorecard design
+// work — edits to scorecard.css, presets.js, renderers, or fixtures
+// hot-reload here.
 import "./style.css";
 import Alpine from "alpinejs";
-import { renderScorecard } from "./scorecard.js";
-import { DESIGN_PRESETS, getPreset } from "./presets.js";
+import { STYLE_PRESETS, getPreset } from "./presets.js";
+import { RENDERERS, getRenderer } from "./renderers.js";
 import nineInnings from "./fixtures/game-nine-innings.json";
 import extraInnings from "./fixtures/game-extra-innings.json";
 
 Alpine.data("designHarness", () => ({
-  designs: DESIGN_PRESETS,
+  layouts: RENDERERS,
+  styles: STYLE_PRESETS,
+  layoutId: "classic",
   presetId: "classic",
   labelMode: "names",
   fixtures: [
@@ -19,10 +22,11 @@ Alpine.data("designHarness", () => ({
 
   render(fixture) {
     const preset = getPreset(this.presetId);
-    return renderScorecard(fixture.norm, {
+    const renderer = getRenderer(this.layoutId);
+    return renderer.render(fixture.norm, {
       labelMode: this.labelMode,
       preset: preset.id,
-      tokens: preset.tokens,
+      tokens: preset.tokens?.[renderer.id] || {},
     });
   },
 }));

@@ -1,28 +1,45 @@
-// Design presets. Each preset is:
-//   - a [data-preset="<id>"] variable block in src/scorecard.css (style)
-//   - a `tokens` object here, merged over DEFAULT_TOKENS (geometry and
-//     decoration toggles; see src/scorecard.js for the full token list)
-// Adding a design means adding one entry here and one CSS block there.
+// Color/style presets — one axis of the design system. Each style is a
+// [data-preset="<id>"] variable block in src/scorecard.css. `tokens` is
+// optional per-RENDERER geometry overrides, keyed by renderer id (see
+// src/renderers.js), merged over that renderer's own defaults.
+//
+// Palette inspirations: classic = pencil-on-paper scorebook; pennant =
+// cream/royal/red win-loss posters; midnight + harvest = mid-century
+// "laws of UX"-style geometric prints; mustard = Bauhaus yellow;
+// blueprint = engineering drawing.
 
-export const DESIGN_PRESETS = [
-  {
-    id: "classic",
-    label: "Classic",
-    tokens: {},
-  },
-  {
-    id: "mono",
-    label: "Monochrome",
-    tokens: {},
-  },
+export const STYLE_PRESETS = [
+  { id: "classic", label: "Classic", tokens: {} },
+  { id: "mono", label: "Monochrome", tokens: {} },
   {
     id: "blueprint",
     label: "Blueprint",
-    // roomier grid to show that geometry is per-preset too
-    tokens: { cell: 72, diamondRadius: 22, smallRadius: 13, codeSize: 10 },
+    tokens: { classic: { cell: 72, diamondRadius: 22, smallRadius: 13, codeSize: 10 } },
   },
+  {
+    id: "marquee",
+    label: "Marquee",
+    // blueprint geometry plus: roomier corner margins, linescore boxed
+    // beside the title, legend flush right
+    tokens: {
+      classic: {
+        cell: 72,
+        diamondRadius: 22,
+        smallRadius: 13,
+        codeSize: 10,
+        badgeMargin: 13,
+        linescorePos: "right",
+        linescoreGrid: true,
+        legendAlign: "end",
+      },
+    },
+  },
+  { id: "midnight", label: "Midnight", tokens: {} },
+  { id: "pennant", label: "Pennant", tokens: {} },
+  { id: "mustard", label: "Mustard", tokens: {} },
+  { id: "harvest", label: "Harvest", tokens: {} },
 ];
 
 export function getPreset(id) {
-  return DESIGN_PRESETS.find((p) => p.id === id) || DESIGN_PRESETS[0];
+  return STYLE_PRESETS.find((p) => p.id === id) || STYLE_PRESETS[0];
 }

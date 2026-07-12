@@ -151,12 +151,44 @@ export function normalizeGame(feed) {
   const allPlays = ld.plays?.allPlays || [];
   let maxInning = 9;
 
+  // Runners currently on base in the half-inning being processed,
+  // keyed by player id -> their PA entry, so advancement caused by
+  // later batters (and runs scored) is back-filled onto the PA where
+  // the runner originally reached.
+  let activeKey = "";
+  let onBase = {};
+
   for (const play of allPlays) {
     if (play.result?.type !== "atBat" || !play.about?.isComplete) continue;
+    const batterId = play.matchup.batter.id;
     const side = play.about.halfInning === "top" ? sides.away : sides.home;
-    const slot = slotOf(side, play.matchup.batter.id);
-    if (slot == null) continue;
     const inning = play.about.inning;
+
+    const key = `${inning}-${play.about.halfInning}`;
+    if (key !== activeKey) {
+      activeKey = key;
+      onBase = {};
+    }
+    for (const r of play.runners || []) {
+      const rid = r.details?.runner?.id;
+      if (rid === batterId) continue;
+      const prior = onBase[rid];
+      if (!prior) continue; // pinch runner etc.
+      const m = r.movement || {};
+      if (m.isOut) {
+        delete onBase[rid];
+        continue;
+      }
+      const b = baseNum(m.end);
+      if (b > prior.base) prior.base = b;
+      if (b === 4) {
+        prior.scored = true;
+        delete onBase[rid];
+      }
+    }
+
+    const slot = slotOf(side, batterId);
+    if (slot == null) continue;
     maxInning = Math.max(maxInning, inning);
 
     const fate = batterFate(play);
@@ -171,6 +203,7 @@ export function normalizeGame(feed) {
       desc: play.result.description || "",
     };
     ((side.cells[slot] ??= {})[inning] ??= []).push(pa);
+    if (!fate.out && fate.base > 0 && fate.base < 4) onBase[batterId] = pa;
   }
 
   const ls = ld.linescore || {};

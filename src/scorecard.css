@@ -22,8 +22,15 @@
   --sc-rbi: #c99b2f;
   --sc-line: #a89f88;
   --sc-font: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --sc-font-display: var(--sc-font);
   --sc-diamond-dash: 3 2.5;
   --sc-scored-opacity: 0.12;
+  /* outcome categories, used by the abstract renderers */
+  --sc-cat-hit: #1d4a34;
+  --sc-cat-hr: #c99b2f;
+  --sc-cat-walk: #7d906c;
+  --sc-cat-out: #cfc5ab;
+  --sc-cat-run: #b8452c;
 }
 
 [data-preset="mono"] {
@@ -32,6 +39,11 @@
   --sc-accent: #111111;
   --sc-rbi: #555555;
   --sc-line: #9a9a9a;
+  --sc-cat-hit: #111111;
+  --sc-cat-hr: #111111;
+  --sc-cat-walk: #777777;
+  --sc-cat-out: #d4d4d4;
+  --sc-cat-run: #111111;
 }
 
 [data-preset="blueprint"] {
@@ -40,8 +52,110 @@
   --sc-accent: #ffd166;
   --sc-rbi: #7fd4c1;
   --sc-line: #5b7ea8;
+  --sc-font-code: "Barlow", "Helvetica Neue", sans-serif;
+  --sc-font-display: "Space Grotesk", var(--sc-font);
   --sc-diamond-dash: 1.5 3;
   --sc-scored-opacity: 0.25;
+  --sc-cat-hit: #9fc2e0;
+  --sc-cat-hr: #ffd166;
+  --sc-cat-walk: #7fd4c1;
+  --sc-cat-out: #2c4d7d;
+  --sc-cat-run: #ffd166;
+}
+
+/* Blueprint variant with ballpark-marquee typography: geometric bold
+ * (Montserrat) for title/names/linescore, solid gold out badges, white
+ * play codes. Layout tweaks live in presets.js tokens. */
+[data-preset="marquee"] {
+  --sc-paper: #16375f;
+  --sc-ink: #dbe9ff;
+  --sc-accent: #ffd166;
+  --sc-rbi: #7fd4c1;
+  --sc-line: #5b7ea8;
+  /* annotation layer (subtitle, inning/slot numbers, positions, subs,
+   * badge numerals, legend) — Inter for small-size legibility */
+  --sc-font: "Inter", "Helvetica Neue", sans-serif;
+  --sc-font-display: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-font-name: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-font-score: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-font-code: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-diamond-dash: 1.5 3;
+  --sc-scored-opacity: 0.25;
+  --sc-cat-hit: #9fc2e0;
+  --sc-cat-hr: #ffd166;
+  --sc-cat-walk: #7fd4c1;
+  --sc-cat-out: #2c4d7d;
+  --sc-cat-run: #ffd166;
+  /* solid gold badge, paper-blue numeral; all-white play codes */
+  --sc-badge-fill: var(--sc-accent);
+  --sc-badge-num-color: var(--sc-paper);
+  --sc-code-color: #ffffff;
+  --sc-code-out-color: #ffffff;
+  --sc-code-tracking: 0.07em;
+}
+
+/* mid-century navy poster: dusty blues, sand, coral (Jost display) */
+[data-preset="midnight"] {
+  --sc-paper: #202c47;
+  --sc-ink: #d6dce8;
+  --sc-accent: #e07a5f;
+  --sc-rbi: #f2cc8f;
+  --sc-line: #56638b;
+  --sc-font-display: "Jost", var(--sc-font);
+  --sc-diamond-dash: 2 3;
+  --sc-scored-opacity: 0.3;
+  --sc-cat-hit: #7ea8c4;
+  --sc-cat-hr: #f2cc8f;
+  --sc-cat-walk: #81b29a;
+  --sc-cat-out: #3a4767;
+  --sc-cat-run: #e07a5f;
+}
+
+/* cream / royal blue / red, like classic win-loss record posters (Oswald display) */
+[data-preset="pennant"] {
+  --sc-paper: #f7f3e3;
+  --sc-ink: #2b3a8f;
+  --sc-accent: #c73e2e;
+  --sc-rbi: #c73e2e;
+  --sc-line: #c5bfa4;
+  --sc-font-display: "Oswald", var(--sc-font);
+  --sc-cat-hit: #2b3a8f;
+  --sc-cat-hr: #c73e2e;
+  --sc-cat-walk: #8791c9;
+  --sc-cat-out: #ddd6bd;
+  --sc-cat-run: #c73e2e;
+}
+
+/* Bauhaus yellow: navy and steel on mustard (Space Grotesk display) */
+[data-preset="mustard"] {
+  --sc-paper: #e3a51a;
+  --sc-ink: #22294a;
+  --sc-accent: #f6f1e4;
+  --sc-rbi: #f6f1e4;
+  --sc-line: #b8850f;
+  --sc-font-display: "Space Grotesk", var(--sc-font);
+  --sc-scored-opacity: 0.2;
+  --sc-cat-hit: #22294a;
+  --sc-cat-hr: #f6f1e4;
+  --sc-cat-walk: #3f6ba5;
+  --sc-cat-out: #c28f0e;
+  --sc-cat-run: #f6f1e4;
+}
+
+/* olive field: tans, sage, rust on deep green (Jost display) */
+[data-preset="harvest"] {
+  --sc-paper: #333a24;
+  --sc-ink: #e8e0c9;
+  --sc-accent: #c47a4a;
+  --sc-rbi: #c9a35f;
+  --sc-line: #5c6247;
+  --sc-font-display: "Jost", var(--sc-font);
+  --sc-scored-opacity: 0.25;
+  --sc-cat-hit: #c9a35f;
+  --sc-cat-hr: #e8e0c9;
+  --sc-cat-walk: #8fa07a;
+  --sc-cat-out: #464e31;
+  --sc-cat-run: #c47a4a;
 }
 
 /* ---- card ---- */
@@ -51,9 +165,7 @@
   height: auto;
   display: block;
   font-family: var(--sc-font);
-}
-
-.sc-card text {
+  /* inherited by all <text>; single-class rules below override cleanly */
   fill: var(--sc-ink);
 }
 
@@ -63,6 +175,23 @@
 
 .sc-title {
   font-weight: 700;
+}
+
+.sc-title,
+.sc-team-name {
+  font-family: var(--sc-font-display);
+  letter-spacing: 0.02em;
+}
+
+.sc-player {
+  font-family: var(--sc-font-name, var(--sc-font));
+}
+
+.sc-ls-head,
+.sc-ls-team,
+.sc-ls-val,
+.sc-ls-total {
+  font-family: var(--sc-font-score, var(--sc-font));
 }
 
 .sc-subtitle,
@@ -121,31 +250,150 @@
   stroke-linejoin: round;
 }
 
-/* play code sits on top of the base path; halo it with paper color */
 .sc-code {
   font-weight: 600;
-  paint-order: stroke;
-  stroke: var(--sc-paper);
-  stroke-width: 3;
-  stroke-linejoin: round;
+  font-family: var(--sc-font-code, var(--sc-font));
+  fill: var(--sc-code-color, var(--sc-ink));
+  letter-spacing: var(--sc-code-tracking, 0);
 }
 
-.sc-code--out,
-.sc-out-num,
+.sc-code--out {
+  fill: var(--sc-code-out-color, var(--sc-accent));
+}
+
 .sc-overflow {
   fill: var(--sc-accent);
 }
 
 .sc-out-num {
   font-weight: 600;
+  fill: var(--sc-badge-num-color, var(--sc-accent));
 }
 
 .sc-out-badge {
-  fill: none;
+  fill: var(--sc-badge-fill, none);
   stroke: var(--sc-accent);
   stroke-width: 1;
 }
 
 .sc-rbi {
   fill: var(--sc-rbi);
+}
+
+/* ---- abstract renderers ---- */
+
+.sc-rule {
+  stroke: var(--sc-line);
+  stroke-width: 0.5;
+  opacity: 0.6;
+}
+
+.sc-legend-label {
+  fill: var(--sc-line);
+}
+
+/* geometric glyphs */
+.sc-g-hit {
+  fill: var(--sc-cat-hit);
+}
+.sc-g-hr {
+  fill: var(--sc-cat-hr);
+}
+.sc-g-walk {
+  fill: var(--sc-cat-walk);
+}
+.sc-g-out {
+  fill: var(--sc-cat-out);
+}
+.sc-g-k {
+  fill: none;
+  stroke: var(--sc-cat-out);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.sc-g-reach {
+  fill: none;
+  stroke: var(--sc-cat-hit);
+  stroke-width: 1.5;
+}
+.sc-g-run {
+  fill: none;
+  stroke: var(--sc-cat-run);
+  stroke-width: 1.5;
+}
+
+/* diamond-grid variants (inlay / trace / facet) */
+.sc-basepath--walk {
+  stroke: var(--sc-cat-walk);
+}
+.sc-basepath--reach {
+  stroke: var(--sc-cat-walk);
+  stroke-dasharray: 3 3;
+}
+.sc-basepath-out {
+  fill: none;
+  stroke: var(--sc-accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.sc-f-run {
+  fill: none;
+  stroke: var(--sc-cat-run);
+  stroke-width: 1.25;
+}
+
+/* mosaic pips */
+.sc-p-hit {
+  fill: var(--sc-cat-hit);
+}
+.sc-p-hr {
+  fill: var(--sc-cat-hr);
+}
+.sc-p-walk {
+  fill: var(--sc-cat-walk);
+}
+.sc-p-out {
+  fill: var(--sc-cat-out);
+}
+.sc-p-k {
+  fill: none;
+  stroke: var(--sc-cat-out);
+  stroke-width: 1.5;
+}
+.sc-p-reach {
+  fill: none;
+  stroke: var(--sc-cat-walk);
+  stroke-width: 1.5;
+}
+.sc-p-run {
+  fill: var(--sc-paper);
+  stroke: var(--sc-cat-run);
+  stroke-width: 1.5;
+}
+
+/* timeline bars */
+.sc-b-hit {
+  fill: var(--sc-cat-hit);
+}
+.sc-b-hr {
+  fill: var(--sc-cat-hr);
+}
+.sc-b-walk {
+  fill: var(--sc-cat-walk);
+}
+.sc-b-reach {
+  fill: var(--sc-cat-walk);
+  fill-opacity: 0.55;
+}
+.sc-b-out {
+  fill: var(--sc-cat-out);
+}
+.sc-b-k {
+  fill: none;
+  stroke: var(--sc-cat-out);
+  stroke-width: 1.5;
+}
+.sc-b--run {
+  stroke: var(--sc-cat-run);
+  stroke-width: 1.5;
 }

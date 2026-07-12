@@ -1,7 +1,7 @@
 import { fetchTeams, fetchSchedule, fetchFeed, fetchNotes } from "./api.js";
 import { normalizeGame } from "./normalize.js";
-import { renderScorecard } from "./scorecard.js";
-import { DESIGN_PRESETS, getPreset } from "./presets.js";
+import { STYLE_PRESETS, getPreset } from "./presets.js";
+import { RENDERERS, getRenderer } from "./renderers.js";
 
 const PRESETS = [
   { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
@@ -20,7 +20,9 @@ export function scorecardApp() {
     presets: PRESETS,
 
     // settings
-    designs: DESIGN_PRESETS,
+    layouts: RENDERERS,
+    styles: STYLE_PRESETS,
+    layoutId: "classic",
     presetId: "classic",
     labelMode: "names",
 
@@ -38,8 +40,9 @@ export function scorecardApp() {
       await this.loadTeams();
       this.$watch("date", () => this.loadTeams());
       this.$watch("labelMode", () => this.redraw());
-      // preset changes geometry tokens, not just CSS, so re-render
+      // style can change geometry tokens, not just CSS, so re-render
       this.$watch("presetId", () => this.redraw());
+      this.$watch("layoutId", () => this.redraw());
     },
 
     get season() {
@@ -105,10 +108,11 @@ export function scorecardApp() {
     redraw() {
       if (!this.norm) return;
       const preset = getPreset(this.presetId);
-      this.svg = renderScorecard(this.norm, {
+      const renderer = getRenderer(this.layoutId);
+      this.svg = renderer.render(this.norm, {
         labelMode: this.labelMode,
         preset: preset.id,
-        tokens: preset.tokens,
+        tokens: preset.tokens?.[renderer.id] || {},
       });
     },
   };

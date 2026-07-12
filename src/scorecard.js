@@ -22,17 +22,39 @@ export const DEFAULT_TOKENS = {
   titleSize: 15,
   showOutBadge: true, // circled out number, upper right
   showRbiDots: true, // one dot per RBI, lower left
+  badgeMargin: 9.5, // out badge / RBI dot distance from the cell corner
+  linescorePos: "top", // "top" (own row) or "right" (beside the title)
+  linescoreGrid: false, // box the linescore cells like the grid
+  legendAlign: "start", // "start" (left) or "end" (right edge)
 };
 
-const esc = (s) =>
-  String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+import { esc, text, linescore, slotLabel, legend } from "./render/common.js";
 
-function text(x, y, str, cls, size, anchor = "middle") {
-  return `<text x="${x}" y="${y}" class="${cls}" font-size="${size}" text-anchor="${anchor}">${esc(str)}</text>`;
-}
+const LEGEND = [
+  {
+    swatch: `<text class="sc-code" font-size="8" text-anchor="middle" y="3">1B</text>`,
+    label: "hit",
+  },
+  {
+    swatch: `<text class="sc-code sc-code--out" font-size="8" text-anchor="middle" y="3">6-3</text>`,
+    label: "out, by fielders",
+  },
+  { swatch: `<path class="sc-basepath" d="M-6,6 L6,-6"/>`, label: "bases reached" },
+  {
+    swatch: `<path class="sc-diamond sc-diamond--scored" d="M0,7 L7,0 L0,-7 L-7,0 Z"/>`,
+    label: "scored",
+  },
+  {
+    swatch: `<g><circle class="sc-out-badge" r="5"/><text class="sc-out-num" font-size="7" text-anchor="middle" y="2.5">2</text></g>`,
+    label: "out number",
+  },
+  { swatch: `<circle class="sc-rbi" r="2.5"/>`, label: "RBI" },
+];
 
 // One plate appearance drawn as a diamond centered at (cx, cy).
-function diamond(pa, cx, cy, r, T) {
+// badgeAt/rbiAt override where the out badge and RBI dots sit (defaults
+// hug the diamond; single-PA cells anchor them to the cell corners).
+function diamond(pa, cx, cy, r, T, badgeAt, rbiAt) {
   const H = [cx, cy + r];
   const F = [cx + r, cy];
   const S = [cx, cy - r];
@@ -54,11 +76,18 @@ function diamond(pa, cx, cy, r, T) {
 
   const codeSize = r > 14 ? T.codeSize : T.smallCodeSize;
   const codeCls = pa.out ? "sc-code sc-code--out" : "sc-code";
-  parts.push(text(cx, cy + codeSize / 3, pa.code, codeCls, codeSize));
+  // compound codes ("6-4-3 DP") stack the suffix on a second line so the
+  // fielder sequence doesn't run past the diamond
+  const [main, suffix] = pa.code.split(" ");
+  if (suffix) {
+    parts.push(text(cx, cy + 0.5, main, codeCls, codeSize));
+    parts.push(text(cx, cy + codeSize * 1.05, suffix, codeCls, codeSize * 0.78));
+  } else {
+    parts.push(text(cx, cy + codeSize / 3, pa.code, codeCls, codeSize));
+  }
 
   if (T.showOutBadge && pa.out && pa.outNumber) {
-    const ox = cx + r + 4;
-    const oy = cy - r + 2;
+    const [ox, oy] = badgeAt || [cx + r + 4, cy - r + 2];
     parts.push(
       `<circle class="sc-out-badge" cx="${ox}" cy="${oy}" r="5.5"/>`,
       text(ox, oy + 2.5, pa.outNumber, "sc-out-num", 7)
@@ -66,10 +95,9 @@ function diamond(pa, cx, cy, r, T) {
   }
 
   if (T.showRbiDots) {
+    const [rx, ry] = rbiAt || [cx - r - 4, cy + r - 2];
     for (let i = 0; i < Math.min(pa.rbi, 4); i++) {
-      parts.push(
-        `<circle class="sc-rbi" cx="${cx - r - 4}" cy="${cy + r - 2 - i * 7}" r="2.5"/>`
-      );
+      parts.push(`<circle class="sc-rbi" cx="${rx}" cy="${ry - i * 7}" r="2.5"/>`);
     }
   }
 
@@ -79,7 +107,12 @@ function diamond(pa, cx, cy, r, T) {
 function cellContents(pas, x, y, T) {
   const cx = x + T.cell / 2;
   const cy = y + T.cell / 2;
-  if (pas.length === 1) return diamond(pas[0], cx, cy, T.diamondRadius, T);
+  if (pas.length === 1) {
+    // out badge and RBI dots equidistant from their cell corners
+    const m = T.badgeMargin;
+    return diamond(pas[0], cx, cy, T.diamondRadius, T,
+      [x + T.cell - m, y + m], [x + m, y + T.cell - m]);
+  }
   // Two (or more) trips in the same inning: shrink and place side by side.
   const shown = pas.slice(0, 2);
   const parts = shown.map((pa, i) =>
@@ -87,28 +120,6 @@ function cellContents(pas, x, y, T) {
   );
   if (pas.length > 2)
     parts.push(text(cx, y + T.cell - 5, `+${pas.length - 2}`, "sc-overflow", 7));
-  return parts.join("");
-}
-
-function slotLabel(players, labelMode, x, y, T) {
-  const parts = [];
-  const starter = players[0];
-  const label =
-    labelMode === "numbers"
-      ? `#${starter.number || "?"}`
-      : starter.name.length > 18
-        ? starter.name.slice(0, 17) + "…"
-        : starter.name;
-  parts.push(text(x, y, label, "sc-player", 10, "start"));
-  parts.push(
-    text(T.labelWidth + T.pad - 8, y, starter.pos, "sc-player-pos", 8, "end")
-  );
-  players.slice(1, 3).forEach((sub, i) => {
-    const subLabel = labelMode === "numbers" ? `#${sub.number || "?"}` : sub.name;
-    parts.push(
-      text(x + 6, y + 11 + i * 10, `↳ ${subLabel} ${sub.pos}`, "sc-player-sub", 7.5, "start")
-    );
-  });
   return parts.join("");
 }
 
@@ -132,9 +143,11 @@ function teamGrid(side, teamMeta, homeAway, innings, labelMode, y0, T) {
   const gridY = headY + 20;
   for (let s = 1; s <= slotCount; s++) {
     const rowY = gridY + (s - 1) * T.cell;
-    parts.push(text(T.pad + 2, rowY + T.cell / 2 + 3, s, "sc-slot-num", 10, "start"));
+    // same baseline as the player name so slot number and name align
+    parts.push(text(T.pad + 2, rowY + T.cell / 2 - 2, s, "sc-slot-num", 10, "start"));
     const players = side.slots[s];
-    if (players) parts.push(slotLabel(players, labelMode, T.pad + 16, rowY + T.cell / 2 - 2, T));
+    if (players)
+      parts.push(slotLabel(players, labelMode, T.pad + 16, rowY + T.cell / 2 - 2, T.pad + T.labelWidth - 8));
 
     for (let i = 1; i <= innings; i++) {
       const x = gridX + (i - 1) * T.cell;
@@ -149,37 +162,43 @@ function teamGrid(side, teamMeta, homeAway, innings, labelMode, y0, T) {
   return [parts.join(""), gridY + slotCount * T.cell - y0];
 }
 
-function linescore(norm, y0, T) {
+// Compact, boxed linescore for linescorePos: "right" — team abbreviations,
+// grid lines matching the scorecard table. Returns [svg, width, height].
+function linescoreBoxed(norm, x0, y0) {
   const { innings, totals } = norm.linescore;
-  const parts = [];
-  const cw = 26;
-  const labelW = 150;
-  const rowH = 18;
-  const x0 = T.pad;
+  const labelW = 46;
+  const cw = 24;
+  const rowH = 20;
   const cols = [...innings.map((i) => String(i.num)), "R", "H", "E"];
+  const w = labelW + cols.length * cw;
+  const h = rowH * 3;
+  const parts = [];
+
   const rowVals = (side) => [
     ...innings.map((i) => (i[side] == null ? "-" : String(i[side]))),
     String(totals[side].runs ?? ""),
     String(totals[side].hits ?? ""),
     String(totals[side].errors ?? ""),
   ];
+  const rows = [
+    [null, cols, "sc-ls-head"],
+    [norm.meta.away.abbr || norm.meta.away.name, rowVals("away"), "sc-ls-val"],
+    [norm.meta.home.abbr || norm.meta.home.name, rowVals("home"), "sc-ls-val"],
+  ];
 
-  cols.forEach((c, i) => {
-    const cls = i >= innings.length ? "sc-ls-head sc-ls-total" : "sc-ls-head";
-    parts.push(text(x0 + labelW + i * cw + cw / 2, y0 + 12, c, cls, 8.5));
-  });
-  [
-    [norm.meta.away.name, rowVals("away")],
-    [norm.meta.home.name, rowVals("home")],
-  ].forEach(([name, vals], r) => {
-    const y = y0 + 12 + (r + 1) * rowH;
-    parts.push(text(x0, y, name, "sc-ls-team", 9.5, "start"));
+  rows.forEach(([label, vals, cls], r) => {
+    const cellY = y0 + r * rowH;
+    const textY = cellY + rowH / 2 + 3;
+    parts.push(`<rect class="sc-cell" x="${x0}" y="${cellY}" width="${labelW}" height="${rowH}"/>`);
+    if (label) parts.push(text(x0 + labelW / 2, textY, label, "sc-ls-team", 9));
     vals.forEach((v, i) => {
-      const cls = i >= innings.length ? "sc-ls-val sc-ls-total" : "sc-ls-val";
-      parts.push(text(x0 + labelW + i * cw + cw / 2, y, v, cls, 9.5));
+      const cellX = x0 + labelW + i * cw;
+      parts.push(`<rect class="sc-cell" x="${cellX}" y="${cellY}" width="${cw}" height="${rowH}"/>`);
+      const bold = i >= innings.length;
+      parts.push(text(cellX + cw / 2, textY, v, bold ? `${cls} sc-ls-total` : cls, 9));
     });
   });
-  return [parts.join(""), 12 + 3 * rowH];
+  return [parts.join(""), w, h];
 }
 
 export function renderScorecard(norm, { labelMode = "names", preset = "classic", tokens = {} } = {}) {
@@ -198,9 +217,18 @@ export function renderScorecard(norm, { labelMode = "names", preset = "classic",
   );
   y += 16;
 
-  const [lsSvg, lsH] = linescore(norm, y, T);
-  parts.push(lsSvg);
-  y += lsH + 22;
+  if (T.linescorePos === "right") {
+    // linescore sits beside the title block, flush right
+    const probe = linescoreBoxed(norm, 0, 0);
+    const lsX = width - T.pad - probe[1];
+    const [lsSvg, , lsH] = linescoreBoxed(norm, lsX, T.pad);
+    parts.push(lsSvg);
+    y = Math.max(y, T.pad + lsH + 8) + 14;
+  } else {
+    const [lsSvg, lsH] = linescore(norm, y, T);
+    parts.push(lsSvg);
+    y += lsH + 22;
+  }
 
   const [awaySvg, awayH] = teamGrid(norm.sides.away, norm.meta.away, "AWAY", innings, labelMode, y, T);
   parts.push(awaySvg);
@@ -208,7 +236,12 @@ export function renderScorecard(norm, { labelMode = "names", preset = "classic",
 
   const [homeSvg, homeH] = teamGrid(norm.sides.home, norm.meta.home, "HOME", innings, labelMode, y, T);
   parts.push(homeSvg);
-  y += homeH + T.pad;
+  y += homeH + 24;
+
+  parts.push(
+    legend(LEGEND, T.legendAlign === "end" ? width - T.pad : T.pad, y, 14, T.legendAlign)
+  );
+  y += 20 + T.pad / 2;
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${y}" ` +

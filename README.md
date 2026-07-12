@@ -26,10 +26,14 @@ npm run smoke     # node scripts/smoke.mjs <feed.json> <out.svg> [preset] —
 
 ```
 src/api.js        MLB Stats API fetchers (teams by season, schedule, live feed, editorial content)
-src/normalize.js  GUMBO live feed -> minimal scorecard model (plain JSON: slots, PAs per inning, linescore, scoring plays)
-src/scorecard.js  model -> one self-contained <svg> string (geometry + sc-* classes only)
-src/scorecard.css all scorecard presentation, driven by --sc-* variables; one block per preset
-src/presets.js    design presets: geometry tokens + decoration toggles per preset
+src/normalize.js  GUMBO live feed -> minimal scorecard model (plain JSON: slots, PAs per inning,
+                  linescore, scoring plays; runner advancement/runs back-filled onto each PA)
+src/scorecard.js  classic renderer: model -> traditional diamond-grid <svg>
+src/render/       common.js (shared helpers + at-bat categorizer) and the abstract
+                  renderers: geometric.js, mosaic.js, timeline.js
+src/renderers.js  layout registry — the LAYOUT axis of the design system
+src/scorecard.css all scorecard presentation, driven by --sc-* variables; one block per style
+src/presets.js    color styles — the STYLE axis; optional per-renderer geometry tokens
 src/app.js        Alpine component wiring form state to the above
 src/design.js     design-harness entry (design.html): renders fixtures, no network
 src/fixtures/     normalized games checked in as harness data (9-inning and 11-inning)
@@ -78,10 +82,33 @@ Design decisions worth knowing:
 
 Hits: `1B 2B 3B HR` · strikeout swinging `K`, looking `ꓘ` · walks `BB IBB` ·
 outs by fielding credits (`6-3`, `F7`, `L9`, `P4`, `3U`) · `E5 FC SF8 SAC HBP CI`.
-Solid diamond path = bases the batter reached on his own PA; shaded diamond =
-scored; circled red number = which out; gold dots = RBIs. Known simplification:
-advancement caused by later batters (steals, wild pitches) is not back-filled
-onto the earlier batter's cell.
+Solid diamond path = bases reached, including advancement caused by later
+plays; shaded diamond = scored; circled red number = which out; gold dots =
+RBIs. Pinch runners are the one gap: a run scored by a replacement runner is
+not traced back to the original batter's cell.
+
+## Layouts
+
+Seven renderers share the same normalized model and style system.
+Diamond-grid family (boxed cells, dashed diamonds, traced base paths):
+
+- **Classic** — traditional: play codes, fielding credits, out numbers, RBI dots
+- **Inlay** — diamond + base path kept, the text code replaced by a small
+  geometric glyph (circle = hit sized by bases, half-disc walk, × K, wedge out)
+- **Trace** — path marks only: colored base paths (ink hit / sage walk /
+  dashed reach), × at home for strikeouts, outs as a stub cut short by a tick
+- **Facet** — the diamond itself is the datum: quadrants fill with bases
+  reached, quilt-style; ring = scored
+
+Freer poster layouts:
+
+- **Geometric** — floating Bauhaus glyphs, hairline rules, no boxes
+- **Mosaic** — one colored pip per at-bat, dot-matrix poster style
+- **Timeline** — rounded bars per batter, length = how far they got
+
+Color styles: Classic, Monochrome, Blueprint, Midnight, Pennant, Mustard,
+Harvest. Poster styles set display faces via `--sc-font-display`:
+Jost (Bauhaus/Futura homage), Space Grotesk, and Oswald.
 
 ## Roadmap
 

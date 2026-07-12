@@ -207,11 +207,11 @@
       {
        "inning": 1,
        "code": "BB",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "James Wood walks."
       }
      ],
@@ -231,7 +231,7 @@
       {
        "inning": 5,
        "code": "BB",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -379,11 +379,11 @@
       {
        "inning": 11,
        "code": "FC",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Andrés Chaparro reaches on a fielder's choice out, third baseman Ronny Mauricio unassisted. CJ Abrams out at 3rd."
       }
      ]
@@ -517,11 +517,11 @@
       {
        "inning": 2,
        "code": "1B",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Dylan Crews singles on a ground ball to shortstop Francisco Lindor."
       }
      ],
@@ -579,11 +579,11 @@
       {
        "inning": 2,
        "code": "1B",
-       "base": 3,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Riley Adams singles on a line drive to right fielder Juan Soto. Dylan Crews scores. Riley Adams to 3rd. Fielding error by right fielder Juan Soto."
       }
      ],
@@ -629,7 +629,7 @@
       {
        "inning": 2,
        "code": "E3",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -912,7 +912,7 @@
       {
        "inning": 9,
        "code": "HBP",
-       "base": 1,
+       "base": 3,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -986,7 +986,7 @@
       {
        "inning": 9,
        "code": "1B",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 1,
@@ -1110,11 +1110,11 @@
       {
        "inning": 8,
        "code": "3-6",
-       "base": 1,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Brandon Nimmo grounds into a force out, first baseman Andrés Chaparro to shortstop CJ Abrams. Pete Alonso out at 2nd. Brandon Nimmo to 1st."
       }
      ],
@@ -1172,11 +1172,11 @@
       {
        "inning": 8,
        "code": "2B",
-       "base": 2,
+       "base": 4,
        "out": false,
        "outNumber": null,
        "rbi": 0,
-       "scored": false,
+       "scored": true,
        "desc": "Starling Marte doubles (14) on a sharp line drive to left fielder James Wood. Brandon Nimmo to 3rd."
       }
      ],
@@ -1198,7 +1198,7 @@
       {
        "inning": 2,
        "code": "BB",
-       "base": 1,
+       "base": 2,
        "out": false,
        "outNumber": null,
        "rbi": 0,
@@ -1334,7 +1334,7 @@
       {
        "inning": 5,
        "code": "1B",
-       "base": 1,
+       "base": 3,
        "out": false,
        "outNumber": null,
        "rbi": 0,

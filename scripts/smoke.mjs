@@ -2,13 +2,14 @@
 // without a browser, to catch shape errors early. Embeds scorecard.css in
 // the output so the standalone SVG is fully styled — the same technique
 // the poster-export path will use. Usage:
-//   node scripts/smoke.mjs path/to/feed.json out.svg [preset]
+//   node scripts/smoke.mjs path/to/feed.json out.svg [style] [layout]
 import { readFileSync, writeFileSync } from "node:fs";
 import { normalizeGame } from "../src/normalize.js";
-import { renderScorecard } from "../src/scorecard.js";
 import { getPreset } from "../src/presets.js";
+import { getRenderer } from "../src/renderers.js";
 
-const [feedPath, outPath = "smoke-out.svg", presetId = "classic"] = process.argv.slice(2);
+const [feedPath, outPath = "smoke-out.svg", presetId = "classic", layoutId = "classic"] =
+  process.argv.slice(2);
 const feed = JSON.parse(readFileSync(feedPath, "utf8"));
 const norm = normalizeGame(feed);
 
@@ -22,7 +23,12 @@ for (const side of ["away", "home"]) {
 }
 
 const preset = getPreset(presetId);
-let svg = renderScorecard(norm, { labelMode: "names", preset: preset.id, tokens: preset.tokens });
+const renderer = getRenderer(layoutId);
+let svg = renderer.render(norm, {
+  labelMode: "names",
+  preset: preset.id,
+  tokens: preset.tokens?.[renderer.id] || {},
+});
 
 // Standalone SVG has no page stylesheet; embed it. CDATA keeps CSS
 // characters like & from breaking XML parsing.

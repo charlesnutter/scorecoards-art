@@ -35,9 +35,20 @@
           </label>
 
           <fieldset>
-            <legend class="text-xs text-stone-400 mb-1">3 · STYLE</legend>
-            <div class="flex flex-wrap gap-4">
-              <template x-for="d in designs" :key="d.id">
+            <legend class="text-xs text-stone-400 mb-1">3 · LAYOUT</legend>
+            <div class="flex flex-wrap gap-x-4 gap-y-1">
+              <template x-for="l in layouts" :key="l.id">
+                <label class="cursor-pointer">
+                  <input type="radio" :value="l.id" x-model="layoutId" class="mr-1" /><span x-text="l.label"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="text-xs text-stone-400 mb-1">4 · STYLE</legend>
+            <div class="flex flex-wrap gap-x-4 gap-y-1">
+              <template x-for="d in styles" :key="d.id">
                 <label class="cursor-pointer">
                   <input type="radio" :value="d.id" x-model="presetId" class="mr-1" /><span x-text="d.label"></span>
                 </label>
@@ -46,7 +57,7 @@
           </fieldset>
 
           <fieldset>
-            <legend class="text-xs text-stone-400 mb-1">4 · PLAYER LABELS</legend>
+            <legend class="text-xs text-stone-400 mb-1">5 · PLAYER LABELS</legend>
             <div class="flex gap-4">
               <label class="cursor-pointer">
                 <input type="radio" value="names" x-model="labelMode" class="mr-1" />Names
@@ -90,8 +101,9 @@
             <p class="mt-2 leading-relaxed">
               Data comes live from the public MLB Stats API. Team lists are
               era-correct for the chosen season. Hits show 1B/2B/3B/HR; outs
-              show fielding credits (6-3, F7). Runner advancement caused by
-              later batters is not back-filled onto earlier cells.
+              show fielding credits (6-3, F7). Base paths trace advancement
+              from later plays, and runs scored are marked on the plate
+              appearance where the runner reached.
             </p>
           </details>
         </div>
