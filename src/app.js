@@ -8,6 +8,8 @@ const PRESETS = [
   { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
   { label: "SD @ CHC · 2025-10-01", date: "2025-10-01", team: 112 },
   { label: "Opening Day LAD · 2025-03-18", date: "2025-03-18", team: 119 },
+  { label: "SF @ KC · 2014 World Series G7", date: "2014-10-29", team: 118 },
+  { label: "NYM @ SF · 2013-07-08 · 16 innings", date: "2013-07-08", team: 137 },
 ];
 
 export function scorecardApp() {
@@ -19,6 +21,7 @@ export function scorecardApp() {
     games: [],
     gamePk: null,
     presets: PRESETS,
+    presetChoice: "",
 
     // settings
     layouts: RENDERERS,
