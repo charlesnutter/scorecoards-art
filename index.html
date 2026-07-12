@@ -36,13 +36,12 @@
 
           <fieldset>
             <legend class="text-xs text-stone-400 mb-1">3 · STYLE</legend>
-            <div class="flex gap-4">
-              <label class="cursor-pointer">
-                <input type="radio" value="classic" x-model="theme" class="mr-1" />Classic
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" value="mono" x-model="theme" class="mr-1" />Monochrome
-              </label>
+            <div class="flex flex-wrap gap-4">
+              <template x-for="d in designs" :key="d.id">
+                <label class="cursor-pointer">
+                  <input type="radio" :value="d.id" x-model="presetId" class="mr-1" /><span x-text="d.label"></span>
+                </label>
+              </template>
             </div>
           </fieldset>
 
@@ -99,7 +98,7 @@
       </aside>
 
       <!-- ===== Preview pane (2/3) ===== -->
-      <main class="md:col-span-2 scorecard-theme" :data-theme="theme === 'mono' ? 'mono' : null"
+      <main class="md:col-span-2 scorecard-theme" :data-preset="presetId"
         style="background: var(--sc-paper)">
         <div class="p-6 min-h-screen flex flex-col" style="color: var(--sc-ink)">
           <div x-show="!svg" class="flex-1 flex items-center justify-center opacity-40 text-sm">

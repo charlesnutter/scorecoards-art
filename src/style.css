@@ -3,27 +3,10 @@
 @import "@fontsource/ibm-plex-mono/600.css";
 @import "@fontsource/ibm-plex-mono/700.css";
 
+/* All scorecard presentation + design-preset variables. Kept as a separate
+ * plain-CSS file so the export path can embed it inside the SVG. */
+@import "./scorecard.css";
+
 @theme {
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-}
-
-/*
- * Scorecard theme variables live on the preview pane only, so the
- * classic/monochrome toggle never touches the form column. The SVG
- * references these as var(--sc-*, fallback).
- */
-.scorecard-theme {
-  --sc-paper: #f6f1e4;
-  --sc-ink: #1d4a34;
-  --sc-accent: #b8452c;
-  --sc-rbi: #c99b2f;
-  --sc-line: #a89f88;
-}
-
-.scorecard-theme[data-theme="mono"] {
-  --sc-paper: #ffffff;
-  --sc-ink: #111111;
-  --sc-accent: #111111;
-  --sc-rbi: #555555;
-  --sc-line: #9a9a9a;
 }

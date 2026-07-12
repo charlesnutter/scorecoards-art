@@ -1,96 +1,96 @@
 // Renders a normalized game as a single self-contained <svg> string.
-// All colors go through var(--sc-*, fallback) so the page theme can
-// restyle the card, but the SVG still renders standalone (export path).
+//
+// Separation of concerns for the design system:
+//   - This module emits GEOMETRY ONLY (positions, sizes, path data) plus
+//     semantic sc-* classes. All presentation (color, stroke, dash, font,
+//     opacity) lives in src/scorecard.css, driven by --sc-* variables.
+//   - Per-preset GEOMETRY (cell size, radii, decorations) comes in through
+//     the `tokens` option; see src/presets.js.
+//
+// The <svg> root carries class="sc-card scorecard-theme" and the active
+// data-preset, so the same stylesheet applies whether the SVG sits in the
+// page or is exported standalone with the CSS embedded in a <style> block.
 
-const CELL = 64;
-const LABEL_W = 180;
-const PAD = 24;
-const INK = "var(--sc-ink, #1d4a34)";
-const ACCENT = "var(--sc-accent, #b8452c)";
-const RBI = "var(--sc-rbi, #c99b2f)";
-const LINE = "var(--sc-line, #a89f88)";
-const PAPER = "var(--sc-paper, #f6f1e4)";
-const FONT = "'IBM Plex Mono', ui-monospace, monospace";
+export const DEFAULT_TOKENS = {
+  cell: 64, // grid cell width/height
+  labelWidth: 180, // lineup label column
+  pad: 24, // outer margin
+  diamondRadius: 19, // full-size diamond
+  smallRadius: 11, // when 2+ PAs share a cell
+  codeSize: 9.5, // play-code font size (full / small diamond)
+  smallCodeSize: 7,
+  titleSize: 15,
+  showOutBadge: true, // circled out number, upper right
+  showRbiDots: true, // one dot per RBI, lower left
+};
 
 const esc = (s) =>
   String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-function text(x, y, str, size, opts = {}) {
-  const { fill = INK, anchor = "middle", weight = 400, halo = false } = opts;
-  const haloAttr = halo
-    ? ` stroke="${PAPER}" stroke-width="3" paint-order="stroke" stroke-linejoin="round"`
-    : "";
-  return `<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" text-anchor="${anchor}" font-weight="${weight}"${haloAttr}>${esc(str)}</text>`;
+function text(x, y, str, cls, size, anchor = "middle") {
+  return `<text x="${x}" y="${y}" class="${cls}" font-size="${size}" text-anchor="${anchor}">${esc(str)}</text>`;
 }
 
 // One plate appearance drawn as a diamond centered at (cx, cy).
-function diamond(pa, cx, cy, r) {
+function diamond(pa, cx, cy, r, T) {
   const H = [cx, cy + r];
   const F = [cx + r, cy];
   const S = [cx, cy - r];
-  const T = [cx - r, cy];
-  const corners = [H, F, S, T, H];
+  const Th = [cx - r, cy];
+  const corners = [H, F, S, Th, H];
   const parts = [];
 
-  const outline = `M${H} L${F} L${S} L${T} Z`;
-  const fill = pa.scored ? `fill="${INK}" fill-opacity="0.12"` : `fill="none"`;
+  const scored = pa.scored ? " sc-diamond--scored" : "";
   parts.push(
-    `<path d="${outline}" ${fill} stroke="${LINE}" stroke-width="1" stroke-dasharray="3 2.5"/>`
+    `<path class="sc-diamond${scored}" d="M${H} L${F} L${S} L${Th} Z"/>`
   );
 
   // Solid path along the bases actually reached.
   if (pa.base > 0) {
     let d = `M${corners[0]}`;
     for (let i = 1; i <= Math.min(pa.base, 4); i++) d += ` L${corners[i]}`;
-    parts.push(
-      `<path d="${d}" fill="none" stroke="${INK}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`
-    );
+    parts.push(`<path class="sc-basepath" d="${d}"/>`);
   }
 
-  const codeSize = r > 14 ? 9.5 : 7;
-  parts.push(
-    text(cx, cy + codeSize / 3, pa.code, codeSize, {
-      fill: pa.out ? ACCENT : INK,
-      weight: 600,
-      halo: true,
-    })
-  );
+  const codeSize = r > 14 ? T.codeSize : T.smallCodeSize;
+  const codeCls = pa.out ? "sc-code sc-code--out" : "sc-code";
+  parts.push(text(cx, cy + codeSize / 3, pa.code, codeCls, codeSize));
 
-  // Circled out number, upper right.
-  if (pa.out && pa.outNumber) {
+  if (T.showOutBadge && pa.out && pa.outNumber) {
     const ox = cx + r + 4;
     const oy = cy - r + 2;
     parts.push(
-      `<circle cx="${ox}" cy="${oy}" r="5.5" fill="none" stroke="${ACCENT}" stroke-width="1"/>`,
-      text(ox, oy + 2.5, pa.outNumber, 7, { fill: ACCENT, weight: 600 })
+      `<circle class="sc-out-badge" cx="${ox}" cy="${oy}" r="5.5"/>`,
+      text(ox, oy + 2.5, pa.outNumber, "sc-out-num", 7)
     );
   }
 
-  // RBI dots, lower left.
-  for (let i = 0; i < Math.min(pa.rbi, 4); i++) {
-    parts.push(
-      `<circle cx="${cx - r - 4}" cy="${cy + r - 2 - i * 7}" r="2.5" fill="${RBI}"/>`
-    );
+  if (T.showRbiDots) {
+    for (let i = 0; i < Math.min(pa.rbi, 4); i++) {
+      parts.push(
+        `<circle class="sc-rbi" cx="${cx - r - 4}" cy="${cy + r - 2 - i * 7}" r="2.5"/>`
+      );
+    }
   }
 
   return parts.join("");
 }
 
-function cellContents(pas, x, y) {
-  const cx = x + CELL / 2;
-  const cy = y + CELL / 2;
-  if (pas.length === 1) return diamond(pas[0], cx, cy, 19);
+function cellContents(pas, x, y, T) {
+  const cx = x + T.cell / 2;
+  const cy = y + T.cell / 2;
+  if (pas.length === 1) return diamond(pas[0], cx, cy, T.diamondRadius, T);
   // Two (or more) trips in the same inning: shrink and place side by side.
   const shown = pas.slice(0, 2);
   const parts = shown.map((pa, i) =>
-    diamond(pa, x + CELL * (0.28 + 0.44 * i), cy, 11)
+    diamond(pa, x + T.cell * (0.28 + 0.44 * i), cy, T.smallRadius, T)
   );
   if (pas.length > 2)
-    parts.push(text(cx, y + CELL - 5, `+${pas.length - 2}`, 7, { fill: ACCENT }));
+    parts.push(text(cx, y + T.cell - 5, `+${pas.length - 2}`, "sc-overflow", 7));
   return parts.join("");
 }
 
-function slotLabel(players, labelMode, x, y) {
+function slotLabel(players, labelMode, x, y, T) {
   const parts = [];
   const starter = players[0];
   const label =
@@ -99,66 +99,63 @@ function slotLabel(players, labelMode, x, y) {
       : starter.name.length > 18
         ? starter.name.slice(0, 17) + "…"
         : starter.name;
-  parts.push(text(x, y, label, 10, { anchor: "start", weight: 600 }));
+  parts.push(text(x, y, label, "sc-player", 10, "start"));
   parts.push(
-    text(LABEL_W + PAD - 8, y, starter.pos, 8, { anchor: "end", fill: LINE })
+    text(T.labelWidth + T.pad - 8, y, starter.pos, "sc-player-pos", 8, "end")
   );
   players.slice(1, 3).forEach((sub, i) => {
     const subLabel = labelMode === "numbers" ? `#${sub.number || "?"}` : sub.name;
     parts.push(
-      text(x + 6, y + 11 + i * 10, `↳ ${subLabel} ${sub.pos}`, 7.5, {
-        anchor: "start",
-        fill: LINE,
-      })
+      text(x + 6, y + 11 + i * 10, `↳ ${subLabel} ${sub.pos}`, "sc-player-sub", 7.5, "start")
     );
   });
   return parts.join("");
 }
 
 // One team's grid. Returns [svgString, heightUsed].
-function teamGrid(side, teamMeta, homeAway, innings, labelMode, y0) {
+function teamGrid(side, teamMeta, homeAway, innings, labelMode, y0, T) {
   const parts = [];
-  const slotCount = Math.max(9, ...side.slots.keys());
-  const gridX = PAD + LABEL_W;
+  const slotNums = Object.keys(side.slots).map(Number);
+  const slotCount = Math.max(9, ...slotNums);
+  const gridX = T.pad + T.labelWidth;
 
   parts.push(
-    text(PAD, y0 + 12, `${teamMeta.name.toUpperCase()} — ${homeAway}`, 11, {
-      anchor: "start",
-      weight: 700,
-    })
+    text(T.pad, y0 + 12, `${teamMeta.name.toUpperCase()} — ${homeAway}`, "sc-team-name", 11, "start")
   );
   const headY = y0 + 22;
   for (let i = 1; i <= innings; i++) {
-    parts.push(text(gridX + (i - 1) * CELL + CELL / 2, headY + 14, i, 9, { fill: LINE, weight: 600 }));
+    parts.push(
+      text(gridX + (i - 1) * T.cell + T.cell / 2, headY + 14, i, "sc-inning-num", 9)
+    );
   }
 
   const gridY = headY + 20;
   for (let s = 1; s <= slotCount; s++) {
-    const rowY = gridY + (s - 1) * CELL;
-    parts.push(text(PAD + 2, rowY + CELL / 2 + 3, s, 10, { anchor: "start", fill: LINE, weight: 700 }));
-    const players = side.slots.get(s);
-    if (players) parts.push(slotLabel(players, labelMode, PAD + 16, rowY + CELL / 2 - 2));
+    const rowY = gridY + (s - 1) * T.cell;
+    parts.push(text(T.pad + 2, rowY + T.cell / 2 + 3, s, "sc-slot-num", 10, "start"));
+    const players = side.slots[s];
+    if (players) parts.push(slotLabel(players, labelMode, T.pad + 16, rowY + T.cell / 2 - 2, T));
 
     for (let i = 1; i <= innings; i++) {
-      const x = gridX + (i - 1) * CELL;
+      const x = gridX + (i - 1) * T.cell;
       parts.push(
-        `<rect x="${x}" y="${rowY}" width="${CELL}" height="${CELL}" fill="none" stroke="${LINE}" stroke-width="0.75"/>`
+        `<rect class="sc-cell" x="${x}" y="${rowY}" width="${T.cell}" height="${T.cell}"/>`
       );
-      const pas = side.cells.get(s)?.get(i);
-      if (pas?.length) parts.push(cellContents(pas, x, rowY));
+      const pas = side.cells[s]?.[i];
+      if (pas?.length) parts.push(cellContents(pas, x, rowY, T));
     }
   }
 
-  return [parts.join(""), gridY + slotCount * CELL - y0];
+  return [parts.join(""), gridY + slotCount * T.cell - y0];
 }
 
-function linescore(norm, y0) {
+function linescore(norm, y0, T) {
   const { innings, totals } = norm.linescore;
   const parts = [];
   const cw = 26;
   const labelW = 150;
   const rowH = 18;
-  const x0 = PAD;
+  const x0 = T.pad;
   const cols = [...innings.map((i) => String(i.num)), "R", "H", "E"];
   const rowVals = (side) => [
     ...innings.map((i) => (i[side] == null ? "-" : String(i[side]))),
@@ -168,54 +165,55 @@ function linescore(norm, y0) {
   ];
 
   cols.forEach((c, i) => {
-    const bold = i >= innings.length;
-    parts.push(text(x0 + labelW + i * cw + cw / 2, y0 + 12, c, 8.5, { fill: bold ? INK : LINE, weight: 700 }));
+    const cls = i >= innings.length ? "sc-ls-head sc-ls-total" : "sc-ls-head";
+    parts.push(text(x0 + labelW + i * cw + cw / 2, y0 + 12, c, cls, 8.5));
   });
   [
     [norm.meta.away.name, rowVals("away")],
     [norm.meta.home.name, rowVals("home")],
   ].forEach(([name, vals], r) => {
     const y = y0 + 12 + (r + 1) * rowH;
-    parts.push(text(x0, y, name, 9.5, { anchor: "start", weight: 600 }));
+    parts.push(text(x0, y, name, "sc-ls-team", 9.5, "start"));
     vals.forEach((v, i) => {
-      const bold = i >= innings.length;
-      parts.push(text(x0 + labelW + i * cw + cw / 2, y, v, 9.5, { weight: bold ? 700 : 400 }));
+      const cls = i >= innings.length ? "sc-ls-val sc-ls-total" : "sc-ls-val";
+      parts.push(text(x0 + labelW + i * cw + cw / 2, y, v, cls, 9.5));
     });
   });
   return [parts.join(""), 12 + 3 * rowH];
 }
 
-export function renderScorecard(norm, { labelMode = "names" } = {}) {
+export function renderScorecard(norm, { labelMode = "names", preset = "classic", tokens = {} } = {}) {
+  const T = { ...DEFAULT_TOKENS, ...tokens };
   const innings = norm.maxInning;
-  const width = PAD * 2 + LABEL_W + innings * CELL;
+  const width = T.pad * 2 + T.labelWidth + innings * T.cell;
   const parts = [];
-  let y = PAD + 6;
+  let y = T.pad + 6;
 
   parts.push(
-    text(PAD, y, `${norm.meta.away.name} @ ${norm.meta.home.name}`, 15, { anchor: "start", weight: 700 })
+    text(T.pad, y, `${norm.meta.away.name} @ ${norm.meta.home.name}`, "sc-title", T.titleSize, "start")
   );
   y += 18;
   parts.push(
-    text(PAD, y, `${norm.meta.date}  ·  ${norm.meta.venue}  ·  ${norm.meta.status}`, 9.5, { anchor: "start", fill: LINE })
+    text(T.pad, y, `${norm.meta.date}  ·  ${norm.meta.venue}  ·  ${norm.meta.status}`, "sc-subtitle", 9.5, "start")
   );
   y += 16;
 
-  const [lsSvg, lsH] = linescore(norm, y);
+  const [lsSvg, lsH] = linescore(norm, y, T);
   parts.push(lsSvg);
   y += lsH + 22;
 
-  const [awaySvg, awayH] = teamGrid(norm.sides.away, norm.meta.away, "AWAY", innings, labelMode, y);
+  const [awaySvg, awayH] = teamGrid(norm.sides.away, norm.meta.away, "AWAY", innings, labelMode, y, T);
   parts.push(awaySvg);
   y += awayH + 30;
 
-  const [homeSvg, homeH] = teamGrid(norm.sides.home, norm.meta.home, "HOME", innings, labelMode, y);
+  const [homeSvg, homeH] = teamGrid(norm.sides.home, norm.meta.home, "HOME", innings, labelMode, y, T);
   parts.push(homeSvg);
-  y += homeH + PAD;
+  y += homeH + T.pad;
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${y}" ` +
-    `style="width:100%;height:auto;display:block" font-family="${FONT}">` +
-    `<rect x="0" y="0" width="${width}" height="${y}" fill="${PAPER}"/>` +
+    `class="sc-card scorecard-theme" data-preset="${esc(preset)}">` +
+    `<rect class="sc-bg" x="0" y="0" width="${width}" height="${y}"/>` +
     parts.join("") +
     `</svg>`
   );

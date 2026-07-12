@@ -112,14 +112,15 @@ function batterFate(play) {
   return { base, out, outNumber };
 }
 
+// Sides are plain JSON (no Maps/functions) so normalized games can be
+// saved as fixture files and fed straight back into the renderer.
 function buildSide(boxTeam) {
-  const slots = new Map(); // slot number -> [{id,name,number,pos,order}]
+  const slots = {}; // slot number -> [{id,name,number,pos,order}]
   for (const p of Object.values(boxTeam.players || {})) {
     const order = parseInt(p.battingOrder, 10);
     if (isNaN(order)) continue;
     const slot = Math.floor(order / 100);
-    if (!slots.has(slot)) slots.set(slot, []);
-    slots.get(slot).push({
+    (slots[slot] ??= []).push({
       id: p.person.id,
       name: p.person.fullName,
       number: p.jerseyNumber || "",
@@ -127,17 +128,18 @@ function buildSide(boxTeam) {
       order,
     });
   }
-  for (const list of slots.values()) list.sort((a, b) => a.order - b.order);
+  for (const list of Object.values(slots)) list.sort((a, b) => a.order - b.order);
   return {
     name: boxTeam.team?.name || "",
     slots,
-    slotOf: (batterId) => {
-      for (const [slot, players] of slots)
-        if (players.some((p) => p.id === batterId)) return slot;
-      return null;
-    },
-    cells: new Map(), // slot -> Map(inning -> [pa, ...])
+    cells: {}, // slot -> { inning -> [pa, ...] }
   };
+}
+
+function slotOf(side, batterId) {
+  for (const [slot, players] of Object.entries(side.slots))
+    if (players.some((p) => p.id === batterId)) return Number(slot);
+  return null;
 }
 
 export function normalizeGame(feed) {
@@ -152,7 +154,7 @@ export function normalizeGame(feed) {
   for (const play of allPlays) {
     if (play.result?.type !== "atBat" || !play.about?.isComplete) continue;
     const side = play.about.halfInning === "top" ? sides.away : sides.home;
-    const slot = side.slotOf(play.matchup.batter.id);
+    const slot = slotOf(side, play.matchup.batter.id);
     if (slot == null) continue;
     const inning = play.about.inning;
     maxInning = Math.max(maxInning, inning);
@@ -168,10 +170,7 @@ export function normalizeGame(feed) {
       scored: fate.base === 4,
       desc: play.result.description || "",
     };
-    if (!side.cells.has(slot)) side.cells.set(slot, new Map());
-    const byInning = side.cells.get(slot);
-    if (!byInning.has(inning)) byInning.set(inning, []);
-    byInning.get(inning).push(pa);
+    ((side.cells[slot] ??= {})[inning] ??= []).push(pa);
   }
 
   const ls = ld.linescore || {};

@@ -1,0 +1,1207 @@
+{
+ "meta": {
+  "gamePk": 813070,
+  "date": "2025-10-01",
+  "venue": "Yankee Stadium",
+  "status": "Final",
+  "away": {
+   "name": "Boston Red Sox",
+   "abbr": "BOS"
+  },
+  "home": {
+   "name": "New York Yankees",
+   "abbr": "NYY"
+  }
+ },
+ "maxInning": 9,
+ "linescore": {
+  "innings": [
+   {
+    "num": 1,
+    "away": 0,
+    "home": 2
+   },
+   {
+    "num": 2,
+    "away": 0,
+    "home": 0
+   },
+   {
+    "num": 3,
+    "away": 2,
+    "home": 0
+   },
+   {
+    "num": 4,
+    "away": 0,
+    "home": 0
+   },
+   {
+    "num": 5,
+    "away": 0,
+    "home": 1
+   },
+   {
+    "num": 6,
+    "away": 1,
+    "home": 0
+   },
+   {
+    "num": 7,
+    "away": 0,
+    "home": 0
+   },
+   {
+    "num": 8,
+    "away": 0,
+    "home": 1
+   },
+   {
+    "num": 9,
+    "away": 0
+   }
+  ],
+  "totals": {
+   "away": {
+    "runs": 3,
+    "hits": 6,
+    "errors": 0,
+    "leftOnBase": 5
+   },
+   "home": {
+    "runs": 4,
+    "hits": 10,
+    "errors": 1,
+    "leftOnBase": 9
+   }
+  }
+ },
+ "sides": {
+  "away": {
+   "name": "Boston Red Sox",
+   "slots": {
+    "1": [
+     {
+      "id": 608701,
+      "name": "Rob Refsnyder",
+      "number": "30",
+      "pos": "DH",
+      "order": 100
+     },
+     {
+      "id": 807799,
+      "name": "Masataka Yoshida",
+      "number": "7",
+      "pos": "DH",
+      "order": 101
+     }
+    ],
+    "2": [
+     {
+      "id": 596115,
+      "name": "Trevor Story",
+      "number": "10",
+      "pos": "SS",
+      "order": 200
+     }
+    ],
+    "3": [
+     {
+      "id": 608324,
+      "name": "Alex Bregman",
+      "number": "2",
+      "pos": "3B",
+      "order": 300
+     }
+    ],
+    "4": [
+     {
+      "id": 663853,
+      "name": "Romy Gonzalez",
+      "number": "23",
+      "pos": "1B",
+      "order": 400
+     },
+     {
+      "id": 663993,
+      "name": "Nathaniel Lowe",
+      "number": "37",
+      "pos": "1B",
+      "order": 401
+     }
+    ],
+    "5": [
+     {
+      "id": 665966,
+      "name": "Carlos Narváez",
+      "number": "75",
+      "pos": "C",
+      "order": 500
+     }
+    ],
+    "6": [
+     {
+      "id": 681987,
+      "name": "Nate Eaton",
+      "number": "40",
+      "pos": "RF",
+      "order": 600
+     },
+     {
+      "id": 677800,
+      "name": "Wilyer Abreu",
+      "number": "52",
+      "pos": "PH",
+      "order": 601
+     }
+    ],
+    "7": [
+     {
+      "id": 680776,
+      "name": "Jarren Duran",
+      "number": "16",
+      "pos": "LF",
+      "order": 700
+     }
+    ],
+    "8": [
+     {
+      "id": 678882,
+      "name": "Ceddanne Rafaela",
+      "number": "3",
+      "pos": "CF",
+      "order": 800
+     }
+    ],
+    "9": [
+     {
+      "id": 686765,
+      "name": "Nick Sogard",
+      "number": "20",
+      "pos": "2B",
+      "order": 900
+     }
+    ]
+   },
+   "cells": {
+    "1": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Rob Refsnyder strikes out swinging."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Rob Refsnyder strikes out swinging."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "F9",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Rob Refsnyder flies out to right fielder Aaron Judge in foul territory."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Masataka Yoshida singles on a ground ball to second baseman Jazz Chisholm Jr. Nate Eaton to 3rd. Jarren Duran to 2nd."
+      }
+     ]
+    },
+    "2": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trevor Story strikes out swinging."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 2,
+       "scored": false,
+       "desc": "Trevor Story singles on a sharp line drive to center fielder Trent Grisham. Jarren Duran scores. Ceddanne Rafaela scores. Nick Sogard to 2nd."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "HR",
+       "base": 4,
+       "out": false,
+       "outNumber": null,
+       "rbi": 1,
+       "scored": true,
+       "desc": "Trevor Story homers (1) on a fly ball to left center field."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "F8",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trevor Story flies out sharply to center fielder Trent Grisham."
+      }
+     ]
+    },
+    "3": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "F7",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Alex Bregman flies out to left fielder Cody Bellinger."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "4-6-3 DP",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Alex Bregman grounds into a double play, second baseman Jazz Chisholm Jr. to shortstop Anthony Volpe to first baseman Ben Rice. Trevor Story out at 2nd. Alex Bregman out at 1st."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Alex Bregman walks."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Alex Bregman singles on a sharp line drive to left fielder Cody Bellinger."
+      }
+     ]
+    },
+    "4": {
+     "2": [
+      {
+       "inning": 2,
+       "code": "F9",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Romy Gonzalez flies out to right fielder Aaron Judge."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "P4",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Romy Gonzalez pops out to second baseman Jazz Chisholm Jr."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "P4",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Romy Gonzalez pops out to second baseman Jazz Chisholm Jr."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "1-6-3 DP",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nathaniel Lowe grounds into a double play, pitcher Devin Williams to shortstop Anthony Volpe to first baseman Ben Rice. Alex Bregman out at 2nd. Nathaniel Lowe out at 1st."
+      }
+     ]
+    },
+    "5": {
+     "2": [
+      {
+       "inning": 2,
+       "code": "F8",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Carlos Narváez flies out to center fielder Trent Grisham."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Carlos Narváez strikes out swinging."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "5-4-3 DP",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Carlos Narváez grounds into a double play, third baseman Ryan McMahon to second baseman Jazz Chisholm Jr. to first baseman Ben Rice. Alex Bregman out at 2nd. Carlos Narváez out at 1st."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Carlos Narváez strikes out swinging."
+      }
+     ]
+    },
+    "6": {
+     "2": [
+      {
+       "inning": 2,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nate Eaton strikes out swinging."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nate Eaton singles on a sharp line drive to right fielder Aaron Judge."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nate Eaton walks."
+      }
+     ],
+     "9": [
+      {
+       "inning": 9,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Wilyer Abreu strikes out swinging."
+      }
+     ]
+    },
+    "7": {
+     "3": [
+      {
+       "inning": 3,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jarren Duran singles on a sharp line drive to center fielder Trent Grisham."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "4-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jarren Duran grounds out, second baseman Jazz Chisholm Jr. to first baseman Ben Rice."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "HBP",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jarren Duran hit by pitch."
+      }
+     ],
+     "9": [
+      {
+       "inning": 9,
+       "code": "ꓘ",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jarren Duran called out on strikes."
+      }
+     ]
+    },
+    "8": {
+     "3": [
+      {
+       "inning": 3,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ceddanne Rafaela walks. Jarren Duran to 2nd."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "ꓘ",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ceddanne Rafaela called out on strikes."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "1U",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ceddanne Rafaela bunt pops out to pitcher Fernando Cruz."
+      }
+     ],
+     "9": [
+      {
+       "inning": 9,
+       "code": "F9",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ceddanne Rafaela flies out to right fielder Aaron Judge."
+      }
+     ]
+    },
+    "9": {
+     "3": [
+      {
+       "inning": 3,
+       "code": "SAC",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nick Sogard hits a sacrifice bunt. Throwing error by pitcher Carlos Rodón. Jarren Duran to 3rd. Ceddanne Rafaela to 2nd. Nick Sogard to 1st."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "L7",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nick Sogard lines out to left fielder Cody Bellinger."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "F7",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Nick Sogard flies out to left fielder Cody Bellinger."
+      }
+     ]
+    }
+   }
+  },
+  "home": {
+   "name": "New York Yankees",
+   "slots": {
+    "1": [
+     {
+      "id": 663757,
+      "name": "Trent Grisham",
+      "number": "12",
+      "pos": "CF",
+      "order": 100
+     }
+    ],
+    "2": [
+     {
+      "id": 592450,
+      "name": "Aaron Judge",
+      "number": "99",
+      "pos": "RF",
+      "order": 200
+     }
+    ],
+    "3": [
+     {
+      "id": 641355,
+      "name": "Cody Bellinger",
+      "number": "35",
+      "pos": "LF",
+      "order": 300
+     }
+    ],
+    "4": [
+     {
+      "id": 700250,
+      "name": "Ben Rice",
+      "number": "22",
+      "pos": "1B",
+      "order": 400
+     },
+     {
+      "id": 502671,
+      "name": "Paul Goldschmidt",
+      "number": "48",
+      "pos": "1B",
+      "order": 401
+     }
+    ],
+    "5": [
+     {
+      "id": 519317,
+      "name": "Giancarlo Stanton",
+      "number": "27",
+      "pos": "DH",
+      "order": 500
+     }
+    ],
+    "6": [
+     {
+      "id": 665862,
+      "name": "Jazz Chisholm Jr.",
+      "number": "13",
+      "pos": "2B",
+      "order": 600
+     }
+    ],
+    "7": [
+     {
+      "id": 669224,
+      "name": "Austin Wells",
+      "number": "28",
+      "pos": "C",
+      "order": 700
+     }
+    ],
+    "8": [
+     {
+      "id": 683011,
+      "name": "Anthony Volpe",
+      "number": "11",
+      "pos": "SS",
+      "order": 800
+     }
+    ],
+    "9": [
+     {
+      "id": 641857,
+      "name": "Ryan McMahon",
+      "number": "19",
+      "pos": "3B",
+      "order": 900
+     }
+    ]
+   },
+   "cells": {
+    "1": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "F7",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trent Grisham flies out to left fielder Jarren Duran."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "4-6",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trent Grisham grounds into a force out, second baseman Nick Sogard to shortstop Trevor Story. Ryan McMahon out at 2nd. Trent Grisham to 1st."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trent Grisham walks."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "2B",
+       "base": 2,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trent Grisham doubles (1) on a line drive to right fielder Nate Eaton."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "4-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Trent Grisham grounds out, second baseman Nick Sogard to first baseman Nathaniel Lowe."
+      }
+     ]
+    },
+    "2": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "5-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Aaron Judge grounds out, third baseman Alex Bregman to first baseman Romy Gonzalez."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Aaron Judge singles on a line drive to center fielder Ceddanne Rafaela. Trent Grisham to 2nd."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 1,
+       "scored": false,
+       "desc": "Aaron Judge singles on a line drive to left fielder Jarren Duran. Trent Grisham scores."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "ꓘ",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Aaron Judge called out on strikes."
+      }
+     ]
+    },
+    "3": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Cody Bellinger singles on a ground ball to right fielder Nate Eaton."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "F7",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Cody Bellinger flies out to left fielder Jarren Duran."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "5-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Cody Bellinger grounds out, third baseman Alex Bregman to first baseman Romy Gonzalez."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "F9",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Cody Bellinger flies out to right fielder Nate Eaton."
+      }
+     ]
+    },
+    "4": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "HR",
+       "base": 4,
+       "out": false,
+       "outNumber": null,
+       "rbi": 2,
+       "scored": true,
+       "desc": "Ben Rice homers (1) on a line drive to right field. Cody Bellinger scores."
+      }
+     ],
+     "3": [
+      {
+       "inning": 3,
+       "code": "L9",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ben Rice lines out sharply to right fielder Nate Eaton."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ben Rice singles on a ground ball to third baseman Alex Bregman."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ben Rice strikes out swinging."
+      }
+     ]
+    },
+    "5": {
+     "1": [
+      {
+       "inning": 1,
+       "code": "6-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Giancarlo Stanton grounds out, shortstop Trevor Story to first baseman Romy Gonzalez."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "6-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Giancarlo Stanton grounds out sharply, shortstop Trevor Story to first baseman Romy Gonzalez."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "L7",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Giancarlo Stanton lines out to left fielder Jarren Duran."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "6-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Giancarlo Stanton grounds out, shortstop Trevor Story to first baseman Nathaniel Lowe."
+      }
+     ]
+    },
+    "6": {
+     "2": [
+      {
+       "inning": 2,
+       "code": "F8",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jazz Chisholm Jr. flies out to center fielder Ceddanne Rafaela."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "P3",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jazz Chisholm Jr. pops out to first baseman Romy Gonzalez in foul territory."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jazz Chisholm Jr. strikes out swinging."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Jazz Chisholm Jr. walks."
+      }
+     ]
+    },
+    "7": {
+     "2": [
+      {
+       "inning": 2,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Austin Wells walks."
+      }
+     ],
+     "4": [
+      {
+       "inning": 4,
+       "code": "5-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Austin Wells grounds out, third baseman Alex Bregman to first baseman Romy Gonzalez."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Austin Wells singles on a ground ball to left fielder Jarren Duran. Ben Rice to 2nd."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 1,
+       "scored": false,
+       "desc": "Austin Wells singles on a line drive to right fielder Nate Eaton. Jazz Chisholm Jr. scores."
+      }
+     ]
+    },
+    "8": {
+     "2": [
+      {
+       "inning": 2,
+       "code": "5-4-3 DP",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Anthony Volpe grounds into a double play, third baseman Alex Bregman to second baseman Nick Sogard to first baseman Romy Gonzalez. Austin Wells out at 2nd. Anthony Volpe out at 1st."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "F8",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Anthony Volpe flies out to center fielder Ceddanne Rafaela."
+      }
+     ],
+     "6": [
+      {
+       "inning": 6,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 3,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Anthony Volpe strikes out swinging."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Anthony Volpe singles on a ground ball to left fielder Jarren Duran. Austin Wells to 2nd."
+      }
+     ]
+    },
+    "9": {
+     "3": [
+      {
+       "inning": 3,
+       "code": "1B",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ryan McMahon singles on a sharp line drive to right fielder Nate Eaton."
+      }
+     ],
+     "5": [
+      {
+       "inning": 5,
+       "code": "1-3",
+       "base": 0,
+       "out": true,
+       "outNumber": 2,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ryan McMahon grounds out, pitcher Justin Slaten to first baseman Romy Gonzalez."
+      }
+     ],
+     "7": [
+      {
+       "inning": 7,
+       "code": "K",
+       "base": 0,
+       "out": true,
+       "outNumber": 1,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ryan McMahon strikes out swinging."
+      }
+     ],
+     "8": [
+      {
+       "inning": 8,
+       "code": "BB",
+       "base": 1,
+       "out": false,
+       "outNumber": null,
+       "rbi": 0,
+       "scored": false,
+       "desc": "Ryan McMahon walks. Austin Wells to 3rd. Anthony Volpe to 2nd."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "scoring": [
+  {
+   "inning": "B1",
+   "desc": "Ben Rice homers (1) on a line drive to right field. Cody Bellinger scores."
+  },
+  {
+   "inning": "T3",
+   "desc": "Trevor Story singles on a sharp line drive to center fielder Trent Grisham. Jarren Duran scores. Ceddanne Rafaela scores. Nick Sogard to 2nd."
+  },
+  {
+   "inning": "B5",
+   "desc": "Aaron Judge singles on a line drive to left fielder Jarren Duran. Trent Grisham scores."
+  },
+  {
+   "inning": "T6",
+   "desc": "Trevor Story homers (1) on a fly ball to left center field."
+  },
+  {
+   "inning": "B8",
+   "desc": "Austin Wells singles on a line drive to right fielder Nate Eaton. Jazz Chisholm Jr. scores."
+  }
+ ]
+}

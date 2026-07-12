@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scorecard Design Harness</title>
+  </head>
+  <body class="font-mono bg-stone-900 text-stone-200 min-h-screen">
+    <div x-data="designHarness" class="p-4">
+      <header class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4 text-sm">
+        <h1 class="font-bold tracking-wide">DESIGN HARNESS</h1>
+
+        <div class="flex gap-1">
+          <template x-for="d in designs" :key="d.id">
+            <button @click="presetId = d.id"
+              class="px-3 py-1 rounded border text-xs"
+              :class="presetId === d.id ? 'border-emerald-500 text-emerald-400' : 'border-stone-600 text-stone-300 hover:border-stone-400'"
+              x-text="d.label"></button>
+          </template>
+        </div>
+
+        <div class="flex gap-1">
+          <template x-for="m in ['names', 'numbers']" :key="m">
+            <button @click="labelMode = m"
+              class="px-3 py-1 rounded border text-xs"
+              :class="labelMode === m ? 'border-emerald-500 text-emerald-400' : 'border-stone-600 text-stone-300 hover:border-stone-400'"
+              x-text="m"></button>
+          </template>
+        </div>
+
+        <span class="text-xs text-stone-500">
+          fixture data, no network — edit src/scorecard.css or src/presets.js and save
+        </span>
+      </header>
+
+      <!-- both fixtures side by side on wide screens -->
+      <div class="grid xl:grid-cols-2 gap-4">
+        <template x-for="f in fixtures" :key="f.name">
+          <section class="scorecard-theme rounded overflow-hidden" :data-preset="presetId"
+            style="background: var(--sc-paper)">
+            <p class="text-xs px-3 pt-2 opacity-60" style="color: var(--sc-ink)" x-text="f.name"></p>
+            <div class="p-3" x-html="render(f)"></div>
+          </section>
+        </template>
+      </div>
+    </div>
+
+    <script type="module" src="/src/design.js"></script>
+  </body>
+</html>

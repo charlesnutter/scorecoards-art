@@ -1,0 +1,151 @@
+/*
+ * All scorecard presentation lives here, keyed off sc-* classes emitted by
+ * src/scorecard.js. Geometry (sizes, positions) stays in JS tokens; this
+ * file owns color, stroke, dash, font, and opacity.
+ *
+ * A design preset is a [data-preset="..."] variable block below plus a
+ * tokens entry in src/presets.js. The variables are defined both on the
+ * preview pane (.scorecard-theme) and on the SVG root (.sc-card), so the
+ * card renders identically in-page and standalone (export embeds this
+ * file in a <style> block inside the SVG).
+ *
+ * NOTE for export: keep this file plain CSS — no Tailwind directives,
+ * no imports — so it can be read and embedded as-is.
+ */
+
+.scorecard-theme,
+.sc-card {
+  /* ---- classic (default preset) ---- */
+  --sc-paper: #f6f1e4;
+  --sc-ink: #1d4a34;
+  --sc-accent: #b8452c;
+  --sc-rbi: #c99b2f;
+  --sc-line: #a89f88;
+  --sc-font: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --sc-diamond-dash: 3 2.5;
+  --sc-scored-opacity: 0.12;
+}
+
+[data-preset="mono"] {
+  --sc-paper: #ffffff;
+  --sc-ink: #111111;
+  --sc-accent: #111111;
+  --sc-rbi: #555555;
+  --sc-line: #9a9a9a;
+}
+
+[data-preset="blueprint"] {
+  --sc-paper: #16375f;
+  --sc-ink: #dbe9ff;
+  --sc-accent: #ffd166;
+  --sc-rbi: #7fd4c1;
+  --sc-line: #5b7ea8;
+  --sc-diamond-dash: 1.5 3;
+  --sc-scored-opacity: 0.25;
+}
+
+/* ---- card ---- */
+
+.sc-card {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-family: var(--sc-font);
+}
+
+.sc-card text {
+  fill: var(--sc-ink);
+}
+
+.sc-bg {
+  fill: var(--sc-paper);
+}
+
+.sc-title {
+  font-weight: 700;
+}
+
+.sc-subtitle,
+.sc-inning-num,
+.sc-slot-num,
+.sc-player-pos,
+.sc-player-sub,
+.sc-ls-head {
+  fill: var(--sc-line);
+}
+
+.sc-inning-num,
+.sc-slot-num,
+.sc-ls-head,
+.sc-team-name,
+.sc-player,
+.sc-ls-team {
+  font-weight: 600;
+}
+
+.sc-team-name,
+.sc-slot-num,
+.sc-ls-total {
+  font-weight: 700;
+}
+
+.sc-ls-total {
+  fill: var(--sc-ink);
+}
+
+/* ---- grid and diamonds ---- */
+
+.sc-cell {
+  fill: none;
+  stroke: var(--sc-line);
+  stroke-width: 0.75;
+}
+
+.sc-diamond {
+  fill: none;
+  stroke: var(--sc-line);
+  stroke-width: 1;
+  stroke-dasharray: var(--sc-diamond-dash);
+}
+
+.sc-diamond--scored {
+  fill: var(--sc-ink);
+  fill-opacity: var(--sc-scored-opacity);
+}
+
+.sc-basepath {
+  fill: none;
+  stroke: var(--sc-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* play code sits on top of the base path; halo it with paper color */
+.sc-code {
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: var(--sc-paper);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.sc-code--out,
+.sc-out-num,
+.sc-overflow {
+  fill: var(--sc-accent);
+}
+
+.sc-out-num {
+  font-weight: 600;
+}
+
+.sc-out-badge {
+  fill: none;
+  stroke: var(--sc-accent);
+  stroke-width: 1;
+}
+
+.sc-rbi {
+  fill: var(--sc-rbi);
+}
