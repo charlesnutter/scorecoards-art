@@ -136,6 +136,33 @@ function buildSide(boxTeam) {
   };
 }
 
+// Conventional box-score pitching line, in order of appearance.
+function buildPitching(boxTeam, decisions) {
+  return (boxTeam.pitchers || [])
+    .map((id) => {
+      const p = boxTeam.players?.[`ID${id}`];
+      if (!p) return null;
+      const st = p.stats?.pitching || {};
+      let note = "";
+      if (decisions.winner?.id === id) note = "W";
+      else if (decisions.loser?.id === id) note = "L";
+      else if (decisions.save?.id === id) note = "S";
+      return {
+        name: p.person.fullName,
+        note,
+        ip: st.inningsPitched ?? "",
+        h: st.hits ?? 0,
+        r: st.runs ?? 0,
+        er: st.earnedRuns ?? 0,
+        bb: st.baseOnBalls ?? 0,
+        so: st.strikeOuts ?? 0,
+        hr: st.homeRuns ?? 0,
+        p: st.pitchesThrown ?? st.numberOfPitches ?? "",
+      };
+    })
+    .filter(Boolean);
+}
+
 function slotOf(side, batterId) {
   for (const [slot, players] of Object.entries(side.slots))
     if (players.some((p) => p.id === batterId)) return Number(slot);
@@ -238,5 +265,9 @@ export function normalizeGame(feed) {
     },
     sides,
     scoring,
+    pitching: {
+      away: buildPitching(box.away, ld.decisions || {}),
+      home: buildPitching(box.home, ld.decisions || {}),
+    },
   };
 }

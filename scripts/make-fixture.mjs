@@ -13,6 +13,16 @@ if (!gamePk || !outPath) {
 const res = await fetch(`https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`);
 if (!res.ok) throw new Error(`MLB API ${res.status}`);
 const norm = normalizeGame(await res.json());
+
+// editorial recap rides along for the poster layouts' notes block
+try {
+  const content = await (await fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/content`)).json();
+  const recap = content.editorial?.recap?.mlb || {};
+  norm.recap = { headline: recap.headline || "", blurb: recap.blurb || "" };
+} catch {
+  norm.recap = { headline: "", blurb: "" };
+}
+
 writeFileSync(outPath, JSON.stringify(norm, null, 1));
 console.log(
   `wrote ${outPath}: ${norm.meta.away.name} @ ${norm.meta.home.name} ` +

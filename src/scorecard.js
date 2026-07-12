@@ -30,7 +30,7 @@ export const DEFAULT_TOKENS = {
 
 import { esc, text, linescore, slotLabel, legend } from "./render/common.js";
 
-const LEGEND = [
+export const LEGEND = [
   {
     swatch: `<text class="sc-code" font-size="8" text-anchor="middle" y="3">1B</text>`,
     label: "hit",
@@ -104,7 +104,7 @@ function diamond(pa, cx, cy, r, T, badgeAt, rbiAt) {
   return parts.join("");
 }
 
-function cellContents(pas, x, y, T) {
+export function cellContents(pas, x, y, T) {
   const cx = x + T.cell / 2;
   const cy = y + T.cell / 2;
   if (pas.length === 1) {
@@ -164,7 +164,7 @@ function teamGrid(side, teamMeta, homeAway, innings, labelMode, y0, T) {
 
 // Compact, boxed linescore for linescorePos: "right" — team abbreviations,
 // grid lines matching the scorecard table. Returns [svg, width, height].
-function linescoreBoxed(norm, x0, y0) {
+export function linescoreBoxed(norm, x0, y0) {
   const { innings, totals } = norm.linescore;
   const labelW = 46;
   const cw = 24;

@@ -106,6 +106,23 @@ Freer poster layouts:
 - **Mosaic** — one colored pip per at-bat, dot-matrix poster style
 - **Timeline** — rounded bars per batter, length = how far they got
 
+Paper-format layouts (`src/render/poster.js`) reuse the classic diamond
+cells but compose onto canvases with exact print aspect ratios — content
+is measured, then the canvas is padded (centered) to the target ratio,
+so an export maps directly onto the named paper size:
+
+- **Broadside** — 24×36 landscape; scorebook-spread: away/home side by
+  side, big title left, boxed linescore right (also fits 11×17 landscape
+  with slightly larger margins via the `paper` token)
+- **Herald** — 24×36 portrait; masthead poster: centered stacked title,
+  centered linescore, stacked grids
+- **Pressbox** — 18×24 portrait; stacked grids plus a right rail with a
+  vertical linescore tower and legend column
+- **Tabloid** — 11×17 portrait; compact print with the linescore on its
+  own row
+
+Each declares a `paper: [w, h]` token, overridable per style preset.
+
 Color styles: Classic, Monochrome, Blueprint, Midnight, Pennant, Mustard,
 Harvest. Poster styles set display faces via `--sc-font-display`:
 Jost (Bauhaus/Futura homage), Space Grotesk, and Oswald.

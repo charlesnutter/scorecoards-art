@@ -2,6 +2,7 @@ import { fetchTeams, fetchSchedule, fetchFeed, fetchNotes } from "./api.js";
 import { normalizeGame } from "./normalize.js";
 import { STYLE_PRESETS, getPreset } from "./presets.js";
 import { RENDERERS, getRenderer } from "./renderers.js";
+import { downloadPNG } from "./export.js";
 
 const PRESETS = [
   { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
@@ -28,6 +29,7 @@ export function scorecardApp() {
 
     // output state
     loading: false,
+    exporting: false,
     error: "",
     svg: "",
     norm: null,
@@ -100,9 +102,27 @@ export function scorecardApp() {
         fetchNotes(gamePk),
       ]);
       this.norm = normalizeGame(feed);
+      // poster layouts draw the recap on the card itself
+      this.norm.recap = notes;
       this.notes = notes;
       this.scoring = this.norm.scoring;
       this.redraw();
+    },
+
+    async download() {
+      if (!this.svg || this.exporting) return;
+      this.exporting = true;
+      this.error = "";
+      try {
+        const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const meta = this.norm.meta;
+        const name = `${slug(meta.away.name)}-at-${slug(meta.home.name)}-${meta.date}-${this.layoutId}-${this.presetId}.png`;
+        await downloadPNG(this.svg, name);
+      } catch (e) {
+        this.error = `Export failed: ${e.message}`;
+      } finally {
+        this.exporting = false;
+      }
     },
 
     redraw() {

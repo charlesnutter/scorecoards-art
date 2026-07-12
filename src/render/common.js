@@ -105,18 +105,18 @@ export function slotPAs(side, slot) {
 
 // Horizontal legend row. items: [{swatch: <svg fragment centered on 0,0>, label}]
 // anchor "end" treats x0 as the right edge and lays the row out to end there.
-export function legend(items, x0, y0, gap = 14, anchor = "start") {
+export function legend(items, x0, y0, gap = 16, anchor = "start") {
   const parts = [];
   let x = x0;
   if (anchor === "end") {
-    const total = items.reduce((n, it) => n + 12 + it.label.length * 5.2 + gap, -gap);
+    const total = items.reduce((n, it) => n + 14 + it.label.length * 6.2 + gap, -gap);
     x = x0 - total;
   }
   for (const it of items) {
-    parts.push(`<g transform="translate(${x}, ${y0})">${it.swatch}</g>`);
-    x += 12;
-    parts.push(text(x, y0 + 3, it.label, "sc-legend-label", 8, "start"));
-    x += it.label.length * 5.2 + gap;
+    parts.push(`<g transform="translate(${x}, ${y0}) scale(1.15)">${it.swatch}</g>`);
+    x += 14;
+    parts.push(text(x, y0 + 3.5, it.label, "sc-legend-label", 9.5, "start"));
+    x += it.label.length * 6.2 + gap;
   }
   return parts.join("");
 }

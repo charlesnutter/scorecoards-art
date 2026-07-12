@@ -94,6 +94,38 @@
   --sc-code-tracking: 0.07em;
 }
 
+/* Marquee duplicate for poster experiments (Broadside 24×36 L):
+ * white team header bars with official-team-color lettering, content
+ * top-aligned, scoring plays + recap bottom-right (see presets.js). */
+[data-preset="gameday"] {
+  --sc-paper: #16375f;
+  --sc-ink: #dbe9ff;
+  --sc-accent: #ffd166;
+  --sc-rbi: #7fd4c1;
+  --sc-line: #5b7ea8;
+  --sc-font: "Inter", "Helvetica Neue", sans-serif;
+  --sc-font-display: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-font-name: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-font-score: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-font-code: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-diamond-dash: 1.5 3;
+  --sc-scored-opacity: 0.25;
+  --sc-cat-hit: #9fc2e0;
+  --sc-cat-hr: #ffd166;
+  --sc-cat-walk: #7fd4c1;
+  --sc-cat-out: #2c4d7d;
+  --sc-cat-run: #ffd166;
+  --sc-badge-fill: var(--sc-accent);
+  --sc-badge-num-color: var(--sc-paper);
+  --sc-code-color: #ffffff;
+  --sc-code-out-color: #ffffff;
+  --sc-code-tracking: 0.07em;
+  --sc-header-bar: #ffffff;
+  --sc-header-bar-opacity: 0.22;
+  --sc-header-bar-text: #ffffff;
+  --sc-grid-frame: #ffffff;
+}
+
 /* mid-century navy poster: dusty blues, sand, coral (Jost display) */
 [data-preset="midnight"] {
   --sc-paper: #202c47;
@@ -278,6 +310,68 @@
 
 .sc-rbi {
   fill: var(--sc-rbi);
+}
+
+/* team header bars + notes block on poster layouts */
+.sc-team-bar {
+  fill: var(--sc-header-bar, #ffffff);
+  fill-opacity: var(--sc-header-bar-opacity, 1);
+}
+
+.sc-team-bar-label {
+  fill: var(--sc-header-bar-text, var(--sc-ink));
+  font-family: var(--sc-font-display);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.sc-team-bar-tag {
+  fill: var(--sc-header-bar-text, var(--sc-ink));
+  opacity: 0.55;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.sc-grid-frame {
+  fill: none;
+  stroke: var(--sc-grid-frame, #ffffff);
+  stroke-width: 2;
+}
+
+.sc-poster-frame {
+  fill: none;
+  stroke: var(--sc-poster-frame, #ffffff);
+  stroke-width: 1.25;
+}
+
+.sc-note {
+  fill: var(--sc-ink);
+}
+
+.sc-note-head {
+  fill: var(--sc-ink);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.sc-note-tag {
+  fill: var(--sc-line);
+  font-weight: 600;
+}
+
+/* paper trim guide on poster layouts */
+.sc-trim {
+  fill: none;
+  stroke: var(--sc-line);
+  stroke-width: 1;
+  stroke-dasharray: 7 6;
+  opacity: 0.8;
+}
+
+.sc-trim-label {
+  fill: var(--sc-line);
+  font-weight: 600;
+  letter-spacing: 0.08em;
 }
 
 /* ---- abstract renderers ---- */
