@@ -34,21 +34,25 @@ export const LEGEND = [
   {
     swatch: `<text class="sc-code" font-size="8" text-anchor="middle" y="3">1B</text>`,
     label: "hit",
+    w: 13,
   },
   {
     swatch: `<text class="sc-code sc-code--out" font-size="8" text-anchor="middle" y="3">6-3</text>`,
     label: "out, by fielders",
+    w: 19,
   },
-  { swatch: `<path class="sc-basepath" d="M-6,6 L6,-6"/>`, label: "bases reached" },
+  { swatch: `<path class="sc-basepath" d="M-6,6 L6,-6"/>`, label: "bases reached", w: 12 },
   {
     swatch: `<path class="sc-diamond sc-diamond--scored" d="M0,7 L7,0 L0,-7 L-7,0 Z"/>`,
     label: "scored",
+    w: 14,
   },
   {
     swatch: `<g><circle class="sc-out-badge" r="5"/><text class="sc-out-num" font-size="7" text-anchor="middle" y="2.5">2</text></g>`,
     label: "out number",
+    w: 10,
   },
-  { swatch: `<circle class="sc-rbi" r="2.5"/>`, label: "RBI" },
+  { swatch: `<circle class="sc-rbi" r="2.5"/>`, label: "RBI", w: 5 },
 ];
 
 // One plate appearance drawn as a diamond centered at (cx, cy).

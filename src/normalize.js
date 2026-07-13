@@ -136,6 +136,45 @@ function buildSide(boxTeam) {
   };
 }
 
+// Box-score footnote lines (2B, HR, SB...) from the boxscore's own
+// pre-formatted info sections, with verbose parentheticals condensed:
+// "HR: Story (1, 6th inning off Rodón, 0 on, 0 out)." -> "HR: Story (1)"
+const NOTE_LABELS = new Set(["2B", "3B", "HR", "SB", "CS", "SF", "SAC", "GIDP", "E", "PB"]);
+
+function battingNotes(boxTeam) {
+  const out = [];
+  for (const sec of boxTeam.info || []) {
+    for (const f of sec.fieldList || []) {
+      if (!NOTE_LABELS.has(f.label)) continue;
+      const v = String(f.value || "")
+        .trim()
+        .replace(/\.$/, "")
+        .replace(/\(([^,)]+)[^)]*\)/g, "($1)");
+      out.push(`${f.label}: ${v}`);
+    }
+  }
+  return out;
+}
+
+// Game-level pitching footnotes (wild pitches, IBB, hit batters, balks)
+// and the box-score footer facts (time, attendance, weather...).
+const GAME_NOTE_LABELS = new Set(["WP", "IBB", "HBP", "Balk"]);
+const GAME_INFO_LABELS = ["First pitch", "T", "Att", "Weather", "Wind"];
+
+function gameLevelNotes(box) {
+  const clean = (v) => String(v || "").trim().replace(/\.$/, "");
+  const notes = [];
+  const info = [];
+  for (const f of box.info || []) {
+    if (GAME_NOTE_LABELS.has(f.label)) notes.push(`${f.label}: ${clean(f.value)}`);
+  }
+  for (const label of GAME_INFO_LABELS) {
+    const f = (box.info || []).find((x) => x.label === label);
+    if (f) info.push(label === "Weather" || label === "Wind" ? clean(f.value) : `${label}: ${clean(f.value)}`);
+  }
+  return [notes, info];
+}
+
 // Conventional box-score pitching line, in order of appearance.
 function buildPitching(boxTeam, decisions) {
   return (boxTeam.pitchers || [])
@@ -158,6 +197,7 @@ function buildPitching(boxTeam, decisions) {
         so: st.strikeOuts ?? 0,
         hr: st.homeRuns ?? 0,
         p: st.pitchesThrown ?? st.numberOfPitches ?? "",
+        strikes: st.strikes ?? "",
       };
     })
     .filter(Boolean);
@@ -234,13 +274,21 @@ export function normalizeGame(feed) {
   }
 
   const ls = ld.linescore || {};
+  const [gameNotes, gameInfo] = gameLevelNotes(ld.boxscore);
   const scoring = (ld.plays?.scoringPlays || [])
     .map((i) => allPlays[i])
     .filter(Boolean)
-    .map((p) => ({
-      inning: `${p.about.halfInning === "top" ? "T" : "B"}${p.about.inning}`,
-      desc: p.result.description || "",
-    }));
+    .map((p) => {
+      const full = p.matchup.batter.fullName || "";
+      return {
+        inning: `${p.about.halfInning === "top" ? "T" : "B"}${p.about.inning}`,
+        desc: p.result.description || "",
+        // compact one-line form: "Story 1B", 2 RBI, score after the play
+        short: `${full.split(" ").slice(1).join(" ") || full} ${playCode(p)}`,
+        rbi: p.result.rbi || 0,
+        score: `${p.result.awayScore ?? ""}-${p.result.homeScore ?? ""}`,
+      };
+    });
 
   return {
     meta: {
@@ -269,5 +317,11 @@ export function normalizeGame(feed) {
       away: buildPitching(box.away, ld.decisions || {}),
       home: buildPitching(box.home, ld.decisions || {}),
     },
+    battingNotes: {
+      away: battingNotes(box.away),
+      home: battingNotes(box.home),
+    },
+    gameNotes,
+    gameInfo,
   };
 }

@@ -1447,27 +1447,45 @@
  "scoring": [
   {
    "inning": "T1",
-   "desc": "Daylen Lile grounds into a force out, second baseman Jeff McNeil to shortstop Francisco Lindor. James Wood scores. Josh Bell out at 2nd. Daylen Lile to 1st."
+   "desc": "Daylen Lile grounds into a force out, second baseman Jeff McNeil to shortstop Francisco Lindor. James Wood scores. Josh Bell out at 2nd. Daylen Lile to 1st.",
+   "short": "Lile 4-6",
+   "rbi": 1,
+   "score": "1-0"
   },
   {
    "inning": "T2",
-   "desc": "Riley Adams singles on a line drive to right fielder Juan Soto. Dylan Crews scores. Riley Adams to 3rd. Fielding error by right fielder Juan Soto."
+   "desc": "Riley Adams singles on a line drive to right fielder Juan Soto. Dylan Crews scores. Riley Adams to 3rd. Fielding error by right fielder Juan Soto.",
+   "short": "Adams 1B",
+   "rbi": 0,
+   "score": "2-0"
   },
   {
    "inning": "T2",
-   "desc": "CJ Abrams grounds out, second baseman Jeff McNeil to first baseman Pete Alonso."
+   "desc": "CJ Abrams grounds out, second baseman Jeff McNeil to first baseman Pete Alonso.",
+   "short": "Abrams 4-3",
+   "rbi": 0,
+   "score": "3-0"
   },
   {
    "inning": "B8",
-   "desc": "Mark Vientos doubles (21) on a ground ball to left fielder James Wood. Brandon Nimmo scores. Starling Marte scores."
+   "desc": "Mark Vientos doubles (21) on a ground ball to left fielder James Wood. Brandon Nimmo scores. Starling Marte scores.",
+   "short": "Vientos 2B",
+   "rbi": 2,
+   "score": "3-2"
   },
   {
    "inning": "B9",
-   "desc": "Juan Soto singles on a fly ball to center fielder Robert Hassell III. Jose Siri scores. Francisco Lindor to 2nd."
+   "desc": "Juan Soto singles on a fly ball to center fielder Robert Hassell III. Jose Siri scores. Francisco Lindor to 2nd.",
+   "short": "Soto 1B",
+   "rbi": 1,
+   "score": "3-3"
   },
   {
    "inning": "T11",
-   "desc": "Daylen Lile hits an inside-the-park home run (7) on a line drive to center field. Andrés Chaparro scores."
+   "desc": "Daylen Lile hits an inside-the-park home run (7) on a line drive to center field. Andrés Chaparro scores.",
+   "short": "Lile HR",
+   "rbi": 2,
+   "score": "5-3"
   }
  ],
  "pitching": {
@@ -1482,7 +1500,8 @@
     "bb": 1,
     "so": 3,
     "hr": 0,
-    "p": 76
+    "p": 76,
+    "strikes": 52
    },
    {
     "name": "Konnor Pilkington",
@@ -1494,7 +1513,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 16
+    "p": 16,
+    "strikes": 9
    },
    {
     "name": "Clayton Beeter",
@@ -1506,7 +1526,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 17
+    "p": 17,
+    "strikes": 9
    },
    {
     "name": "José A. Ferrer",
@@ -1518,7 +1539,8 @@
     "bb": 1,
     "so": 4,
     "hr": 0,
-    "p": 43
+    "p": 43,
+    "strikes": 31
    },
    {
     "name": "Sauryn Lao",
@@ -1530,7 +1552,8 @@
     "bb": 0,
     "so": 0,
     "hr": 0,
-    "p": 7
+    "p": 7,
+    "strikes": 7
    },
    {
     "name": "PJ Poulin",
@@ -1542,7 +1565,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 12
+    "p": 12,
+    "strikes": 7
    }
   ],
   "home": [
@@ -1556,7 +1580,8 @@
     "bb": 2,
     "so": 6,
     "hr": 0,
-    "p": 92
+    "p": 92,
+    "strikes": 59
    },
    {
     "name": "Huascar Brazobán",
@@ -1568,7 +1593,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 15
+    "p": 15,
+    "strikes": 12
    },
    {
     "name": "Richard Lovelady",
@@ -1580,7 +1606,8 @@
     "bb": 0,
     "so": 2,
     "hr": 0,
-    "p": 16
+    "p": 16,
+    "strikes": 13
    },
    {
     "name": "Ryan Helsley",
@@ -1592,7 +1619,8 @@
     "bb": 1,
     "so": 2,
     "hr": 0,
-    "p": 18
+    "p": 18,
+    "strikes": 9
    },
    {
     "name": "Edwin Díaz",
@@ -1604,7 +1632,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 7
+    "p": 7,
+    "strikes": 7
    },
    {
     "name": "Tyler Rogers",
@@ -1616,10 +1645,37 @@
     "bb": 0,
     "so": 0,
     "hr": 1,
-    "p": 15
+    "p": 15,
+    "strikes": 11
    }
   ]
  },
+ "battingNotes": {
+  "away": [
+   "HR: Lile (7)",
+   "CS: Crews (5)",
+   "E: Bell (2); Adams, R (3)"
+  ],
+  "home": [
+   "2B: Alonso (38); Marte, S (14); Vientos (21)",
+   "SAC: Mullins",
+   "GIDP: Alvarez, F; Baty",
+   "SB: Lindor (31); Soto, J (35)",
+   "E: Soto, J (1); Alonso (9)"
+  ]
+ },
+ "gameNotes": [
+  "WP: McLean 2",
+  "IBB: Alonso (by Ferrer)",
+  "HBP: Alonso (by Ferrer); Lindor (by Ferrer)"
+ ],
+ "gameInfo": [
+  "First pitch: 4:10 PM",
+  "T: 3:18",
+  "Att: 43,412",
+  "74 degrees, Sunny",
+  "7 mph, In From CF"
+ ],
  "recap": {
   "headline": "Inconsistency returns in Mets' 11-inning loss amid playoff push",
   "blurb": "NEW YORK -- If the Mets want to return to the postseason, they need to beat teams like the Nationals, who have one of the worst winning percentages in the Major Leagues. But the clubs’ latest matchup turned out to be a dour day for New York on Saturday evening"

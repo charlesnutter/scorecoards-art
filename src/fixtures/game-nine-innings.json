@@ -1185,23 +1185,38 @@
  "scoring": [
   {
    "inning": "B1",
-   "desc": "Ben Rice homers (1) on a line drive to right field. Cody Bellinger scores."
+   "desc": "Ben Rice homers (1) on a line drive to right field. Cody Bellinger scores.",
+   "short": "Rice HR",
+   "rbi": 2,
+   "score": "0-2"
   },
   {
    "inning": "T3",
-   "desc": "Trevor Story singles on a sharp line drive to center fielder Trent Grisham. Jarren Duran scores. Ceddanne Rafaela scores. Nick Sogard to 2nd."
+   "desc": "Trevor Story singles on a sharp line drive to center fielder Trent Grisham. Jarren Duran scores. Ceddanne Rafaela scores. Nick Sogard to 2nd.",
+   "short": "Story 1B",
+   "rbi": 2,
+   "score": "2-2"
   },
   {
    "inning": "B5",
-   "desc": "Aaron Judge singles on a line drive to left fielder Jarren Duran. Trent Grisham scores."
+   "desc": "Aaron Judge singles on a line drive to left fielder Jarren Duran. Trent Grisham scores.",
+   "short": "Judge 1B",
+   "rbi": 1,
+   "score": "2-3"
   },
   {
    "inning": "T6",
-   "desc": "Trevor Story homers (1) on a fly ball to left center field."
+   "desc": "Trevor Story homers (1) on a fly ball to left center field.",
+   "short": "Story HR",
+   "rbi": 1,
+   "score": "3-3"
   },
   {
    "inning": "B8",
-   "desc": "Austin Wells singles on a line drive to right fielder Nate Eaton. Jazz Chisholm Jr. scores."
+   "desc": "Austin Wells singles on a line drive to right fielder Nate Eaton. Jazz Chisholm Jr. scores.",
+   "short": "Wells 1B",
+   "rbi": 1,
+   "score": "3-4"
   }
  ],
  "pitching": {
@@ -1216,7 +1231,8 @@
     "bb": 1,
     "so": 0,
     "hr": 1,
-    "p": 28
+    "p": 28,
+    "strikes": 17
    },
    {
     "name": "Justin Wilson",
@@ -1228,7 +1244,8 @@
     "bb": 0,
     "so": 0,
     "hr": 0,
-    "p": 23
+    "p": 23,
+    "strikes": 13
    },
    {
     "name": "Justin Slaten",
@@ -1240,7 +1257,8 @@
     "bb": 1,
     "so": 0,
     "hr": 0,
-    "p": 18
+    "p": 18,
+    "strikes": 10
    },
    {
     "name": "Steven Matz",
@@ -1252,7 +1270,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 24
+    "p": 24,
+    "strikes": 13
    },
    {
     "name": "Zack Kelly",
@@ -1264,7 +1283,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 6
+    "p": 6,
+    "strikes": 3
    },
    {
     "name": "Garrett Whitlock",
@@ -1276,7 +1296,8 @@
     "bb": 2,
     "so": 3,
     "hr": 0,
-    "p": 47
+    "p": 47,
+    "strikes": 31
    },
    {
     "name": "Payton Tolle",
@@ -1288,7 +1309,8 @@
     "bb": 0,
     "so": 0,
     "hr": 0,
-    "p": 7
+    "p": 7,
+    "strikes": 4
    }
   ],
   "home": [
@@ -1302,7 +1324,8 @@
     "bb": 3,
     "so": 6,
     "hr": 1,
-    "p": 91
+    "p": 91,
+    "strikes": 53
    },
    {
     "name": "Fernando Cruz",
@@ -1314,7 +1337,8 @@
     "bb": 0,
     "so": 0,
     "hr": 0,
-    "p": 14
+    "p": 14,
+    "strikes": 8
    },
    {
     "name": "Devin Williams",
@@ -1326,7 +1350,8 @@
     "bb": 0,
     "so": 1,
     "hr": 0,
-    "p": 19
+    "p": 19,
+    "strikes": 12
    },
    {
     "name": "David Bednar",
@@ -1338,10 +1363,37 @@
     "bb": 0,
     "so": 2,
     "hr": 0,
-    "p": 16
+    "p": 16,
+    "strikes": 10
    }
   ]
  },
+ "battingNotes": {
+  "away": [
+   "HR: Story (1)",
+   "SAC: Sogard",
+   "GIDP: Bregman; Lowe, N; Narváez",
+   "PB: Narváez (1)"
+  ],
+  "home": [
+   "2B: Grisham (1)",
+   "HR: Rice (1)",
+   "GIDP: Volpe",
+   "SB: Grisham (1)",
+   "E: Rodón (1)"
+  ]
+ },
+ "gameNotes": [
+  "WP: Slaten; Rodón",
+  "HBP: Duran, Ja (by Rodón)"
+ ],
+ "gameInfo": [
+  "First pitch: 6:10 PM",
+  "T: 2:50",
+  "Att: 47,993",
+  "68 degrees, Clear",
+  "10 mph, L To R"
+ ],
  "recap": {
   "headline": "Yanks force win-or-go-home Game 3 thanks to Jazz's epic race home",
   "blurb": "NEW YORK – Jazz Chisholm Jr. didn’t hide his displeasure after being out of the lineup for the American League Wild Card Series opener Tuesday night, turning his back to rummage through his locker when questions were volleyed his way. The Yankees' sparkplug found what he was looking for –"

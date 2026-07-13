@@ -105,18 +105,22 @@ export function slotPAs(side, slot) {
 
 // Horizontal legend row. items: [{swatch: <svg fragment centered on 0,0>, label}]
 // anchor "end" treats x0 as the right edge and lays the row out to end there.
-export function legend(items, x0, y0, gap = 16, anchor = "start") {
+// items: [{swatch, label, w?}] where `w` is the swatch's unscaled width
+// (default 12); swatches are centered on their origin, so each is offset
+// by half its scaled width to left-align with x0.
+export function legend(items, x0, y0, gap = 10, anchor = "start") {
+  const SCALE = 1.3;
+  const itemW = (it) => (it.w ?? 12) * SCALE + 6 + it.label.length * 6.1;
   const parts = [];
   let x = x0;
   if (anchor === "end") {
-    const total = items.reduce((n, it) => n + 14 + it.label.length * 6.2 + gap, -gap);
-    x = x0 - total;
+    x = x0 - items.reduce((n, it) => n + itemW(it) + gap, -gap);
   }
   for (const it of items) {
-    parts.push(`<g transform="translate(${x}, ${y0}) scale(1.15)">${it.swatch}</g>`);
-    x += 14;
-    parts.push(text(x, y0 + 3.5, it.label, "sc-legend-label", 9.5, "start"));
-    x += it.label.length * 6.2 + gap;
+    const sw = (it.w ?? 12) * SCALE;
+    parts.push(`<g transform="translate(${x + sw / 2}, ${y0}) scale(${SCALE})">${it.swatch}</g>`);
+    parts.push(text(x + sw + 6, y0 + 4, it.label, "sc-legend-label", 11.5, "start"));
+    x += itemW(it) + gap;
   }
   return parts.join("");
 }

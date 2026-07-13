@@ -29,6 +29,10 @@ export function scorecardApp() {
     layoutId: "classic",
     presetId: "classic",
     labelMode: "names",
+    legendCol: 1,
+    infoPos: "footer",
+    bottomOrder: "notes-first",
+    notesOrder: "scoring-first",
 
     // output state
     loading: false,
@@ -48,6 +52,10 @@ export function scorecardApp() {
       // style can change geometry tokens, not just CSS, so re-render
       this.$watch("presetId", () => this.redraw());
       this.$watch("layoutId", () => this.redraw());
+      this.$watch("legendCol", () => this.redraw());
+      this.$watch("infoPos", () => this.redraw());
+      this.$watch("bottomOrder", () => this.redraw());
+      this.$watch("notesOrder", () => this.redraw());
     },
 
     get season() {
@@ -136,6 +144,10 @@ export function scorecardApp() {
         labelMode: this.labelMode,
         preset: preset.id,
         tokens: preset.tokens?.[renderer.id] || {},
+        legendCol: Number(this.legendCol),
+        infoPos: this.infoPos,
+        bottomOrder: this.bottomOrder,
+        notesOrder: this.notesOrder,
       });
     },
   };

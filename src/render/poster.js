@@ -208,11 +208,29 @@ function notesColumn(head, lines, x0, y0, lineH = 16) {
   return [parts.join(""), 34 + lines.length * lineH];
 }
 
+// One line per scoring play, never wrapped: "Story 1B · 3 RBI · 3-2".
 function scoringLines(norm, maxChars = 105) {
+  return (norm.scoring || []).slice(0, 12).map((s) => {
+    const text = s.short
+      ? `${s.short}${s.rbi ? ` · ${s.rbi} RBI` : ""} · ${s.score}`
+      : s.desc;
+    return {
+      tag: s.inning,
+      text: text.length > maxChars ? text.slice(0, maxChars - 1) + "…" : text,
+      indent: 34,
+    };
+  });
+}
+
+// Per-team box-score footnotes as wrapped newspaper-style lines,
+// tagged with the team abbreviation.
+function gameNoteLines(norm, maxChars) {
   const lines = [];
-  for (const s of (norm.scoring || []).slice(0, 6)) {
-    wrap(s.desc, maxChars).forEach((l, i) =>
-      lines.push({ tag: i === 0 ? s.inning : "", text: l, indent: 34 })
+  for (const side of ["away", "home"]) {
+    const items = norm.battingNotes?.[side];
+    if (!items?.length) continue;
+    wrap(items.join(";  "), maxChars).forEach((l, i) =>
+      lines.push({ tag: i === 0 ? norm.meta[side].abbr || "" : "", text: l, indent: 34 })
     );
   }
   return lines;
@@ -230,7 +248,7 @@ function recapLines(norm) {
 // Conventional pitching box: name + IP H R ER BB K HR P, boxed like the
 // linescore. `w` sets the table's total width. Returns [svg, width, height].
 function pitchingTable(rows, x0, y0, w = 490) {
-  const cols = [["IP", 40], ["H", 34], ["R", 34], ["ER", 36], ["BB", 36], ["K", 34], ["HR", 36], ["P", 40]];
+  const cols = [["IP", 40], ["H", 34], ["R", 34], ["ER", 36], ["BB", 36], ["K", 34], ["HR", 36], ["P-S", 54]];
   const nameW = w - cols.reduce((n, c) => n + c[1], 0);
   const rowH = 21;
   const parts = [];
@@ -246,11 +264,12 @@ function pitchingTable(rows, x0, y0, w = 490) {
     });
   };
 
-  drawRow([["PITCHING", nameW, "start"], ...cols.map(([l, cw]) => [l, cw])], y0, true);
+  drawRow([["PITCHERS", nameW, "start"], ...cols.map(([l, cw]) => [l, cw])], y0, true);
   rows.forEach((r, i) => {
     const name = r.note ? `${r.name} · ${r.note}` : r.name;
+    const ps = r.strikes !== "" && r.strikes != null ? `${r.p}-${r.strikes}` : r.p;
     drawRow(
-      [[name, nameW, "start"], [r.ip, 40], [r.h, 34], [r.r, 34], [r.er, 36], [r.bb, 36], [r.so, 34], [r.hr, 36], [r.p, 40]],
+      [[name, nameW, "start"], [r.ip, 40], [r.h, 34], [r.r, 34], [r.er, 36], [r.bb, 36], [r.so, 34], [r.hr, 36], [ps, 54]],
       y0 + (i + 1) * rowH
     );
   });
@@ -261,7 +280,20 @@ function pitchingTable(rows, x0, y0, w = 490) {
 
 /* ---------- Broadside: 24×36 landscape ---------- */
 
-export function renderBroadside(norm, { labelMode = "names", preset = "classic", tokens = {} } = {}) {
+// One-line game facts: "First pitch: 6:10 PM · T: 2:50 · Att: 47,993 ·
+// 68°, Clear · 10 mph, L To R" — trailing items dropped if it overflows.
+function conditionsLine(norm, maxChars) {
+  if (!norm.gameInfo?.length) return "";
+  const items = norm.gameInfo.map((s) => s.replace(" degrees", "°"));
+  let line = items.join(" · ");
+  while (items.length > 1 && line.length > maxChars) {
+    items.pop();
+    line = items.join(" · ");
+  }
+  return line;
+}
+
+export function renderBroadside(norm, { labelMode = "names", preset = "classic", tokens = {}, legendCol, infoPos, bottomOrder, notesOrder } = {}) {
   const T = { ...DEFAULT_TOKENS, cell: 64, labelWidth: 170, pad: 48, paper: [36, 24], ...tokens };
   const innings = norm.maxInning;
   const gridW = T.labelWidth + innings * T.cell;
@@ -287,36 +319,94 @@ export function renderBroadside(norm, { labelMode = "names", preset = "classic",
   parts.push(awaySvg, homeSvg);
   y += gridH + 34;
 
-  // bottom row, three equal columns: scoring plays | away pitching | home pitching
+  // bottom row, three equal columns; the first splits into two internal
+  // 50% columns (scoring plays | game notes) with the game facts as the
+  // column's own footer beneath both
   if (T.showNotes || T.showPitching) {
     const colGap = 40;
     const innerW = gridW * 2 + gap;
     const colW = Math.floor((innerW - 2 * colGap) / 3);
+    const colHeights = [0, 0, 0];
+    // "notes-first" (default): notes | away pitching | home pitching
+    // "pitching-first": away pitching | home pitching | notes
+    const pitchingFirst = (bottomOrder ?? T.bottomOrder) === "pitching-first";
+    const colX = (i) => T.pad + i * (colW + colGap);
+    const nx = pitchingFirst ? colX(2) : colX(0);
     let rowH = 0;
 
     if (T.showNotes) {
-      const maxChars = Math.floor((colW - 34) / 5.7);
-      const [sn, sh] = notesColumn("SCORING PLAYS", scoringLines(norm, maxChars), T.pad, y);
+      const subGap = 20;
+      const subW = Math.floor((colW - subGap) / 2);
+      const subChars = Math.floor((subW - 34) / 5.7);
+      const pos = infoPos ?? T.infoPos ?? "footer";
+      const info = pos === "hidden" ? "" : conditionsLine(norm, Math.floor(colW / 6.2));
+      let colY = y;
+      let subH = 0;
+
+      // conditions as a titled header above both sub-columns
+      if (pos === "header" && info) {
+        parts.push(text(nx, colY + 10, "AT THE PARK", "sc-note-head", 13, "start"));
+        parts.push(text(nx, colY + 32, info, "sc-note-tag", 11.5, "start"));
+        colY += 68;
+      }
+
+      // sub-column order is swappable: scoring | notes (default) or reversed
+      const notesFirst = (notesOrder ?? T.notesOrder) === "notes-first";
+      const scoringX = notesFirst ? nx + subW + subGap : nx;
+      const gameNotesX = notesFirst ? nx : nx + subW + subGap;
+      const [sn, sh] = notesColumn("SCORING PLAYS", scoringLines(norm, subChars), scoringX, colY);
       parts.push(sn);
-      rowH = sh;
+      subH = sh;
+
+      const gl = gameNoteLines(norm, subChars);
+      for (const note of norm.gameNotes || []) {
+        wrap(note, subChars).forEach((l) => gl.push({ tag: "", text: l, indent: 34 }));
+      }
+      if (gl.length) {
+        const [gn, gh] = notesColumn("GAME NOTES", gl, gameNotesX, colY);
+        parts.push(gn);
+        subH = Math.max(subH, gh);
+      }
+
+      // ...or as the column's own footer line
+      if (pos === "footer" && info) {
+        parts.push(text(nx, colY + subH + 22, info, "sc-note-tag", 11.5, "start"));
+        subH += 22 + 15;
+      }
+      const nc = pitchingFirst ? 2 : 0;
+      colHeights[nc] = colY - y + subH;
+      rowH = colHeights[nc];
     }
 
     if (T.showPitching && norm.pitching) {
       [
-        [T.pad + colW + colGap, "away", norm.meta.away],
-        [T.pad + (colW + colGap) * 2, "home", norm.meta.home],
-      ].forEach(([x, side, meta]) => {
+        [colX(pitchingFirst ? 0 : 1), "away", norm.meta.away, pitchingFirst ? 0 : 1],
+        [colX(pitchingFirst ? 1 : 2), "home", norm.meta.home, pitchingFirst ? 1 : 2],
+      ].forEach(([x, side, meta, ci]) => {
         parts.push(text(x, y + 10, `${meta.name.toUpperCase()} — PITCHING`, "sc-note-head", 13, "start"));
         const [tbl, , th] = pitchingTable(norm.pitching[side], x, y + 26, colW);
         parts.push(tbl);
+        colHeights[ci] = 26 + th;
         rowH = Math.max(rowH, 26 + th);
       });
     }
+
+    // legend tucks under whichever column the form picked; the notes
+    // column ends in text (baselines sit higher than table borders), so
+    // it needs less air than the pitching tables for a uniform look
+    const lc = Math.min(Math.max(legendCol ?? T.legendCol ?? 1, 1), 3) - 1;
+    const notesColIdx = pitchingFirst ? 2 : 0;
+    const legendGap = lc === notesColIdx ? 18 : 34;
+    const ly = y + colHeights[lc] + legendGap;
+    parts.push(legend(CLASSIC_LEGEND, colX(lc), ly));
+    rowH = Math.max(rowH, colHeights[lc] + legendGap + 14);
     y += rowH + 26;
+  } else {
+    parts.push(legend(CLASSIC_LEGEND, T.pad, y));
+    y += 20;
   }
 
-  parts.push(legend(CLASSIC_LEGEND, T.pad, y));
-  const ch = y + 16 + T.pad;
+  const ch = y + T.pad;
   return paperCanvas(cw, ch, T.paper, preset, parts.join(""), {
     valign: T.valign,
     frame: T.posterFrame,

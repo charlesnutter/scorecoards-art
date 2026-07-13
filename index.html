@@ -73,6 +73,58 @@
             </div>
           </fieldset>
 
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Legend column</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="c in [1, 2, 3]" :key="c">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="LegendColOption" :value="c" x-model.number="legendCol" class="sr-only" />
+                  <span x-text="`Column ${c}`"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Bottom order</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="o in [['notes-first', 'Notes left'], ['pitching-first', 'Pitching left']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="BottomOrderOption" :value="o[0]" x-model="bottomOrder" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Notes order</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="o in [['scoring-first', 'Scoring left'], ['notes-first', 'Notes left']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="NotesOrderOption" :value="o[0]" x-model="notesOrder" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Conditions line</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="p in [['header', 'Header'], ['footer', 'Footer'], ['hidden', 'Hidden']]" :key="p[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="InfoPosOption" :value="p[0]" x-model="infoPos" class="sr-only" />
+                  <span x-text="p[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
           <div class="space-y-2">
             <button @click="load()" :disabled="loading"
               class="inline-flex w-full items-center justify-center rounded-full border border-emerald-600 bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 focus-visible:ring-4 focus-visible:ring-emerald-200 focus-visible:outline-none disabled:opacity-50">
