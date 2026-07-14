@@ -6,11 +6,13 @@
   "status": "Final",
   "away": {
    "name": "Boston Red Sox",
-   "abbr": "BOS"
+   "abbr": "BOS",
+   "city": "Boston"
   },
   "home": {
    "name": "New York Yankees",
-   "abbr": "NYY"
+   "abbr": "NYY",
+   "city": "New York"
   }
  },
  "maxInning": 9,
@@ -1394,6 +1396,14 @@
   "68 degrees, Clear",
   "10 mph, L To R"
  ],
+ "gameInfoDetail": {
+  "firstPitch": "6:10 PM",
+  "duration": "2:50",
+  "attendance": "47,993",
+  "wind": "10 mph, L To R",
+  "temp": "68°",
+  "sky": "Clear"
+ },
  "recap": {
   "headline": "Yanks force win-or-go-home Game 3 thanks to Jazz's epic race home",
   "blurb": "NEW YORK – Jazz Chisholm Jr. didn’t hide his displeasure after being out of the lineup for the American League Wild Card Series opener Tuesday night, turning his back to rummage through his locker when questions were volleyed his way. The Yankees' sparkplug found what he was looking for –"

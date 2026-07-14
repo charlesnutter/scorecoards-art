@@ -33,6 +33,14 @@ export function scorecardApp() {
     infoPos: "footer",
     bottomOrder: "notes-first",
     notesOrder: "scoring-first",
+    padTop: 44,
+    padHeader: 34,
+    padPitch: 34,
+    padBottom: 52,
+    padBar: 12,
+    barStyle: "floating",
+    gridOrder: "away-first",
+    customNote: "",
 
     // output state
     loading: false,
@@ -56,6 +64,9 @@ export function scorecardApp() {
       this.$watch("infoPos", () => this.redraw());
       this.$watch("bottomOrder", () => this.redraw());
       this.$watch("notesOrder", () => this.redraw());
+      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote"]) {
+        this.$watch(k, () => this.redraw());
+      }
     },
 
     get season() {
@@ -148,6 +159,16 @@ export function scorecardApp() {
         infoPos: this.infoPos,
         bottomOrder: this.bottomOrder,
         notesOrder: this.notesOrder,
+        pads: {
+          top: Number(this.padTop),
+          header: Number(this.padHeader),
+          pitch: Number(this.padPitch),
+          bottom: Number(this.padBottom),
+          bar: Number(this.padBar),
+        },
+        barStyle: this.barStyle,
+        gridOrder: this.gridOrder,
+        note: this.customNote.trim(),
       });
     },
   };

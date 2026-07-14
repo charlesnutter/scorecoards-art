@@ -105,12 +105,25 @@ export function slotPAs(side, slot) {
 
 // Horizontal legend row. items: [{swatch: <svg fragment centered on 0,0>, label}]
 // anchor "end" treats x0 as the right edge and lays the row out to end there.
+// Estimate rendered text width per character class — narrow glyphs
+// (i, l, t, punctuation, spaces) vs wide (caps, digits, m/w) — so
+// trailing gaps stay uniform regardless of label content.
+function estTextW(s, size) {
+  let em = 0;
+  for (const ch of String(s)) {
+    if (/[ .,:;'’!|()\-ijltfr]/.test(ch)) em += 0.34;
+    else if (/[A-Z0-9@mw]/.test(ch)) em += 0.64;
+    else em += 0.5;
+  }
+  return em * size;
+}
+
 // items: [{swatch, label, w?}] where `w` is the swatch's unscaled width
 // (default 12); swatches are centered on their origin, so each is offset
 // by half its scaled width to left-align with x0.
-export function legend(items, x0, y0, gap = 10, anchor = "start") {
+export function legend(items, x0, y0, gap = 14, anchor = "start") {
   const SCALE = 1.3;
-  const itemW = (it) => (it.w ?? 12) * SCALE + 6 + it.label.length * 6.1;
+  const itemW = (it) => (it.w ?? 12) * SCALE + 6 + estTextW(it.label, 11.5);
   const parts = [];
   let x = x0;
   if (anchor === "end") {

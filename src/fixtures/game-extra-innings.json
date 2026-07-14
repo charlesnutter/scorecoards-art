@@ -6,11 +6,13 @@
   "status": "Final",
   "away": {
    "name": "Washington Nationals",
-   "abbr": "WSH"
+   "abbr": "WSH",
+   "city": "Washington"
   },
   "home": {
    "name": "New York Mets",
-   "abbr": "NYM"
+   "abbr": "NYM",
+   "city": "New York"
   }
  },
  "maxInning": 11,
@@ -1676,6 +1678,14 @@
   "74 degrees, Sunny",
   "7 mph, In From CF"
  ],
+ "gameInfoDetail": {
+  "firstPitch": "4:10 PM",
+  "duration": "3:18",
+  "attendance": "43,412",
+  "wind": "7 mph, In From CF",
+  "temp": "74°",
+  "sky": "Sunny"
+ },
  "recap": {
   "headline": "Inconsistency returns in Mets' 11-inning loss amid playoff push",
   "blurb": "NEW YORK -- If the Mets want to return to the postseason, they need to beat teams like the Nationals, who have one of the worst winning percentages in the Major Leagues. But the clubs’ latest matchup turned out to be a dour day for New York on Saturday evening"

@@ -71,40 +71,103 @@ function paperCanvas(cw, ch, [pw, ph], preset, body, { valign = "center", frame 
 }
 
 // One team grid at (x0, y0). Returns [svg, width, height].
-function grid(side, teamMeta, homeAway, innings, labelMode, x0, y0, T) {
+function grid(side, teamMeta, homeAway, innings, labelMode, x0, y0, T, score) {
   const parts = [];
   const slotCount = maxSlot(side);
   const gridX = x0 + T.labelWidth;
   const w = T.labelWidth + innings * T.cell;
 
   const BAR_H = 42;
+  const displayName = T.cityNames ? teamMeta.city || teamMeta.name : teamMeta.name;
+  const attached = T.barStyle === "attached";
   if (T.teamHeaderBar) {
-    // tall translucent bar, large sentence-case team name
-    parts.push(`<rect class="sc-team-bar" x="${x0}" y="${y0}" width="${w}" height="${BAR_H}"/>`);
+    if (attached) {
+      // bar joins the grid chrome: darker fill, bordered on three sides —
+      // the header row below supplies the shared bottom line
+      parts.push(`<rect class="sc-cell--empty" x="${x0}" y="${y0}" width="${w}" height="${BAR_H}"/>`);
+      parts.push(
+        `<path class="sc-cell" d="M${x0},${y0 + BAR_H} L${x0},${y0} L${x0 + w},${y0} L${x0 + w},${y0 + BAR_H}"/>`
+      );
+    } else {
+      // tall translucent bar, large sentence-case team name
+      parts.push(`<rect class="sc-team-bar" x="${x0}" y="${y0}" width="${w}" height="${BAR_H}"/>`);
+    }
     parts.push(
-      `<text x="${x0 + 16}" y="${y0 + 28}" class="sc-team-bar-label" font-size="20" text-anchor="start">${esc(teamMeta.name)}</text>`
+      `<text x="${x0 + 16}" y="${y0 + 28}" class="sc-team-bar-label" font-size="20" text-anchor="start">${esc(displayName)}</text>`
     );
-    parts.push(text(x0 + w - 16, y0 + 25, homeAway, "sc-team-bar-tag", 10, "end"));
+    if (T.teamHeaderScore) {
+      // tag inline after the name; score centered on the final cell column
+      const nameW = displayName.length * 10.8;
+      parts.push(text(x0 + 16 + nameW + 14, y0 + 25, homeAway, "sc-team-bar-tag", 10, "start"));
+      if (score != null) {
+        const scoreX = x0 + T.labelWidth + (innings - 0.5) * T.cell;
+        parts.push(
+          `<text x="${scoreX}" y="${y0 + 28}" class="sc-team-bar-label" font-size="20" text-anchor="middle">${esc(score)}</text>`
+        );
+      }
+    } else {
+      parts.push(text(x0 + w - 16, y0 + 25, homeAway, "sc-team-bar-tag", 10, "end"));
+    }
   } else {
-    parts.push(text(x0, y0 + 12, `${teamMeta.name.toUpperCase()} — ${homeAway}`, "sc-team-name", 11, "start"));
+    parts.push(text(x0, y0 + 12, `${displayName.toUpperCase()} — ${homeAway}`, "sc-team-name", 11, "start"));
   }
-  const headY = y0 + (T.teamHeaderBar ? BAR_H + 12 : 22);
+  const headY = y0 + (T.teamHeaderBar ? BAR_H + (attached ? 0 : T.barGap ?? 12) : 22);
+  // scorebook chrome: boxed header row and boxed #/name/pos columns
+  const chrome = T.gridChrome;
+  const numW = 24;
+  const posW = 30;
+  const nameW = T.labelWidth - numW - posW;
+  if (chrome) {
+    parts.push(`<rect class="sc-cell sc-cell--empty" x="${x0}" y="${headY}" width="${numW}" height="20"/>`);
+    parts.push(text(x0 + numW / 2, headY + 14, "#", "sc-inning-num", 8));
+    parts.push(`<rect class="sc-cell sc-cell--empty" x="${x0 + numW}" y="${headY}" width="${nameW}" height="20"/>`);
+    parts.push(text(x0 + numW + 8, headY + 14, "BATTER", "sc-inning-num", 8, "start"));
+    parts.push(`<rect class="sc-cell sc-cell--empty" x="${x0 + numW + nameW}" y="${headY}" width="${posW}" height="20"/>`);
+    parts.push(text(x0 + numW + nameW + posW / 2, headY + 14, "POS", "sc-inning-num", 8));
+  }
   for (let i = 1; i <= innings; i++) {
+    if (chrome) {
+      parts.push(
+        `<rect class="sc-cell sc-cell--empty" x="${gridX + (i - 1) * T.cell}" y="${headY}" width="${T.cell}" height="20"/>`
+      );
+    }
     parts.push(text(gridX + (i - 1) * T.cell + T.cell / 2, headY + 14, i, "sc-inning-num", 9));
   }
 
   const gridY = headY + 20;
+  const trunc = (str, n) => (str.length > n ? str.slice(0, n - 1) + "…" : str);
   for (let s = 1; s <= slotCount; s++) {
     const rowY = gridY + (s - 1) * T.cell;
-    parts.push(text(x0 + 2, rowY + T.cell / 2 - 2, s, "sc-slot-num", 10, "start"));
     const players = side.slots[s];
-    if (players)
-      parts.push(slotLabel(players, labelMode, x0 + 16, rowY + T.cell / 2 - 2, x0 + T.labelWidth - 8));
+    if (chrome) {
+      // # cell (darker), then name + pos cells ruled into three lines
+      parts.push(`<rect class="sc-cell sc-cell--empty" x="${x0}" y="${rowY}" width="${numW}" height="${T.cell}"/>`);
+      parts.push(text(x0 + numW / 2, rowY + T.cell / 2 + 3, s, "sc-slot-num", 10));
+      parts.push(`<rect class="sc-cell" x="${x0 + numW}" y="${rowY}" width="${nameW}" height="${T.cell}"/>`);
+      parts.push(`<rect class="sc-cell" x="${x0 + numW + nameW}" y="${rowY}" width="${posW}" height="${T.cell}"/>`);
+      const third = T.cell / 3;
+      for (let k = 1; k <= 2; k++) {
+        parts.push(
+          `<line class="sc-subrule" x1="${x0 + numW}" y1="${rowY + k * third}" x2="${x0 + T.labelWidth}" y2="${rowY + k * third}"/>`
+        );
+      }
+      (players || []).slice(0, 3).forEach((p, k) => {
+        const ly = rowY + (k + 0.5) * third + 3;
+        const label = labelMode === "numbers" ? `#${p.number || "?"}` : trunc(p.name, 20);
+        parts.push(text(x0 + numW + 6, ly, label, k === 0 ? "sc-player" : "sc-player-sub", k === 0 ? 9.5 : 9, "start"));
+        parts.push(text(x0 + numW + nameW + posW / 2, ly, p.pos, "sc-player-pos", 8));
+      });
+    } else {
+      parts.push(text(x0 + 2, rowY + T.cell / 2 - 2, s, "sc-slot-num", 10, "start"));
+      if (players)
+        parts.push(slotLabel(players, labelMode, x0 + 16, rowY + T.cell / 2 - 2, x0 + T.labelWidth - 8));
+    }
 
     for (let i = 1; i <= innings; i++) {
       const x = gridX + (i - 1) * T.cell;
-      parts.push(`<rect class="sc-cell" x="${x}" y="${rowY}" width="${T.cell}" height="${T.cell}"/>`);
       const pas = side.cells[s]?.[i];
+      const cls = pas?.length ? "sc-cell" : "sc-cell sc-cell--empty";
+      parts.push(`<rect class="${cls}" x="${x}" y="${rowY}" width="${T.cell}" height="${T.cell}"/>`);
       if (pas?.length) parts.push(cellContents(pas, x, rowY, T));
     }
   }
@@ -222,16 +285,59 @@ function scoringLines(norm, maxChars = 105) {
   });
 }
 
-// Per-team box-score footnotes as wrapped newspaper-style lines,
-// tagged with the team abbreviation.
+// Pack whole items onto lines separated by "; " — an item never splits
+// across lines unless it alone exceeds the width (then it word-wraps).
+function packItems(items, maxChars) {
+  const lines = [];
+  let line = "";
+  for (const item of items) {
+    const candidate = line ? `${line}; ${item}` : item;
+    if (candidate.length <= maxChars) {
+      line = candidate;
+      continue;
+    }
+    if (line) lines.push(line);
+    if (item.length > maxChars) {
+      const wrapped = wrap(item, maxChars);
+      lines.push(...wrapped.slice(0, -1));
+      line = wrapped[wrapped.length - 1];
+    } else {
+      line = item;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+// Per-team box-score footnotes as newspaper-style lines, tagged with the
+// team abbreviation; items are packed, never split mid-item.
 function gameNoteLines(norm, maxChars) {
   const lines = [];
   for (const side of ["away", "home"]) {
     const items = norm.battingNotes?.[side];
     if (!items?.length) continue;
-    wrap(items.join(";  "), maxChars).forEach((l, i) =>
+    packItems(items, maxChars).forEach((l, i) =>
       lines.push({ tag: i === 0 ? norm.meta[side].abbr || "" : "", text: l, indent: 34 })
     );
+  }
+  return lines;
+}
+
+// AT THE PARK panel: one labeled fact per line, plus an optional personal
+// note separated by a blank line.
+function parkLines(norm, note, maxChars) {
+  const d = norm.gameInfoDetail || {};
+  const rows = [
+    ["First Pitch", d.firstPitch],
+    ["Time", d.duration],
+    ["Attendance", d.attendance],
+    ["Temperature", d.temp],
+    ["Conditions", [d.sky, d.wind].filter(Boolean).join(" · ")],
+  ];
+  const lines = rows.filter(([, v]) => v).map(([l, v]) => ({ text: `${l}: ${v}` }));
+  if (note) {
+    if (lines.length) lines.push({ text: "" });
+    wrap(note, maxChars).forEach((l) => lines.push({ text: l }));
   }
   return lines;
 }
@@ -293,15 +399,53 @@ function conditionsLine(norm, maxChars) {
   return line;
 }
 
-export function renderBroadside(norm, { labelMode = "names", preset = "classic", tokens = {}, legendCol, infoPos, bottomOrder, notesOrder } = {}) {
-  const T = { ...DEFAULT_TOKENS, cell: 64, labelWidth: 170, pad: 48, paper: [36, 24], ...tokens };
+// "bases reached" legend swatch as a mini diamond with a line to first,
+// matching the card's own notation (opt in via T.legendDiamondReach).
+const REACH_LEGEND = CLASSIC_LEGEND.map((it) =>
+  it.label === "bases reached"
+    ? {
+        swatch: `<g><path class="sc-diamond" d="M0,7 L7,0 L0,-7 L-7,0 Z"/><path class="sc-basepath" d="M0,7 L7,0"/></g>`,
+        label: it.label,
+        w: 14,
+      }
+    : it
+);
+
+export function renderBroadside(
+  norm,
+  { labelMode = "names", preset = "classic", tokens = {}, legendCol, infoPos, bottomOrder, notesOrder, pads = {}, note = "", barStyle, gridOrder } = {}
+) {
+  const T = {
+    ...DEFAULT_TOKENS,
+    cell: 64,
+    labelWidth: 170,
+    pad: 48,
+    paper: [36, 24],
+    padTop: 44,
+    padHeader: 34,
+    padPitch: 34,
+    padBottom: 52,
+    ...tokens,
+  };
+  // vertical padding, user-adjustable: frame->title, header->grids,
+  // grids->bottom row, bottom row->frame
+  const P = {
+    top: pads.top ?? T.padTop,
+    header: pads.header ?? T.padHeader,
+    pitch: pads.pitch ?? T.padPitch,
+    bottom: pads.bottom ?? T.padBottom,
+  };
+  T.barGap = pads.bar ?? T.barGap ?? 12;
+  if (barStyle) T.barStyle = barStyle;
+  const F = 22; // poster frame inset
   const innings = norm.maxInning;
   const gridW = T.labelWidth + innings * T.cell;
   const gap = 56;
   const cw = T.pad * 2 + gridW * 2 + gap;
+  const nameOf = (meta) => (T.cityNames ? meta.city || meta.name : meta.name);
   const parts = [];
 
-  let y = T.pad + 44;
+  let y = F + P.top + 26; // title baseline (~cap height at 36px)
   parts.push(
     text(T.pad, y, `${norm.meta.away.name} @ ${norm.meta.home.name}`.toUpperCase(), "sc-title", 36, "start")
   );
@@ -309,19 +453,27 @@ export function renderBroadside(norm, { labelMode = "names", preset = "classic",
 
   const probe = linescoreBoxed(norm, 0, 0);
   // box top aligned with the title's cap height
-  const lsY = T.pad + 18;
+  const lsY = y - 26;
   const [lsSvg] = linescoreBoxed(norm, cw - T.pad - probe[1], lsY);
   parts.push(lsSvg);
 
-  y = lsY + probe[2] + 34;
-  const [awaySvg, , gridH] = grid(norm.sides.away, norm.meta.away, "AWAY", innings, labelMode, T.pad, y, T);
-  const [homeSvg] = grid(norm.sides.home, norm.meta.home, "HOME", innings, labelMode, T.pad + gridW + gap, y, T);
+  y = Math.max(y + 24, lsY + probe[2]) + P.header;
+  const scores = norm.linescore?.totals || {};
+  // away card leads by default; "home-first" swaps the two scorecards
+  const homeFirst = (gridOrder ?? T.gridOrder) === "home-first";
+  const leftX = T.pad;
+  const rightX = T.pad + gridW + gap;
+  const [awaySvg, , gridH] = grid(
+    norm.sides.away, norm.meta.away, "AWAY", innings, labelMode, homeFirst ? rightX : leftX, y, T, scores.away?.runs
+  );
+  const [homeSvg] = grid(
+    norm.sides.home, norm.meta.home, "HOME", innings, labelMode, homeFirst ? leftX : rightX, y, T, scores.home?.runs
+  );
   parts.push(awaySvg, homeSvg);
-  y += gridH + 34;
+  y += gridH + P.pitch;
 
-  // bottom row, three equal columns; the first splits into two internal
-  // 50% columns (scoring plays | game notes) with the game facts as the
-  // column's own footer beneath both
+  // bottom row, three equal columns; the notes column splits into two
+  // internal 50% sub-columns
   if (T.showNotes || T.showPitching) {
     const colGap = 40;
     const innerW = gridW * 2 + gap;
@@ -338,40 +490,52 @@ export function renderBroadside(norm, { labelMode = "names", preset = "classic",
       const subGap = 20;
       const subW = Math.floor((colW - subGap) / 2);
       const subChars = Math.floor((subW - 34) / 5.7);
-      const pos = infoPos ?? T.infoPos ?? "footer";
-      const info = pos === "hidden" ? "" : conditionsLine(norm, Math.floor(colW / 6.2));
+      const swap = (notesOrder ?? T.notesOrder) === "notes-first";
       let colY = y;
       let subH = 0;
 
-      // conditions as a titled header above both sub-columns
-      if (pos === "header" && info) {
-        parts.push(text(nx, colY + 10, "AT THE PARK", "sc-note-head", 13, "start"));
-        parts.push(text(nx, colY + 32, info, "sc-note-tag", 11.5, "start"));
-        colY += 68;
-      }
-
-      // sub-column order is swappable: scoring | notes (default) or reversed
-      const notesFirst = (notesOrder ?? T.notesOrder) === "notes-first";
-      const scoringX = notesFirst ? nx + subW + subGap : nx;
-      const gameNotesX = notesFirst ? nx : nx + subW + subGap;
-      const [sn, sh] = notesColumn("SCORING PLAYS", scoringLines(norm, subChars), scoringX, colY);
-      parts.push(sn);
-      subH = sh;
-
       const gl = gameNoteLines(norm, subChars);
-      for (const note of norm.gameNotes || []) {
-        wrap(note, subChars).forEach((l) => gl.push({ tag: "", text: l, indent: 34 }));
-      }
-      if (gl.length) {
-        const [gn, gh] = notesColumn("GAME NOTES", gl, gameNotesX, colY);
-        parts.push(gn);
-        subH = Math.max(subH, gh);
-      }
+      packItems(norm.gameNotes || [], subChars).forEach((l) =>
+        gl.push({ tag: "", text: l, indent: 34 })
+      );
 
-      // ...or as the column's own footer line
-      if (pos === "footer" && info) {
-        parts.push(text(nx, colY + subH + 22, info, "sc-note-tag", 11.5, "start"));
-        subH += 22 + 15;
+      if (T.parkPanel) {
+        // AT THE PARK panel + game notes, swappable
+        const parkX = swap ? nx + subW + subGap : nx;
+        const notesX = swap ? nx : nx + subW + subGap;
+        const plainChars = Math.floor(subW / 5.7);
+        const [pn, ph] = notesColumn("AT THE PARK", parkLines(norm, note, plainChars), parkX, colY);
+        parts.push(pn);
+        subH = ph;
+        if (gl.length) {
+          const [gn, gh] = notesColumn("GAME NOTES", gl, notesX, colY);
+          parts.push(gn);
+          subH = Math.max(subH, gh);
+        }
+      } else {
+        // scoring plays + game notes, with the conditions line as a
+        // titled header or a column footer
+        const pos = infoPos ?? T.infoPos ?? "footer";
+        const info = pos === "hidden" ? "" : conditionsLine(norm, Math.floor(colW / 6.2));
+        if (pos === "header" && info) {
+          parts.push(text(nx, colY + 10, "AT THE PARK", "sc-note-head", 13, "start"));
+          parts.push(text(nx, colY + 32, info, "sc-note-tag", 11.5, "start"));
+          colY += 68;
+        }
+        const scoringX = swap ? nx + subW + subGap : nx;
+        const gameNotesX = swap ? nx : nx + subW + subGap;
+        const [sn, sh] = notesColumn("SCORING PLAYS", scoringLines(norm, subChars), scoringX, colY);
+        parts.push(sn);
+        subH = sh;
+        if (gl.length) {
+          const [gn, gh] = notesColumn("GAME NOTES", gl, gameNotesX, colY);
+          parts.push(gn);
+          subH = Math.max(subH, gh);
+        }
+        if (pos === "footer" && info) {
+          parts.push(text(nx, colY + subH + 22, info, "sc-note-tag", 11.5, "start"));
+          subH += 22 + 15;
+        }
       }
       const nc = pitchingFirst ? 2 : 0;
       colHeights[nc] = colY - y + subH;
@@ -383,7 +547,7 @@ export function renderBroadside(norm, { labelMode = "names", preset = "classic",
         [colX(pitchingFirst ? 0 : 1), "away", norm.meta.away, pitchingFirst ? 0 : 1],
         [colX(pitchingFirst ? 1 : 2), "home", norm.meta.home, pitchingFirst ? 1 : 2],
       ].forEach(([x, side, meta, ci]) => {
-        parts.push(text(x, y + 10, `${meta.name.toUpperCase()} — PITCHING`, "sc-note-head", 13, "start"));
+        parts.push(text(x, y + 10, `${nameOf(meta).toUpperCase()} — PITCHING`, "sc-note-head", 13, "start"));
         const [tbl, , th] = pitchingTable(norm.pitching[side], x, y + 26, colW);
         parts.push(tbl);
         colHeights[ci] = 26 + th;
@@ -394,19 +558,20 @@ export function renderBroadside(norm, { labelMode = "names", preset = "classic",
     // legend tucks under whichever column the form picked; the notes
     // column ends in text (baselines sit higher than table borders), so
     // it needs less air than the pitching tables for a uniform look
+    const legendItems = T.legendDiamondReach ? REACH_LEGEND : CLASSIC_LEGEND;
     const lc = Math.min(Math.max(legendCol ?? T.legendCol ?? 1, 1), 3) - 1;
     const notesColIdx = pitchingFirst ? 2 : 0;
     const legendGap = lc === notesColIdx ? 18 : 34;
     const ly = y + colHeights[lc] + legendGap;
-    parts.push(legend(CLASSIC_LEGEND, colX(lc), ly));
+    parts.push(legend(legendItems, colX(lc), ly));
     rowH = Math.max(rowH, colHeights[lc] + legendGap + 14);
-    y += rowH + 26;
+    y += rowH;
   } else {
-    parts.push(legend(CLASSIC_LEGEND, T.pad, y));
-    y += 20;
+    parts.push(legend(T.legendDiamondReach ? REACH_LEGEND : CLASSIC_LEGEND, T.pad, y));
+    y += 14;
   }
 
-  const ch = y + T.pad;
+  const ch = y + P.bottom + F;
   return paperCanvas(cw, ch, T.paper, preset, parts.join(""), {
     valign: T.valign,
     frame: T.posterFrame,

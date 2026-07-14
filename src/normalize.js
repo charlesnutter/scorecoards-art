@@ -165,14 +165,28 @@ function gameLevelNotes(box) {
   const clean = (v) => String(v || "").trim().replace(/\.$/, "");
   const notes = [];
   const info = [];
+  const detail = {};
+  const get = (label) => {
+    const f = (box.info || []).find((x) => x.label === label);
+    return f ? clean(f.value) : "";
+  };
   for (const f of box.info || []) {
     if (GAME_NOTE_LABELS.has(f.label)) notes.push(`${f.label}: ${clean(f.value)}`);
   }
   for (const label of GAME_INFO_LABELS) {
-    const f = (box.info || []).find((x) => x.label === label);
-    if (f) info.push(label === "Weather" || label === "Wind" ? clean(f.value) : `${label}: ${clean(f.value)}`);
+    const v = get(label);
+    if (v) info.push(label === "Weather" || label === "Wind" ? v : `${label}: ${v}`);
   }
-  return [notes, info];
+  // structured facts for panel-style rendering
+  detail.firstPitch = get("First pitch");
+  detail.duration = get("T");
+  detail.attendance = get("Att");
+  detail.wind = get("Wind");
+  const weather = get("Weather");
+  const m = weather.match(/^(\d+)\s*degrees?,?\s*(.*)$/i);
+  detail.temp = m ? `${m[1]}°` : "";
+  detail.sky = m ? m[2] : weather;
+  return [notes, info, detail];
 }
 
 // Conventional box-score pitching line, in order of appearance.
@@ -274,7 +288,7 @@ export function normalizeGame(feed) {
   }
 
   const ls = ld.linescore || {};
-  const [gameNotes, gameInfo] = gameLevelNotes(ld.boxscore);
+  const [gameNotes, gameInfo, gameInfoDetail] = gameLevelNotes(ld.boxscore);
   const scoring = (ld.plays?.scoringPlays || [])
     .map((i) => allPlays[i])
     .filter(Boolean)
@@ -296,8 +310,8 @@ export function normalizeGame(feed) {
       date: gd.datetime?.officialDate || "",
       venue: gd.venue?.name || "",
       status: gd.status?.detailedState || "",
-      away: { name: gd.teams.away.name, abbr: gd.teams.away.abbreviation },
-      home: { name: gd.teams.home.name, abbr: gd.teams.home.abbreviation },
+      away: { name: gd.teams.away.name, abbr: gd.teams.away.abbreviation, city: gd.teams.away.franchiseName },
+      home: { name: gd.teams.home.name, abbr: gd.teams.home.abbreviation, city: gd.teams.home.franchiseName },
     },
     maxInning,
     linescore: {
@@ -323,5 +337,6 @@ export function normalizeGame(feed) {
     },
     gameNotes,
     gameInfo,
+    gameInfoDetail,
   };
 }

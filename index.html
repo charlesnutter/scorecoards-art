@@ -102,7 +102,7 @@
           <fieldset x-show="layoutId === 'broadside'">
             <legend class="pt-1 text-base font-semibold text-gray-900">Notes order</legend>
             <div class="mt-2 flex gap-2">
-              <template x-for="o in [['scoring-first', 'Scoring left'], ['notes-first', 'Notes left']]" :key="o[0]">
+              <template x-for="o in [['scoring-first', 'Info left'], ['notes-first', 'Notes left']]" :key="o[0]">
                 <label
                   class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
                   <input type="radio" name="NotesOrderOption" :value="o[0]" x-model="notesOrder" class="sr-only" />
@@ -111,6 +111,51 @@
               </template>
             </div>
           </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Poster padding</legend>
+            <div class="mt-2 grid grid-cols-2 gap-2">
+              <template x-for="p in [['padTop', 'Top'], ['padHeader', 'Header'], ['padBar', 'Title'], ['padPitch', 'Pitching'], ['padBottom', 'Bottom']]" :key="p[0]">
+                <label class="block">
+                  <span class="text-xs font-medium text-gray-500" x-text="p[1]"></span>
+                  <input type="number" min="0" max="300" step="2" x-model.number="$data[p[0]]"
+                    class="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" />
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Scorecard order</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="o in [['away-first', 'Away first'], ['home-first', 'Home first']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="GridOrderOption" :value="o[0]" x-model="gridOrder" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Title bar</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="o in [['floating', 'Floating'], ['attached', 'Attached']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="BarStyleOption" :value="o[0]" x-model="barStyle" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <label x-show="layoutId === 'broadside'" class="block">
+            <span class="block pt-1 text-base font-semibold text-gray-900">Personal note</span>
+            <input type="text" x-model.lazy="customNote" placeholder="Charlie's first Yankees game"
+              class="mt-1.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" />
+          </label>
 
           <fieldset x-show="layoutId === 'broadside'">
             <legend class="pt-1 text-base font-semibold text-gray-900">Conditions line</legend>

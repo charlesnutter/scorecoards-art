@@ -59,6 +59,37 @@ export const STYLE_PRESETS = [
       },
     },
   },
+  {
+    id: "keepsake",
+    label: "Keepsake",
+    // Gameday duplicate for keepsake-poster experiments: AT THE PARK
+    // panel + personal note, bar scores, city-only names
+    tokens: {
+      classic: {
+        cell: 72,
+        diamondRadius: 22,
+        smallRadius: 13,
+        codeSize: 10,
+        badgeMargin: 13,
+        linescorePos: "right",
+        linescoreGrid: true,
+        legendAlign: "end",
+      },
+      broadside: {
+        valign: "top",
+        showNotes: true,
+        showPitching: true,
+        teamHeaderBar: true,
+        posterFrame: true,
+        trimGuide: false,
+        parkPanel: true,
+        cityNames: true,
+        teamHeaderScore: true,
+        legendDiamondReach: true,
+        gridChrome: true,
+      },
+    },
+  },
   { id: "midnight", label: "Midnight", tokens: {} },
   { id: "pennant", label: "Pennant", tokens: {} },
   { id: "mustard", label: "Mustard", tokens: {} },
