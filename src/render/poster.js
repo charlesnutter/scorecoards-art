@@ -445,19 +445,26 @@ export function renderBroadside(
   const nameOf = (meta) => (T.cityNames ? meta.city || meta.name : meta.name);
   const parts = [];
 
-  let y = F + P.top + 26; // title baseline (~cap height at 36px)
-  parts.push(
-    text(T.pad, y, `${norm.meta.away.name} @ ${norm.meta.home.name}`.toUpperCase(), "sc-title", 36, "start")
-  );
-  parts.push(text(T.pad, y + 24, subtitleOf(norm), "sc-subtitle", 11, "start"));
+  // refined title (keepsake): traditional case, larger title and meta
+  const refined = T.refinedTitle;
+  const titleSize = refined ? 42 : 36;
+  const capH = Math.round(titleSize * 0.72);
+  const metaSize = refined ? 16 : 11;
+  const metaGap = refined ? 32 : 24;
+  const titleText = refined
+    ? `${norm.meta.away.name} @ ${norm.meta.home.name}`
+    : `${norm.meta.away.name} @ ${norm.meta.home.name}`.toUpperCase();
+  let y = F + P.top + capH; // title baseline
+  parts.push(text(T.pad, y, titleText, "sc-title", titleSize, "start"));
+  parts.push(text(T.pad, y + metaGap, subtitleOf(norm), "sc-subtitle", metaSize, "start"));
 
   const probe = linescoreBoxed(norm, 0, 0);
   // box top aligned with the title's cap height
-  const lsY = y - 26;
+  const lsY = y - capH;
   const [lsSvg] = linescoreBoxed(norm, cw - T.pad - probe[1], lsY);
   parts.push(lsSvg);
 
-  y = Math.max(y + 24, lsY + probe[2]) + P.header;
+  y = Math.max(y + metaGap, lsY + probe[2]) + P.header;
   const scores = norm.linescore?.totals || {};
   // away card leads by default; "home-first" swaps the two scorecards
   const homeFirst = (gridOrder ?? T.gridOrder) === "home-first";

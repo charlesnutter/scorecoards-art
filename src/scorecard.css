@@ -157,6 +157,9 @@
   --sc-header-bar-text: #ffffff;
   --sc-grid-frame: #ffffff;
   --sc-cell-empty: rgba(0, 0, 0, 0.12);
+  --sc-title-color: #ffffff;
+  --sc-font-subtitle: "Outfit", "Helvetica Neue", sans-serif;
+  --sc-ls-head-fill: rgba(0, 0, 0, 0.12);
 }
 
 /* mid-century navy poster: dusty blues, sand, coral (Jost display) */
@@ -240,6 +243,7 @@
 
 .sc-title {
   font-weight: 700;
+  fill: var(--sc-title-color, var(--sc-ink));
 }
 
 .sc-title,
@@ -257,6 +261,10 @@
 .sc-ls-val,
 .sc-ls-total {
   font-family: var(--sc-font-score, var(--sc-font));
+}
+
+.sc-subtitle {
+  font-family: var(--sc-font-subtitle, var(--sc-font));
 }
 
 .sc-subtitle,
@@ -298,6 +306,11 @@
 /* cells with no plate appearance; styles opt in via --sc-cell-empty */
 .sc-cell--empty {
   fill: var(--sc-cell-empty, none);
+}
+
+/* boxed linescore header row; styles opt in via --sc-ls-head-fill */
+.sc-ls-headcell {
+  fill: var(--sc-ls-head-fill, none);
 }
 
 /* thin ruled lines inside scorebook name/pos cells */

@@ -193,11 +193,13 @@ export function linescoreBoxed(norm, x0, y0) {
   rows.forEach(([label, vals, cls], r) => {
     const cellY = y0 + r * rowH;
     const textY = cellY + rowH / 2 + 3;
-    parts.push(`<rect class="sc-cell" x="${x0}" y="${cellY}" width="${labelW}" height="${rowH}"/>`);
+    // header row can take a darker fill via --sc-ls-head-fill
+    const cellCls = r === 0 ? "sc-cell sc-ls-headcell" : "sc-cell";
+    parts.push(`<rect class="${cellCls}" x="${x0}" y="${cellY}" width="${labelW}" height="${rowH}"/>`);
     if (label) parts.push(text(x0 + labelW / 2, textY, label, "sc-ls-team", 9));
     vals.forEach((v, i) => {
       const cellX = x0 + labelW + i * cw;
-      parts.push(`<rect class="sc-cell" x="${cellX}" y="${cellY}" width="${cw}" height="${rowH}"/>`);
+      parts.push(`<rect class="${cellCls}" x="${cellX}" y="${cellY}" width="${cw}" height="${rowH}"/>`);
       const bold = i >= innings.length;
       parts.push(text(cellX + cw / 2, textY, v, bold ? `${cls} sc-ls-total` : cls, 9));
     });
