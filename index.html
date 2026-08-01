@@ -34,7 +34,7 @@
             </select>
           </label>
 
-          <fieldset>
+          <fieldset x-show="showAllOptions">
             <legend class="pt-1 text-base font-semibold text-gray-900">Layout</legend>
             <div class="mt-2 flex flex-wrap gap-2">
               <template x-for="l in layouts" :key="l.id">
@@ -47,7 +47,7 @@
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset x-show="showAllOptions">
             <legend class="pt-1 text-base font-semibold text-gray-900">Style</legend>
             <div class="mt-2 flex flex-wrap gap-2">
               <template x-for="d in styles" :key="d.id">
@@ -107,6 +107,36 @@
                   class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
                   <input type="radio" name="NotesOrderOption" :value="o[0]" x-model="notesOrder" class="sr-only" />
                   <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'broadside' && themeOptions.length">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Colors</legend>
+            <div class="mt-2 space-y-2">
+              <label
+                class="flex cursor-pointer items-center gap-3 rounded border border-gray-300 bg-white p-2.5 text-sm font-medium shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:ring-1 has-checked:ring-emerald-600">
+                <input type="radio" name="TeamColorsOption" value="default" x-model="teamColors"
+                  class="size-4 border-gray-300 text-emerald-600" />
+                <span class="flex gap-1">
+                  <span class="size-4 rounded-full border border-gray-200" style="background:#16375f"></span>
+                  <span class="size-4 rounded-full border border-gray-200" style="background:#ffd166"></span>
+                  <span class="size-4 rounded-full border border-gray-200" style="background:#dbe9ff"></span>
+                </span>
+                <span class="text-xs text-gray-700">Keepsake (default)</span>
+              </label>
+              <template x-for="t in themeOptions" :key="t.key">
+                <label
+                  class="flex cursor-pointer items-center gap-3 rounded border border-gray-300 bg-white p-2.5 text-sm font-medium shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="TeamColorsOption" :value="t.key" x-model="teamColors"
+                    class="size-4 border-gray-300 text-emerald-600" />
+                  <span class="flex gap-1">
+                    <template x-for="c in t.palette" :key="c">
+                      <span class="size-4 rounded-full border border-gray-200" :style="`background:${c}`"></span>
+                    </template>
+                  </span>
+                  <span class="text-xs text-gray-700" x-text="t.label"></span>
                 </label>
               </template>
             </div>
@@ -238,8 +268,7 @@
       </aside>
 
       <!-- ===== Preview pane (3/4) ===== -->
-      <main class="md:col-span-3 scorecard-theme" :data-preset="presetId"
-        style="background: var(--sc-paper)">
+      <main class="md:col-span-3 scorecard-theme" :data-preset="presetId" :style="paneStyle">
         <div class="p-6 min-h-screen flex flex-col" style="color: var(--sc-ink)">
           <div x-show="!svg" class="flex-1 flex items-center justify-center opacity-40 text-sm">
             <p>No game loaded — pick a date and team.</p>

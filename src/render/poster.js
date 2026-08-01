@@ -42,7 +42,7 @@ function wrap(str, maxChars) {
 // Pad content out to the paper's exact aspect ratio, centered, with a
 // dashed trim line at the paper edge and a dimension label so the
 // preview reads as the printed sheet.
-function paperCanvas(cw, ch, [pw, ph], preset, body, { valign = "center", frame = false, trim = true } = {}) {
+function paperCanvas(cw, ch, [pw, ph], preset, body, { valign = "center", frame = false, trim = true, styleVars = "" } = {}) {
   const target = pw / ph;
   let W = cw;
   let H = ch;
@@ -66,7 +66,8 @@ function paperCanvas(cw, ch, [pw, ph], preset, body, { valign = "center", frame 
     Math.round(W),
     Math.round(H),
     preset,
-    `<g transform="translate(${ox.toFixed(1)},${oy.toFixed(1)})">${body}</g>` + overlay
+    `<g transform="translate(${ox.toFixed(1)},${oy.toFixed(1)})">${body}</g>` + overlay,
+    styleVars
   );
 }
 
@@ -413,7 +414,7 @@ const REACH_LEGEND = CLASSIC_LEGEND.map((it) =>
 
 export function renderBroadside(
   norm,
-  { labelMode = "names", preset = "classic", tokens = {}, legendCol, infoPos, bottomOrder, notesOrder, pads = {}, note = "", barStyle, gridOrder } = {}
+  { labelMode = "names", preset = "classic", tokens = {}, legendCol, infoPos, bottomOrder, notesOrder, pads = {}, note = "", barStyle, gridOrder, themeVars = "" } = {}
 ) {
   const T = {
     ...DEFAULT_TOKENS,
@@ -451,11 +452,22 @@ export function renderBroadside(
   const capH = Math.round(titleSize * 0.72);
   const metaSize = refined ? 16 : 11;
   const metaGap = refined ? 32 : 24;
-  const titleText = refined
-    ? `${norm.meta.away.name} @ ${norm.meta.home.name}`
-    : `${norm.meta.away.name} @ ${norm.meta.home.name}`.toUpperCase();
   let y = F + P.top + capH; // title baseline
-  parts.push(text(T.pad, y, titleText, "sc-title", titleSize, "start"));
+  if (refined) {
+    // "at" instead of "@", smaller and in the subtitle's subdued color;
+    // sits on the same baseline as the rest of the title as a tspan
+    const atSize = Math.round(titleSize * 0.62);
+    parts.push(
+      `<text x="${T.pad}" y="${y}" class="sc-title" font-size="${titleSize}" text-anchor="start">` +
+        `${esc(norm.meta.away.name)}` +
+        `<tspan class="sc-title-at" font-size="${atSize}"> at </tspan>` +
+        `${esc(norm.meta.home.name)}` +
+        `</text>`
+    );
+  } else {
+    const titleText = `${norm.meta.away.name} @ ${norm.meta.home.name}`.toUpperCase();
+    parts.push(text(T.pad, y, titleText, "sc-title", titleSize, "start"));
+  }
   parts.push(text(T.pad, y + metaGap, subtitleOf(norm), "sc-subtitle", metaSize, "start"));
 
   const probe = linescoreBoxed(norm, 0, 0);
@@ -583,6 +595,7 @@ export function renderBroadside(
     valign: T.valign,
     frame: T.posterFrame,
     trim: T.trimGuide !== false,
+    styleVars: themeVars,
   });
 }
 

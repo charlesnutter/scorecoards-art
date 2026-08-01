@@ -267,6 +267,11 @@
   font-family: var(--sc-font-subtitle, var(--sc-font));
 }
 
+/* "at" between team names in the refined (Keepsake) title */
+.sc-title-at {
+  fill: var(--sc-line);
+}
+
 .sc-subtitle,
 .sc-inning-num,
 .sc-slot-num,

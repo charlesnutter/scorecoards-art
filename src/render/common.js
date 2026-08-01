@@ -163,10 +163,13 @@ export function basePathD(cx, cy, r, base) {
   return d;
 }
 
-export function svgShell(width, height, preset, body) {
+// `styleVars` (optional) is an inline CSS custom-property string — e.g.
+// a team color theme — carried on the root so it survives export.
+export function svgShell(width, height, preset, body, styleVars = "") {
+  const style = styleVars ? ` style="${esc(styleVars)}"` : "";
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" ` +
-    `class="sc-card scorecard-theme" data-preset="${esc(preset)}">` +
+    `class="sc-card scorecard-theme" data-preset="${esc(preset)}"${style}>` +
     `<rect class="sc-bg" x="0" y="0" width="${width}" height="${height}"/>` +
     body +
     `</svg>`

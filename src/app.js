@@ -3,6 +3,8 @@ import { normalizeGame } from "./normalize.js";
 import { STYLE_PRESETS, getPreset } from "./presets.js";
 import { RENDERERS, getRenderer } from "./renderers.js";
 import { downloadPNG } from "./export.js";
+import { teamThemeFor } from "./data/teamThemes.js";
+import { buildThemeVars, varsToStyle, variantRoles } from "./theme.js";
 
 const PRESETS = [
   { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
@@ -23,11 +25,14 @@ export function scorecardApp() {
     presets: PRESETS,
     presetChoice: "",
 
-    // settings
+    // settings — layout/style pickers hidden while Broadside/Keepsake is
+    // the focus of development; flip showAllOptions to restore them
+    showAllOptions: false,
     layouts: RENDERERS,
     styles: STYLE_PRESETS,
-    layoutId: "classic",
-    presetId: "classic",
+    layoutId: "broadside",
+    presetId: "keepsake",
+    teamColors: "default",
     labelMode: "names",
     legendCol: 1,
     infoPos: "footer",
@@ -64,7 +69,7 @@ export function scorecardApp() {
       this.$watch("infoPos", () => this.redraw());
       this.$watch("bottomOrder", () => this.redraw());
       this.$watch("notesOrder", () => this.redraw());
-      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote"]) {
+      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote", "teamColors"]) {
         this.$watch(k, () => this.redraw());
       }
     },
@@ -117,7 +122,47 @@ export function scorecardApp() {
       }
     },
 
+    // team-color options for the loaded game (only teams with safe
+    // palettes in the dataset); teams with an alternate background get a
+    // second entry so both sheets can be evaluated
+    get themeOptions() {
+      if (!this.norm) return [];
+      const opts = [];
+      const dots = (bg, palette) => [
+        bg,
+        ...palette.filter((c) => c.toLowerCase() !== bg.toLowerCase()),
+      ];
+      for (const side of ["away", "home"]) {
+        const theme = teamThemeFor(this.norm.meta[side].abbr);
+        if (!theme) continue;
+        opts.push({ key: side, label: theme.name, palette: dots(theme.roles.paper, theme.palette) });
+        if (theme.altPaper) {
+          opts.push({
+            key: `${side}-alt`,
+            label: `${theme.name} · alt`,
+            palette: dots(theme.altPaper, theme.palette),
+          });
+        }
+      }
+      return opts;
+    },
+
+    currentThemeStyle() {
+      if (this.teamColors === "default" || !this.norm) return "";
+      const [side, alt] = this.teamColors.split("-");
+      const meta = this.norm.meta[side];
+      const theme = meta && teamThemeFor(meta.abbr);
+      if (!theme) return "";
+      return varsToStyle(buildThemeVars(variantRoles(theme, alt === "alt")));
+    },
+
+    get paneStyle() {
+      const vars = this.currentThemeStyle();
+      return `background: var(--sc-paper);${vars ? ` ${vars}` : ""}`;
+    },
+
     async loadGame(gamePk) {
+      this.teamColors = "default";
       this.gamePk = gamePk;
       const [feed, notes] = await Promise.all([
         fetchFeed(gamePk),
@@ -169,6 +214,7 @@ export function scorecardApp() {
         barStyle: this.barStyle,
         gridOrder: this.gridOrder,
         note: this.customNote.trim(),
+        themeVars: this.currentThemeStyle(),
       });
     },
   };
