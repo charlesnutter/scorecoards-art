@@ -7,12 +7,20 @@
   "away": {
    "name": "Boston Red Sox",
    "abbr": "BOS",
-   "city": "Boston"
+   "city": "Boston",
+   "record": {
+    "wins": 1,
+    "losses": 1
+   }
   },
   "home": {
    "name": "New York Yankees",
    "abbr": "NYY",
-   "city": "New York"
+   "city": "New York",
+   "record": {
+    "wins": 1,
+    "losses": 1
+   }
   }
  },
  "maxInning": 9,

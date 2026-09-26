@@ -914,12 +914,14 @@
 .hd-card[data-preset="tencents"][data-scheme="royal"] { --tc-spot: #e3b23c; --tc-dark: #1f3a5f; }
 .hd-card[data-preset="tencents"][data-ink="pencil"] { --hd-ink: #3b3b42; }
 
-.tc-title { font-family: "Limelight", "Josefin Sans", sans-serif; fill: var(--tc-dark); letter-spacing: 0.04em; }
+.tc-title { font-family: "Bowlby One", "Josefin Sans", sans-serif; fill: var(--tc-dark); letter-spacing: 0.02em; font-size: 60px; }
 .tc-eyebrow { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.18em; fill: var(--tc-dark); }
 .tc-club { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.1em; fill: var(--tc-spot); }
 .tc-bar { fill: var(--tc-spot); }
 .tc-roundel { fill: var(--tc-spot); }
-.tc-price { font-family: "Alfa Slab One", serif; fill: var(--sc-paper); }
+.tc-price { font-family: "Bowlby One", "Alfa Slab One", serif; fill: var(--sc-paper); letter-spacing: -0.01em; }
+.tc-price-cent { font-family: "Bowlby One", "Alfa Slab One", serif; }
+.tc-final-head { font-family: "Bowlby One", "Josefin Sans", sans-serif; fill: var(--tc-spot); letter-spacing: 0.02em; }
 .tc-rule { stroke: var(--tc-dark); stroke-width: 1; fill: none; }
 .tc-head { fill: var(--tc-dark); stroke: var(--tc-dark); stroke-width: 0.8; }
 .tc-head-text { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.08em; fill: var(--sc-paper); }
@@ -931,8 +933,9 @@
 .tc-ad { fill: none; stroke: var(--tc-spot); stroke-width: 2.4; }
 .tc-ad-inner { fill: none; stroke: var(--tc-spot); stroke-width: 0.8; }
 .tc-ad-head { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.16em; fill: var(--tc-spot); }
-.tc-ad-big { font-family: "Limelight", serif; fill: var(--tc-dark); letter-spacing: 0.04em; }
 .tc-ad-copy { font-family: "Josefin Sans", sans-serif; font-weight: 400; letter-spacing: 0.06em; fill: var(--tc-dark); }
+.tc-field-grass { fill: var(--tc-dark); fill-opacity: 0.06; stroke: var(--tc-dark); stroke-width: 1; }
+.tc-field-infield { fill: var(--tc-dark); fill-opacity: 0.22; stroke: var(--tc-dark); stroke-width: 1; }
 .tc-ad-small { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.14em; fill: var(--tc-spot); }
 
 /* ---- Spiral: coach's wire-bound scorebook ---- */

@@ -7,12 +7,20 @@
   "away": {
    "name": "Washington Nationals",
    "abbr": "WSH",
-   "city": "Washington"
+   "city": "Washington",
+   "record": {
+    "wins": 63,
+    "losses": 92
+   }
   },
   "home": {
    "name": "New York Mets",
    "abbr": "NYM",
-   "city": "New York"
+   "city": "New York",
+   "record": {
+    "wins": 80,
+    "losses": 75
+   }
   }
  },
  "maxInning": 11,

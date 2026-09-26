@@ -223,6 +223,8 @@ function slotOf(side, batterId) {
   return null;
 }
 
+const rec = (t) => (t?.record && t.record.wins != null ? { wins: t.record.wins, losses: t.record.losses } : null);
+
 export function normalizeGame(feed) {
   const gd = feed.gameData;
   const ld = feed.liveData;
@@ -310,8 +312,9 @@ export function normalizeGame(feed) {
       date: gd.datetime?.officialDate || "",
       venue: gd.venue?.name || "",
       status: gd.status?.detailedState || "",
-      away: { name: gd.teams.away.name, abbr: gd.teams.away.abbreviation, city: gd.teams.away.franchiseName },
-      home: { name: gd.teams.home.name, abbr: gd.teams.home.abbreviation, city: gd.teams.home.franchiseName },
+      // record after the game (the series record in the postseason)
+      away: { name: gd.teams.away.name, abbr: gd.teams.away.abbreviation, city: gd.teams.away.franchiseName, record: rec(gd.teams.away) },
+      home: { name: gd.teams.home.name, abbr: gd.teams.home.abbreviation, city: gd.teams.home.franchiseName, record: rec(gd.teams.home) },
     },
     maxInning,
     linescore: {
