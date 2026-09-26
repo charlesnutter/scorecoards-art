@@ -19,6 +19,32 @@
 @import "@fontsource/inter/600.css";
 @import "@fontsource/archivo/500.css";
 @import "@fontsource/archivo/600.css";
+/* vintage: handwriting, letterpress labels, wood-type title (latin only —
+ * the export inlines every @font-face, and the full sets are huge) */
+@import "@fontsource/nanum-pen-script/latin-400.css";
+@import "@fontsource/mansalva/latin-400.css";
+@import "@fontsource/old-standard-tt/latin-400.css";
+@import "@fontsource/old-standard-tt/latin-400-italic.css";
+@import "@fontsource/old-standard-tt/latin-700.css";
+@import "@fontsource/alfa-slab-one/latin-400.css";
+/* the printed-form and poster styles */
+@import "@fontsource/josefin-sans/latin-400.css";
+@import "@fontsource/josefin-sans/latin-700.css";
+@import "@fontsource/limelight/latin-400.css";
+@import "@fontsource/barlow-condensed/latin-500.css";
+@import "@fontsource/barlow-condensed/latin-700.css";
+@import "@fontsource/teko/latin-600.css";
+@import "@fontsource/oleo-script/latin-700.css";
+@import "@fontsource/work-sans/latin-500.css";
+@import "@fontsource/work-sans/latin-600.css";
+@import "@fontsource/libre-franklin/latin-400.css";
+@import "@fontsource/libre-franklin/latin-600.css";
+@import "@fontsource/archivo-narrow/latin-400.css";
+@import "@fontsource/archivo-narrow/latin-600.css";
+@import "@fontsource/playfair-display/latin-700.css";
+@import "@fontsource/playfair-display/latin-900.css";
+@import "@fontsource/anton/latin-400.css";
+@import "@fontsource/bebas-neue/latin-400.css";
 
 /* All scorecard presentation + design-preset variables. Kept as a separate
  * plain-CSS file so the export path can embed it inside the SVG. */

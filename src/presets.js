@@ -90,6 +90,31 @@ export const STYLE_PRESETS = [
       },
     },
   },
+  {
+    id: "vintage",
+    label: "Vintage",
+    // aged paper filled in by hand; pairs with the vintage renderer,
+    // which draws its own sheet (see .vt-* in scorecard.css)
+    tokens: { vintage: { paper: [17, 11] } },
+  },
+  {
+    id: "ballpark",
+    label: "Ballpark",
+    // Vintage duplicate with a contemporary condensed-sans title, so the
+    // card reads as a recent game kept by hand rather than a period piece
+    tokens: { vintage: { paper: [17, 11] } },
+  },
+  // abstract posters: each pairs with its own layout and draws its own
+  // colours from the [data-preset] block; variants via data-ground
+  // hand-filled printed forms; each pairs with its own layout
+  { id: "tencents", label: "Ten Cents", tokens: {} },
+  { id: "spiral", label: "Spiral", tokens: {} },
+  { id: "foil", label: "Foil", tokens: {} },
+  // typeset cards
+  { id: "agate", label: "Agate", tokens: {} },
+  { id: "scoreboard", label: "Scoreboard", tokens: {} },
+  { id: "rings", label: "Rings", tokens: {} },
+  { id: "homage", label: "Homage", tokens: {} },
   { id: "midnight", label: "Midnight", tokens: {} },
   { id: "pennant", label: "Pennant", tokens: {} },
   { id: "mustard", label: "Mustard", tokens: {} },

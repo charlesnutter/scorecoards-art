@@ -163,3 +163,30 @@ white for the badge fill"), not a per-team hack.
 Beyond that, no open bugs or half-finished features — every item asked
 for in this conversation was implemented, verified with a rendered
 screenshot, and left in a working state.
+
+## Addendum — September 25, 2026 session (uncommitted)
+
+Everything below is in the working tree on `team-colors`, **not committed**.
+
+- **Style dropdown.** `LOOKS` in `src/app.js` pairs a layout with a
+  preset; the form shows only the chosen style's controls; other styles'
+  settings persist when you switch away and back.
+- **New styles** (renderer in `src/render/`, preset id = layout id,
+  colour/type block appended to `scorecard.css`):
+  Vintage + Ballpark (`vintage.js`, worn/aged/good paper, pencil/pen,
+  opt-in `vintage.words="mansalva"`), Ten Cents (`tencents.js`),
+  Spiral (`spiral.js`), Foil (`foil.js`), Agate (`agate.js`),
+  Scoreboard (`scoreboard.js`), Rings (`rings.js`), Homage (`homage.js`).
+- **Shared kit:** `hand.js` (seeded handwriting: per-glyph tilt/bounce,
+  drift, slant, strokes, hatching, name helpers) and `cardkit.js`
+  (lineup grid with style-supplied chrome, hand marks, box-score
+  arithmetic, paper canvas).
+- **Fonts** via @fontsource latin subsets in `src/style.css` so the PNG
+  exporter can inline them. `@fontsource/big-shoulders-display` fails
+  Vite's exports resolution; Anton stands in.
+- **Artifacts:** Scorekeeper's Hand (font/variation lab for handwritten
+  words) https://claude.ai/artifact/K3WsHFdh2KDqJHxX8hABsq and the
+  Scorecard Style Board (seven styles + both research reports).
+- **Open decisions:** which words face for handwriting (Mansalva
+  proposed); team colours for the new styles (Ten Cents first); whether
+  to build Warp and Weft / Weimar Linescore as a third poster.

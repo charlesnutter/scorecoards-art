@@ -554,3 +554,507 @@
   stroke: var(--sc-cat-run);
   stroke-width: 1.5;
 }
+
+/* ---- vintage: worn printed card, filled in by hand ----
+ * The vintage renderer draws its own paper, so --sc-paper here is the
+ * desk the card sits on in the preview pane, not the card itself. */
+
+[data-preset="vintage"],
+[data-preset="ballpark"] {
+  --sc-paper: #2e2925;
+  --sc-ink: #e8dec8;
+  --sc-line: #6b6258;
+}
+
+.vt-card {
+  --vt-paper: #e7dabb;
+  --vt-print: #261d14;
+  --vt-hand: #3b3b42;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.vt-card[data-ink="pen"] {
+  --vt-hand: #1f2c5e;
+}
+
+.vt-card[data-wear="light"] {
+  --vt-paper: #ece2c8;
+}
+
+.vt-card[data-wear="good"] {
+  --vt-paper: #f4f1ea;
+  --vt-print: #22211f;
+}
+
+.vt-card[data-wear="aged"] {
+  --vt-paper: #f0e9da;
+  --vt-print: #24201b;
+}
+
+.vt-paper {
+  fill: var(--vt-paper);
+}
+
+.vt-fox {
+  fill: #8a5a2b;
+}
+
+.vt-label {
+  font-family: "Old Standard TT", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  fill: var(--vt-print);
+}
+
+.vt-label--tiny {
+  opacity: 0.8;
+}
+
+.vt-title {
+  font-family: "Alfa Slab One", Georgia, serif;
+  letter-spacing: 0.08em;
+  fill: var(--vt-print);
+}
+
+/* ballpark: same card, contemporary condensed-sans title */
+.vt-card[data-preset="ballpark"] .vt-title {
+  font-family: "Oswald", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 60px;
+  letter-spacing: 0.14em;
+}
+
+.vt-imprint {
+  font-family: "Old Standard TT", Georgia, serif;
+  font-style: italic;
+  fill: var(--vt-print);
+  opacity: 0.75;
+}
+
+.vt-rule {
+  fill: none;
+  stroke: var(--vt-print);
+  stroke-width: 0.9;
+}
+
+.vt-rule--heavy {
+  stroke-width: 1.8;
+}
+
+.vt-rule--thin {
+  stroke-width: 0.7;
+}
+
+.vt-rule--faint {
+  stroke-width: 0.6;
+  opacity: 0.45;
+}
+
+.vt-diamond {
+  fill: none;
+  stroke: var(--vt-print);
+  stroke-width: 0.8;
+  opacity: 0.45;
+}
+
+.vt-ornament {
+  fill: none;
+  stroke: var(--vt-print);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.vt-ornament-fill,
+.vt-field-base {
+  fill: var(--vt-print);
+}
+
+.vt-ball {
+  fill: none;
+  stroke: var(--vt-print);
+  stroke-width: 1.6;
+}
+
+.vt-ball-stitch {
+  fill: none;
+  stroke: var(--vt-print);
+  stroke-width: 1.1;
+  stroke-dasharray: 1.6 1.4;
+}
+
+.vt-field-grass {
+  fill: var(--vt-print);
+  fill-opacity: 0.06;
+  stroke: var(--vt-print);
+  stroke-width: 1.1;
+}
+
+.vt-field-infield {
+  fill: var(--vt-print);
+  fill-opacity: 0.3;
+  stroke: var(--vt-print);
+  stroke-width: 1.2;
+}
+
+.vt-hand {
+  font-family: "Nanum Pen Script", "Comic Sans MS", cursive;
+  fill: var(--vt-hand);
+}
+
+/* words face: names and notes in a hand with three drawings of each
+ * letter (calt), so doubled letters differ; marks stay in the pen face */
+.vt-card[data-words="mansalva"] .vt-hand--words {
+  font-family: "Mansalva", "Nanum Pen Script", cursive;
+  font-feature-settings: "calt" 1;
+}
+
+.vt-stroke {
+  fill: none;
+  stroke: var(--vt-hand);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.vt-stroke--thin {
+  stroke-width: 1.1;
+}
+
+.vt-stroke--hatch {
+  stroke-width: 1.3;
+  opacity: 0.85;
+}
+
+.vt-dot {
+  fill: var(--vt-hand);
+}
+
+.vt-card[data-ink="pen"] .vt-stroke {
+  stroke-width: 1.3;
+}
+
+
+/* ---- Rings: concentric-ring poster (Müller-Brockmann) ---- */
+
+[data-preset="rings"] {
+  --sc-paper: #0b0b0b;
+  --sc-ink: #f3f0e8;
+  --sc-line: #3a3a3a;
+  --rg-out: #f3f0e8;
+  --rg-on: #c8302a;
+  --rg-hr: #e39a4a;
+  --rg-run: #0b0b0b;
+  --rg-guide: rgba(243, 240, 232, 0.14);
+}
+
+.ab-card[data-preset="rings"][data-ground="light"] {
+  --sc-paper: #f3e9d2;
+  --sc-ink: #3b2f2a;
+  --rg-out: #3b2f2a;
+  --rg-on: #c8553d;
+  --rg-hr: #2e6f6b;
+  --rg-run: #f3e9d2;
+  --rg-guide: rgba(59, 47, 42, 0.14);
+}
+
+.rg-guide {
+  fill: none;
+  stroke: var(--rg-guide);
+  stroke-width: 1;
+}
+
+.rg-seg {
+  fill: none;
+  stroke-linecap: butt;
+}
+
+.rg-seg--out { stroke: var(--rg-out); }
+.rg-seg--on { stroke: var(--rg-on); }
+.rg-seg--hr { stroke: var(--rg-hr); }
+
+.rg-run {
+  fill: var(--rg-run);
+}
+
+.rg-seam {
+  stroke: var(--rg-guide);
+  stroke-width: 1;
+}
+
+.rg-title {
+  font-family: "Bebas Neue", "Oswald", sans-serif;
+  fill: var(--sc-ink);
+  letter-spacing: 0.06em;
+}
+
+.rg-title-sep {
+  fill: var(--rg-on);
+}
+
+.rg-caption {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-weight: 500;
+  fill: var(--sc-ink);
+  opacity: 0.7;
+}
+
+/* ---- Homage: nested-square tiles (Albers) ---- */
+
+[data-preset="homage"] {
+  --sc-paper: #f3e9d2;
+  --sc-ink: #3b2f2a;
+  --sc-line: #d9ccb2;
+  --hm-core: #f8f2e3;
+  /* away: warm scale by runs 0..4+ */
+  --hm-aw-0: #e4d2a6;
+  --hm-aw-1: #e39a4a;
+  --hm-aw-2: #d8792f;
+  --hm-aw-3: #c8553d;
+  --hm-aw-4: #9f3a2b;
+  /* home: cool scale */
+  --hm-hm-0: #c3d1c9;
+  --hm-hm-1: #8fb3a8;
+  --hm-hm-2: #5f9590;
+  --hm-hm-3: #2e6f6b;
+  --hm-hm-4: #1f4f4c;
+}
+
+.ab-card[data-preset="homage"][data-ground="stark"] {
+  --sc-paper: #f3f0e8;
+  --sc-ink: #0b0b0b;
+  --hm-core: #ffffff;
+  --hm-aw-0: #d9d5cc;
+  --hm-aw-1: #b8b8b8;
+  --hm-aw-2: #7a7a7a;
+  --hm-aw-3: #3a3a3a;
+  --hm-aw-4: #000000;
+  --hm-hm-0: #ebc9c5;
+  --hm-hm-1: #e39b95;
+  --hm-hm-2: #d4645b;
+  --hm-hm-3: #c8302a;
+  --hm-hm-4: #8c1d19;
+}
+
+.hm-sq { stroke: none; }
+.hm-core { fill: var(--hm-core); }
+.hm-aw--0 { fill: var(--hm-aw-0); }
+.hm-aw--1 { fill: var(--hm-aw-1); }
+.hm-aw--2 { fill: var(--hm-aw-2); }
+.hm-aw--3 { fill: var(--hm-aw-3); }
+.hm-aw--4 { fill: var(--hm-aw-4); }
+.hm-hm--0 { fill: var(--hm-hm-0); }
+.hm-hm--1 { fill: var(--hm-hm-1); }
+.hm-hm--2 { fill: var(--hm-hm-2); }
+.hm-hm--3 { fill: var(--hm-hm-3); }
+.hm-hm--4 { fill: var(--hm-hm-4); }
+
+.hm-title {
+  font-family: "Jost", "Futura", sans-serif;
+  font-weight: 500;
+  fill: var(--sc-ink);
+  letter-spacing: 0.04em;
+}
+
+.hm-title-at {
+  opacity: 0.5;
+}
+
+.hm-title-date {
+  opacity: 0.5;
+}
+
+
+/* ---- shared handwriting layer for the printed-form cards ----
+ * hd-card roots set --hd-ink; the marks face writes numerals and codes,
+ * the words face names and notes (three drawings per letter via calt). */
+
+.hd-card {
+  --hd-ink: #2b2b31;
+  --hd-font-marks: "Nanum Pen Script", cursive;
+  --hd-font-words: "Mansalva", "Nanum Pen Script", cursive;
+}
+
+.hd-text {
+  font-family: var(--hd-font-marks);
+  fill: var(--hd-ink);
+}
+
+.hd-text--words {
+  font-family: var(--hd-font-words);
+  font-feature-settings: "calt" 1;
+}
+
+.hd-stroke {
+  fill: none;
+  stroke: var(--hd-ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hd-stroke--thin { stroke-width: 1.05; }
+.hd-stroke--hatch { stroke-width: 1.2; opacity: 0.85; }
+.hd-dot { fill: var(--hd-ink); }
+
+/* ---- Ten Cents: 1937–68 team-issued program card ---- */
+
+[data-preset="tencents"] {
+  --sc-paper: #f3e9d2;
+  --sc-ink: #1b1b1b;
+  --sc-line: #cfc2a3;
+  --tc-spot: #d33a2c;
+  --tc-dark: #1f3a5f;
+  --tc-tint: rgba(31, 58, 95, 0.08);
+  --hd-ink: #1f2c5e;
+}
+
+.hd-card[data-preset="tencents"][data-scheme="kelly"] { --tc-spot: #1d7a46; --tc-dark: #1b1b1b; --tc-tint: rgba(27, 27, 27, 0.07); }
+.hd-card[data-preset="tencents"][data-scheme="royal"] { --tc-spot: #e3b23c; --tc-dark: #1f3a5f; }
+.hd-card[data-preset="tencents"][data-ink="pencil"] { --hd-ink: #3b3b42; }
+
+.tc-title { font-family: "Limelight", "Josefin Sans", sans-serif; fill: var(--tc-dark); letter-spacing: 0.04em; }
+.tc-eyebrow { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.18em; fill: var(--tc-dark); }
+.tc-club { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.1em; fill: var(--tc-spot); }
+.tc-bar { fill: var(--tc-spot); }
+.tc-roundel { fill: var(--tc-spot); }
+.tc-price { font-family: "Alfa Slab One", serif; fill: var(--sc-paper); }
+.tc-rule { stroke: var(--tc-dark); stroke-width: 1; fill: none; }
+.tc-head { fill: var(--tc-dark); stroke: var(--tc-dark); stroke-width: 0.8; }
+.tc-head-text { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.08em; fill: var(--sc-paper); }
+.tc-head-text--dark { fill: var(--tc-dark); }
+.tc-cell { fill: none; stroke: var(--tc-dark); stroke-width: 0.7; }
+.tc-cell--totals { fill: var(--tc-tint); }
+.tc-subrule { stroke: var(--tc-dark); stroke-width: 0.4; opacity: 0.55; }
+.tc-frame { fill: none; stroke: var(--tc-dark); stroke-width: 1.6; }
+.tc-ad { fill: none; stroke: var(--tc-spot); stroke-width: 2.4; }
+.tc-ad-inner { fill: none; stroke: var(--tc-spot); stroke-width: 0.8; }
+.tc-ad-head { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.16em; fill: var(--tc-spot); }
+.tc-ad-big { font-family: "Limelight", serif; fill: var(--tc-dark); letter-spacing: 0.04em; }
+.tc-ad-copy { font-family: "Josefin Sans", sans-serif; font-weight: 400; letter-spacing: 0.06em; fill: var(--tc-dark); }
+.tc-ad-small { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.14em; fill: var(--tc-spot); }
+
+/* ---- Spiral: coach's wire-bound scorebook ---- */
+
+[data-preset="spiral"] {
+  --sc-paper: #efe3c0;
+  --sc-ink: #1b1b1b;
+  --sc-line: #b7a878;
+  --sp-form: #2e6b3a;
+  --sp-form-soft: rgba(46, 107, 58, 0.55);
+  --sp-tint: rgba(46, 107, 58, 0.1);
+  --hd-ink: #3b3b42;
+}
+
+.hd-card[data-preset="spiral"][data-form="red"] { --sp-form: #c0392b; --sp-form-soft: rgba(192, 57, 43, 0.55); --sp-tint: rgba(192, 57, 43, 0.1); }
+.hd-card[data-preset="spiral"][data-form="blue"] { --sp-form: #3f6fb5; --sp-form-soft: rgba(63, 111, 181, 0.55); --sp-tint: rgba(63, 111, 181, 0.1); }
+.hd-card[data-preset="spiral"][data-paper="white"] { --sc-paper: #f7f5ee; }
+
+.sp-hole { fill: #f7f5ee; stroke: var(--sp-form-soft); stroke-width: 0.8; }
+.sp-wire { fill: none; stroke: #6e6a60; stroke-width: 3; stroke-linecap: round; }
+.sp-title { font-family: "Teko", "Barlow Condensed", sans-serif; font-weight: 600; letter-spacing: 0.06em; fill: var(--sp-form); }
+.sp-title--right { font-family: "Barlow Condensed", sans-serif; font-weight: 700; letter-spacing: 0.14em; }
+.sp-label { font-family: "Barlow Condensed", sans-serif; font-weight: 700; letter-spacing: 0.1em; fill: var(--sp-form); }
+.sp-form { font-family: "Barlow Condensed", sans-serif; font-weight: 500; fill: var(--sp-form); }
+.sp-box { fill: none; stroke: var(--sp-form); stroke-width: 0.9; }
+.sp-head { fill: var(--sp-tint); stroke: var(--sp-form); stroke-width: 0.9; }
+.sp-head-text { font-family: "Barlow Condensed", sans-serif; font-weight: 700; letter-spacing: 0.06em; fill: var(--sp-form); }
+.sp-cell { fill: none; stroke: var(--sp-form); stroke-width: 0.7; }
+.sp-cell--totals { fill: var(--sp-tint); }
+.sp-subrule { stroke: var(--sp-form-soft); stroke-width: 0.5; }
+.sp-frame { fill: none; stroke: var(--sp-form); stroke-width: 1.5; }
+.sp-diamond { fill: none; stroke: var(--sp-form-soft); stroke-width: 0.7; }
+.sp-posnum { font-family: "Barlow Condensed", sans-serif; font-weight: 500; fill: var(--sp-form-soft); text-anchor: middle; }
+.sp-bs { fill: none; stroke: var(--sp-form-soft); stroke-width: 0.5; }
+
+/* ---- Foil: designer stationery scorebook ---- */
+
+[data-preset="foil"] {
+  --sc-paper: #fafaf7;
+  --sc-ink: #101010;
+  --sc-line: #d8d8d2;
+  --fl-spot: #1e3d2f;
+  --fl-hair: rgba(30, 61, 47, 0.35);
+  --fl-tint: rgba(30, 61, 47, 0.06);
+  --fl-foil: url(#fl-foil-gold);
+  --hd-ink: #101010;
+}
+
+.hd-card[data-preset="foil"][data-ink="black"] { --fl-spot: #101010; --fl-hair: rgba(16, 16, 16, 0.3); --fl-tint: rgba(16, 16, 16, 0.05); }
+.hd-card[data-preset="foil"][data-ink="navy"] { --fl-spot: #1f2c5e; --fl-hair: rgba(31, 44, 94, 0.35); --fl-tint: rgba(31, 44, 94, 0.06); }
+.hd-card[data-preset="foil"][data-foil="copper"] { --fl-foil: url(#fl-foil-copper); }
+
+.fl-mark { font-family: "Oleo Script", cursive; font-weight: 700; fill: var(--fl-foil); }
+.fl-label { font-family: "Work Sans", sans-serif; font-weight: 600; letter-spacing: 0.16em; fill: var(--fl-spot); text-transform: uppercase; }
+.fl-rule { stroke: var(--fl-spot); stroke-width: 0.9; fill: none; }
+.fl-hair { stroke: var(--fl-hair); stroke-width: 0.6; fill: none; }
+.fl-cell { fill: none; stroke: var(--fl-hair); stroke-width: 0.6; }
+.fl-cell--tint { fill: var(--fl-tint); }
+.fl-frame { fill: none; stroke: var(--fl-spot); stroke-width: 1; }
+.fl-foil-rule { stroke: var(--fl-foil); stroke-width: 3; }
+
+
+/* ---- Agate: newspaper box score ---- */
+
+[data-preset="agate"] {
+  --sc-paper: #e8e1cf;
+  --sc-ink: #262626;
+  --sc-line: #8a8a8a;
+  --ag-rule: #262626;
+  --ag-hair: #8a8a8a;
+  --ag-spot: #b22222;
+}
+
+.sc-card[data-preset="agate"][data-paper="yellowed"] { --sc-paper: #ddd0b4; --sc-ink: #2a2622; }
+.sc-card[data-preset="agate"][data-paper="fresh"] .ag-age { opacity: 0.35; }
+
+.ag-slug { font-family: "Libre Franklin", "Archivo Narrow", sans-serif; font-weight: 600; letter-spacing: 0.14em; fill: var(--sc-ink); }
+.ag-head { font-family: "Playfair Display", Georgia, serif; font-weight: 900; fill: var(--sc-ink); letter-spacing: -0.01em; }
+.ag-deck { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-style: italic; fill: var(--sc-ink); }
+.ag-body { font-family: "Libre Baskerville", "Old Standard TT", Georgia, serif; fill: var(--sc-ink); }
+.ag-body--italic { font-style: italic; }
+.ag-subhead { font-family: "Libre Franklin", sans-serif; font-weight: 600; letter-spacing: 0.12em; fill: var(--sc-ink); }
+.ag-agate { font-family: "Archivo Narrow", "Libre Franklin", sans-serif; fill: var(--sc-ink); }
+.ag-agate--bold { font-weight: 600; }
+.ag-agate--italic { font-style: italic; }
+.ag-agate--mono { font-family: "IBM Plex Mono", monospace; letter-spacing: 0.04em; }
+.ag-rule { stroke: var(--ag-rule); stroke-width: 0.8; fill: none; }
+.ag-rule--heavy { stroke-width: 3; }
+.ag-hair { stroke: var(--ag-hair); stroke-width: 0.6; fill: none; }
+
+/* ---- Scoreboard: hand-operated board ---- */
+
+[data-preset="scoreboard"] {
+  --sc-paper: #1e4d2b;
+  --sc-ink: #ede6d6;
+  --sc-line: #0f3d26;
+  --sb-plate: #0f3d26;
+  --sb-plate-edge: #082a19;
+  --sb-slot: #163f24;
+  --sb-white: #ede6d6;
+  --sb-yellow: #f2c230;
+  --sb-red: #c8102e;
+  --sb-green: #6fd08c;
+  --sb-dim: rgba(237, 230, 214, 0.55);
+}
+
+.sc-card[data-preset="scoreboard"][data-wall="brown"] { --sc-paper: #4a3521; --sc-line: #2e2013; --sb-plate: #2e2013; --sb-plate-edge: #1b120a; --sb-slot: #3b2a1a; }
+.sc-card[data-preset="scoreboard"][data-wall="black"] { --sc-paper: #151515; --sc-line: #0a0a0a; --sb-plate: #0a0a0a; --sb-plate-edge: #000; --sb-slot: #1f1f1f; }
+
+.sb-wall-grain { fill: none; }
+.sb-plate { fill: var(--sb-plate); stroke: var(--sb-plate-edge); stroke-width: 2; }
+.sb-plate--name { fill: var(--sb-plate); }
+.sb-slot { fill: var(--sb-slot); stroke: var(--sb-plate-edge); stroke-width: 1; }
+.sb-num { font-family: "Anton", "Oswald", sans-serif; fill: var(--sb-white); letter-spacing: 0.02em; }
+.sb-num--yellow { fill: var(--sb-yellow); }
+.sb-num--dim { fill: var(--sb-dim); }
+.sb-name { font-family: "Anton", "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.06em; fill: var(--sb-white); }
+.sb-name--small { letter-spacing: 0.08em; }
+.sb-paint { font-family: "Bebas Neue", "Oswald", sans-serif; fill: var(--sb-white); letter-spacing: 0.1em; }
+.sb-paint--dim { fill: var(--sb-dim); }
+.sb-paint--yellow { fill: var(--sb-yellow); }
+.sb-grid { stroke: var(--sb-white); stroke-width: 2; opacity: 0.85; }
+.sb-light { fill: none; stroke: var(--sb-plate-edge); stroke-width: 2; }
+.sb-light--red { fill: var(--sb-red); }
+.sb-light--green { fill: var(--sb-green); }

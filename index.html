@@ -15,6 +15,16 @@
         </p>
 
         <div class="space-y-6">
+          <label for="Look" class="block">
+            <span class="block pt-1 text-base font-semibold text-gray-900"> Style </span>
+            <select id="Look" x-model="lookId"
+              class="mt-1.5 w-full rounded border-gray-300 shadow-sm sm:text-sm">
+              <template x-for="l in looks" :key="l.id">
+                <option :value="l.id" x-text="l.label" :selected="l.id === lookId"></option>
+              </template>
+            </select>
+          </label>
+
           <label for="GameDate" class="block">
             <span class="block pt-1 text-base font-semibold text-gray-900"> Date </span>
             <input type="date" id="GameDate" x-model="date"
@@ -60,7 +70,7 @@
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset x-show="layoutId !== 'vintage'">
             <legend class="pt-1 text-base font-semibold text-gray-900">Player labels</legend>
             <div class="mt-2 flex gap-2">
               <template x-for="m in [['names', 'Names'], ['numbers', 'Numbers']]" :key="m[0]">
@@ -181,7 +191,176 @@
             </div>
           </fieldset>
 
-          <label x-show="layoutId === 'broadside'" class="block">
+          <fieldset x-show="layoutId === 'vintage'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Written in</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="o in [['pencil', 'Pencil'], ['pen', 'Ink pen']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="VintageInkOption" :value="o[0]" x-model="vintageInk" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="presetId === 'ballpark'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Paper</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['good', 'Good condition'], ['aged', 'Lightly aged'], ['worn', 'Well worn']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="BallparkWearOption" :value="o[0]" x-model="ballparkWear" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="presetId === 'vintage'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Paper</legend>
+            <div class="mt-2 flex gap-2">
+              <template x-for="o in [['worn', 'Well worn'], ['light', 'Lightly aged']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="VintageWearOption" :value="o[0]" x-model="vintageWear" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'tencents'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Written in</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['pen', 'Ballpoint'], ['pencil', 'Pencil']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="TencentsInkOption" :value="o[0]" x-model="tencentsInk" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'tencents'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Print colours</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['vermilion', 'Vermilion & navy'], ['kelly', 'Kelly & black'], ['royal', 'Mustard & navy']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="TencentsSchemeOption" :value="o[0]" x-model="tencentsScheme" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'spiral'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Form ink</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['green', 'Green'], ['red', 'Red'], ['blue', 'Blue']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="SpiralFormOption" :value="o[0]" x-model="spiralForm" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'spiral'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Stock</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['manila', 'Manila'], ['white', 'White']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="SpiralPaperOption" :value="o[0]" x-model="spiralPaper" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'foil'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Spot ink</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['green', 'Bottle green'], ['black', 'Black'], ['navy', 'Navy']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="FoilInkOption" :value="o[0]" x-model="foilInk" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'foil'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Foil</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['gold', 'Gold'], ['copper', 'Copper']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="FoilFoilOption" :value="o[0]" x-model="foilFoil" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'agate'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Newsprint</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['fresh', 'Fresh'], ['yellowed', 'Yellowed']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="AgatePaperOption" :value="o[0]" x-model="agatePaper" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'scoreboard'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Wall</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['green', 'Green'], ['brown', 'Seal brown'], ['black', 'Black']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="ScoreboardWallOption" :value="o[0]" x-model="scoreboardWall" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'rings'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Ground</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['dark', 'Black'], ['light', 'Cream']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="RingsGroundOption" :value="o[0]" x-model="ringsGround" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <fieldset x-show="layoutId === 'homage'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Palette</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['warm', 'Warm'], ['stark', 'Stark']]" :key="o[0]">
+                <label
+                  class="cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="HomageGroundOption" :value="o[0]" x-model="homageGround" class="sr-only" />
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <label x-show="['broadside', 'vintage', 'tencents', 'spiral', 'foil', 'agate', 'scoreboard'].includes(layoutId)" class="block">
             <span class="block pt-1 text-base font-semibold text-gray-900">Personal note</span>
             <input type="text" x-model.lazy="customNote" placeholder="Charlie's first Yankees game"
               class="mt-1.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" />
@@ -275,7 +454,7 @@
           </div>
 
           <div x-show="svg" class="flex-1">
-            <div x-html="svg"></div>
+            <div x-html="svg" :class="layoutId !== 'broadside' && 'shadow-2xl shadow-black/60'"></div>
 
             <!-- Game notes: scoring plays along the bottom, recap beside them -->
             <div class="mt-6 pt-4 grid md:grid-cols-2 gap-6 text-xs"

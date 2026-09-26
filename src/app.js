@@ -6,6 +6,23 @@ import { downloadPNG } from "./export.js";
 import { teamThemeFor } from "./data/teamThemes.js";
 import { buildThemeVars, varsToStyle, variantRoles } from "./theme.js";
 
+// Top-level looks offered in the Style dropdown. Each pairs a layout
+// with a color preset and lists the form sections it uses; switching
+// styles leaves every other style's settings untouched, so they come
+// back as they were when the user switches back.
+const LOOKS = [
+  { id: "keepsake", label: "Keepsake", layoutId: "broadside", presetId: "keepsake" },
+  { id: "vintage", label: "Vintage", layoutId: "vintage", presetId: "vintage" },
+  { id: "ballpark", label: "Ballpark", layoutId: "vintage", presetId: "ballpark" },
+  { id: "tencents", label: "Ten Cents", layoutId: "tencents", presetId: "tencents" },
+  { id: "spiral", label: "Spiral", layoutId: "spiral", presetId: "spiral" },
+  { id: "foil", label: "Foil", layoutId: "foil", presetId: "foil" },
+  { id: "agate", label: "Agate", layoutId: "agate", presetId: "agate" },
+  { id: "scoreboard", label: "Scoreboard", layoutId: "scoreboard", presetId: "scoreboard" },
+  { id: "rings", label: "Rings", layoutId: "rings", presetId: "rings" },
+  { id: "homage", label: "Homage", layoutId: "homage", presetId: "homage" },
+];
+
 const PRESETS = [
   { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
   { label: "SD @ CHC · 2025-10-01", date: "2025-10-01", team: 112 },
@@ -25,9 +42,11 @@ export function scorecardApp() {
     presets: PRESETS,
     presetChoice: "",
 
-    // settings — layout/style pickers hidden while Broadside/Keepsake is
-    // the focus of development; flip showAllOptions to restore them
+    // settings — the Style dropdown picks a layout+preset pair (LOOKS);
+    // the raw layout/style pickers stay hidden unless showAllOptions
     showAllOptions: false,
+    looks: LOOKS,
+    lookId: "keepsake",
     layouts: RENDERERS,
     styles: STYLE_PRESETS,
     layoutId: "broadside",
@@ -46,6 +65,21 @@ export function scorecardApp() {
     barStyle: "floating",
     gridOrder: "away-first",
     customNote: "",
+    // per-style variants; each style reads only its own keys
+    tencentsInk: "pen",
+    tencentsScheme: "vermilion",
+    spiralForm: "green",
+    spiralPaper: "manila",
+    foilInk: "green",
+    foilFoil: "gold",
+    agatePaper: "fresh",
+    scoreboardWall: "green",
+    ringsGround: "dark",
+    homageGround: "warm",
+    // vintage
+    vintageInk: "pencil",
+    vintageWear: "worn",
+    ballparkWear: "good",
 
     // output state
     loading: false,
@@ -65,11 +99,17 @@ export function scorecardApp() {
       // style can change geometry tokens, not just CSS, so re-render
       this.$watch("presetId", () => this.redraw());
       this.$watch("layoutId", () => this.redraw());
+      this.$watch("lookId", (id) => {
+        const look = LOOKS.find((l) => l.id === id);
+        if (!look) return;
+        this.layoutId = look.layoutId;
+        this.presetId = look.presetId;
+      });
       this.$watch("legendCol", () => this.redraw());
       this.$watch("infoPos", () => this.redraw());
       this.$watch("bottomOrder", () => this.redraw());
       this.$watch("notesOrder", () => this.redraw());
-      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote", "teamColors"]) {
+      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote", "teamColors", "vintageInk", "vintageWear", "ballparkWear", "tencentsInk", "tencentsScheme", "spiralForm", "spiralPaper", "foilInk", "foilFoil", "agatePaper", "scoreboardWall", "ringsGround", "homageGround"]) {
         this.$watch(k, () => this.redraw());
       }
     },
@@ -148,6 +188,8 @@ export function scorecardApp() {
     },
 
     currentThemeStyle() {
+      // team colors are a Keepsake setting
+      if (this.lookId !== "keepsake") return "";
       if (this.teamColors === "default" || !this.norm) return "";
       const [side, alt] = this.teamColors.split("-");
       const meta = this.norm.meta[side];
@@ -215,6 +257,19 @@ export function scorecardApp() {
         gridOrder: this.gridOrder,
         note: this.customNote.trim(),
         themeVars: this.currentThemeStyle(),
+        vintage: {
+          ink: this.vintageInk,
+          wear: this.presetId === "ballpark" ? this.ballparkWear : this.vintageWear,
+        },
+        card: {
+          ink: this.layoutId === "tencents" ? this.tencentsInk : this.foilInk,
+          scheme: this.tencentsScheme,
+          form: this.spiralForm,
+          paper: this.layoutId === "spiral" ? this.spiralPaper : this.agatePaper,
+          foil: this.foilFoil,
+          wall: this.scoreboardWall,
+        },
+        poster: { ground: this.layoutId === "rings" ? this.ringsGround : this.homageGround },
       });
     },
   };
