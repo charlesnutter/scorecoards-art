@@ -25,7 +25,7 @@ const LOOKS = [
 
 const PRESETS = [
   { label: "BOS @ NYY · 2025 AL Wild Card G2", date: "2025-10-01", team: 147 },
-  { label: "SD @ CHC · 2025-10-01", date: "2025-10-01", team: 112 },
+  { label: "HOU @ SF · 2012-06-13 · Matt Cain perfect game", date: "2012-06-13", team: 137 },
   { label: "Opening Day LAD · 2025-03-18", date: "2025-03-18", team: 119 },
   { label: "SF @ KC · 2014 World Series G7", date: "2014-10-29", team: 118 },
   { label: "NYM @ SF · 2013-07-08 · 16 innings", date: "2013-07-08", team: 137 },
@@ -68,6 +68,8 @@ export function scorecardApp() {
     // per-style variants; each style reads only its own keys
     tencentsInk: "pen",
     tencentsScheme: "vermilion",
+    tencentsPaper: "natural",
+    tencentsTitle: "",
     spiralForm: "green",
     spiralPaper: "manila",
     foilInk: "green",
@@ -109,7 +111,7 @@ export function scorecardApp() {
       this.$watch("infoPos", () => this.redraw());
       this.$watch("bottomOrder", () => this.redraw());
       this.$watch("notesOrder", () => this.redraw());
-      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote", "teamColors", "vintageInk", "vintageWear", "ballparkWear", "tencentsInk", "tencentsScheme", "spiralForm", "spiralPaper", "foilInk", "foilFoil", "agatePaper", "scoreboardWall", "ringsGround", "homageGround"]) {
+      for (const k of ["padTop", "padHeader", "padPitch", "padBottom", "padBar", "barStyle", "gridOrder", "customNote", "teamColors", "vintageInk", "vintageWear", "ballparkWear", "tencentsInk", "tencentsScheme", "tencentsPaper", "tencentsTitle", "spiralForm", "spiralPaper", "foilInk", "foilFoil", "agatePaper", "scoreboardWall", "ringsGround", "homageGround"]) {
         this.$watch(k, () => this.redraw());
       }
     },
@@ -265,7 +267,8 @@ export function scorecardApp() {
           ink: this.layoutId === "tencents" ? this.tencentsInk : this.foilInk,
           scheme: this.tencentsScheme,
           form: this.spiralForm,
-          paper: this.layoutId === "spiral" ? this.spiralPaper : this.agatePaper,
+          paper: this.layoutId === "spiral" ? this.spiralPaper : this.layoutId === "tencents" ? this.tencentsPaper : this.agatePaper,
+          title: this.tencentsTitle,
           foil: this.foilFoil,
           wall: this.scoreboardWall,
         },

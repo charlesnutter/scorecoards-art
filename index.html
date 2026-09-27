@@ -256,6 +256,27 @@
             </div>
           </fieldset>
 
+          <fieldset x-show="layoutId === 'tencents'">
+            <legend class="pt-1 text-base font-semibold text-gray-900">Paper</legend>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <template x-for="o in [['natural', 'Natural', '#f6f4ee'], ['warm', 'Warm off-white', '#f5f1e8'], ['ivory', 'Ivory', '#f7f2e5'], ['cream-light', 'Light cream', '#f6efdd'], ['cream', 'Cream', '#f3e9d2'], ['cool', 'Cool off-white', '#f4f4f0'], ['white', 'Near white', '#fbfaf7']]" :key="o[0]">
+                <label
+                  class="flex items-center gap-2 cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-700 has-checked:ring-1 has-checked:ring-emerald-600">
+                  <input type="radio" name="TencentsPaperOption" :value="o[0]" x-model="tencentsPaper" class="sr-only" />
+                  <span class="size-3.5 rounded-full border border-gray-300" :style="`background:${o[2]}`"></span>
+                  <span x-text="o[1]"></span>
+                </label>
+              </template>
+            </div>
+          </fieldset>
+
+          <label x-show="layoutId === 'tencents'" class="block">
+            <span class="block pt-1 text-base font-semibold text-gray-900">Card title</span>
+            <span class="block text-xs text-gray-500">Leave blank to headline the home club</span>
+            <input type="text" x-model.lazy="tencentsTitle" placeholder="2025 AL Wild Card Series"
+              class="mt-1.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" />
+          </label>
+
           <fieldset x-show="layoutId === 'spiral'">
             <legend class="pt-1 text-base font-semibold text-gray-900">Form ink</legend>
             <div class="mt-2 flex flex-wrap gap-2">

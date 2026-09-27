@@ -901,7 +901,7 @@
 /* ---- Ten Cents: 1937–68 team-issued program card ---- */
 
 [data-preset="tencents"] {
-  --sc-paper: #f3e9d2;
+  --sc-paper: #f6f4ee;
   --sc-ink: #1b1b1b;
   --sc-line: #cfc2a3;
   --tc-spot: #d33a2c;
@@ -913,6 +913,15 @@
 .hd-card[data-preset="tencents"][data-scheme="kelly"] { --tc-spot: #1d7a46; --tc-dark: #1b1b1b; --tc-tint: rgba(27, 27, 27, 0.07); }
 .hd-card[data-preset="tencents"][data-scheme="royal"] { --tc-spot: #e3b23c; --tc-dark: #1f3a5f; }
 .hd-card[data-preset="tencents"][data-ink="pencil"] { --hd-ink: #3b3b42; }
+/* paper stock, current cream to bright white; "natural" is what an
+ * uncoated natural sheet looks like with no background ink */
+.hd-card[data-preset="tencents"][data-paper="cream"] { --sc-paper: #f3e9d2; }
+.hd-card[data-preset="tencents"][data-paper="cream-light"] { --sc-paper: #f6efdd; }
+.hd-card[data-preset="tencents"][data-paper="ivory"] { --sc-paper: #f7f2e5; }
+.hd-card[data-preset="tencents"][data-paper="warm"] { --sc-paper: #f5f1e8; }
+.hd-card[data-preset="tencents"][data-paper="natural"] { --sc-paper: #f6f4ee; }
+.hd-card[data-preset="tencents"][data-paper="cool"] { --sc-paper: #f4f4f0; }
+.hd-card[data-preset="tencents"][data-paper="white"] { --sc-paper: #fbfaf7; }
 
 .tc-title { font-family: "Bowlby One", "Josefin Sans", sans-serif; fill: var(--tc-dark); letter-spacing: 0.02em; font-size: 60px; }
 .tc-eyebrow { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.18em; fill: var(--tc-dark); }
@@ -934,6 +943,13 @@
 .tc-ad-inner { fill: none; stroke: var(--tc-spot); stroke-width: 0.8; }
 .tc-ad-head { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.16em; fill: var(--tc-spot); }
 .tc-ad-copy { font-family: "Josefin Sans", sans-serif; font-weight: 400; letter-spacing: 0.06em; fill: var(--tc-dark); }
+/* printed how-to-score key, in the card's inks */
+.tc-key-diamond { fill: none; stroke: var(--tc-dark); stroke-width: 0.8; opacity: 0.55; }
+.tc-key-path { fill: none; stroke: var(--tc-spot); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.tc-key-fill { fill: var(--tc-dark); fill-opacity: 0.22; }
+.tc-key-code { font-family: "Josefin Sans", sans-serif; font-weight: 700; fill: var(--tc-dark); text-anchor: middle; }
+.tc-key-badge { fill: none; stroke: var(--tc-spot); stroke-width: 0.9; }
+.tc-key-dot { fill: var(--tc-spot); }
 .tc-field-grass { fill: var(--tc-dark); fill-opacity: 0.06; stroke: var(--tc-dark); stroke-width: 1; }
 .tc-field-infield { fill: var(--tc-dark); fill-opacity: 0.22; stroke: var(--tc-dark); stroke-width: 1; }
 .tc-ad-small { font-family: "Josefin Sans", sans-serif; font-weight: 700; letter-spacing: 0.14em; fill: var(--tc-spot); }
