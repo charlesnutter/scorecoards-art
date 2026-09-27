@@ -76,15 +76,18 @@ export function renderTenCents(norm, { preset = "tencents", note = "", card = {}
     P.push(text(cw / 2, y + 34, (title || home.name).toUpperCase(), "tc-club", 30));
     P.push(text(cw / 2, y + 58, `${norm.meta.venue.toUpperCase()}`, "tc-eyebrow", 13));
     if (title) {
+      // the club name is anchored to the VS., so the gap between them is
+      // fixed whatever the name; its estimated width only centres the group
       const homeLabel = home.name.toUpperCase();
-      const homeW = homeLabel.length * 11.8; // Josefin 700 at 13 with 0.18em tracking
+      const homeSize = 16;
+      const homeW = homeLabel.length * homeSize * 0.8; // Josefin 700 with 0.18em tracking
       const ruleW = 300;
-      const total = homeW + 12 + 26 + 12 + ruleW;
-      let x = cw / 2 - total / 2;
-      P.push(text(x, y + 96, homeLabel, "tc-eyebrow", 13, "start"));
-      x += homeW + 12;
+      const total = homeW + 14 + 30 + 14 + ruleW;
+      let x = cw / 2 - total / 2 + homeW;
+      P.push(text(x, y + 97, homeLabel, "tc-eyebrow", homeSize, "end"));
+      x += 14;
       P.push(text(x, y + 96, "VS.", "tc-eyebrow", 13, "start"));
-      x += 26 + 12;
+      x += 30 + 14;
       P.push(rule(x, y + 100, x + ruleW, y + 100, "tc-rule"));
       words(x + ruleW / 2, y + 95, norm.meta.away.name, 30, { anchor: "middle", fit: ruleW - 10 });
     } else {
