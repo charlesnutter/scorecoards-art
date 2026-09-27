@@ -132,6 +132,9 @@
       "name": "Eric Young Jr.",
       "number": "22",
       "pos": "LF",
+      "positions": [
+       "LF"
+      ],
       "order": 100
      }
     ],
@@ -141,6 +144,9 @@
       "name": "Daniel Murphy",
       "number": "28",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 200
      }
     ],
@@ -150,6 +156,9 @@
       "name": "David Wright",
       "number": "5",
       "pos": "3B",
+      "positions": [
+       "3B"
+      ],
       "order": 300
      }
     ],
@@ -159,6 +168,9 @@
       "name": "Ike Davis",
       "number": "29",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 400
      },
      {
@@ -166,6 +178,9 @@
       "name": "Josh Edgin",
       "number": "66",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 401
      },
      {
@@ -173,6 +188,9 @@
       "name": "Anthony Recker",
       "number": "20",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 402
      },
      {
@@ -180,6 +198,9 @@
       "name": "Bobby Parnell",
       "number": "39",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 403
      }
     ],
@@ -189,6 +210,9 @@
       "name": "Marlon Byrd",
       "number": "6",
       "pos": "RF",
+      "positions": [
+       "RF"
+      ],
       "order": 500
      }
     ],
@@ -198,6 +222,9 @@
       "name": "Kirk Nieuwenhuis",
       "number": "9",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 600
      },
      {
@@ -205,6 +232,9 @@
       "name": "Greg Burke",
       "number": "46",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 601
      },
      {
@@ -212,6 +242,9 @@
       "name": "Josh Satin",
       "number": "13",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 602
      }
     ],
@@ -221,6 +254,9 @@
       "name": "John Buck",
       "number": "44",
       "pos": "C",
+      "positions": [
+       "C"
+      ],
       "order": 700
      }
     ],
@@ -230,6 +266,9 @@
       "name": "Omar Quintanilla",
       "number": "3",
       "pos": "SS",
+      "positions": [
+       "SS"
+      ],
       "order": 800
      }
     ],
@@ -239,6 +278,9 @@
       "name": "Matt Harvey",
       "number": "33",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 900
      },
      {
@@ -246,6 +288,9 @@
       "name": "Carlos Torres",
       "number": "52",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 901
      },
      {
@@ -253,6 +298,9 @@
       "name": "Andrew Brown",
       "number": "30",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 902
      },
      {
@@ -260,6 +308,9 @@
       "name": "David Aardsma",
       "number": "30",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 903
      },
      {
@@ -267,6 +318,9 @@
       "name": "Scott Rice",
       "number": "56",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 904
      },
      {
@@ -274,6 +328,9 @@
       "name": "Juan Lagares",
       "number": "12",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 905
      }
     ]
@@ -1028,6 +1085,9 @@
       "name": "Grégor Blanco",
       "number": "7",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 100
      }
     ],
@@ -1037,6 +1097,9 @@
       "name": "Marco Scutaro",
       "number": "19",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 200
      }
     ],
@@ -1046,6 +1109,9 @@
       "name": "Brandon Belt",
       "number": "9",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 300
      }
     ],
@@ -1055,6 +1121,9 @@
       "name": "Buster Posey",
       "number": "28",
       "pos": "C",
+      "positions": [
+       "C"
+      ],
       "order": 400
      }
     ],
@@ -1064,6 +1133,9 @@
       "name": "Pablo Sandoval",
       "number": "48",
       "pos": "3B",
+      "positions": [
+       "3B"
+      ],
       "order": 500
      }
     ],
@@ -1073,6 +1145,9 @@
       "name": "Hunter Pence",
       "number": "8",
       "pos": "RF",
+      "positions": [
+       "RF"
+      ],
       "order": 600
      },
      {
@@ -1080,6 +1155,9 @@
       "name": "Jake Dunning",
       "number": "51",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 601
      },
      {
@@ -1087,6 +1165,9 @@
       "name": "Héctor Sánchez",
       "number": "29",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 602
      },
      {
@@ -1094,6 +1175,9 @@
       "name": "George Kontos",
       "number": "70",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 603
      },
      {
@@ -1101,6 +1185,9 @@
       "name": "Javier López",
       "number": "49",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 604
      },
      {
@@ -1108,6 +1195,9 @@
       "name": "Guillermo Quiroz",
       "number": "12",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 605
      }
     ],
@@ -1117,6 +1207,9 @@
       "name": "Brandon Crawford",
       "number": "35",
       "pos": "SS",
+      "positions": [
+       "SS"
+      ],
       "order": 700
      }
     ],
@@ -1125,7 +1218,11 @@
       "id": 400083,
       "name": "Andres Torres",
       "number": "56",
-      "pos": "RF",
+      "pos": "LF",
+      "positions": [
+       "LF",
+       "RF"
+      ],
       "order": 800
      }
     ],
@@ -1135,6 +1232,9 @@
       "name": "Tim Lincecum",
       "number": "55",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 900
      },
      {
@@ -1142,6 +1242,9 @@
       "name": "Tony Abreu",
       "number": "10",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 901
      },
      {
@@ -1149,6 +1252,9 @@
       "name": "Jeremy Affeldt",
       "number": "41",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 902
      },
      {
@@ -1156,6 +1262,9 @@
       "name": "Sergio Romo",
       "number": "54",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 903
      },
      {
@@ -1163,6 +1272,9 @@
       "name": "Jose Mijares",
       "number": "50",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 904
      },
      {
@@ -1170,6 +1282,9 @@
       "name": "Nick Noonan",
       "number": "21",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 905
      },
      {
@@ -1177,6 +1292,9 @@
       "name": "Sandy Rosario",
       "number": "43",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 906
      },
      {
@@ -1184,6 +1302,9 @@
       "name": "Cole Gillespie",
       "number": "22",
       "pos": "LF",
+      "positions": [
+       "LF"
+      ],
       "order": 907
      }
     ]

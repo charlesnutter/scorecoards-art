@@ -424,7 +424,7 @@ export function renderTenCents(norm, { preset = "tencents", note = "", card = {}
       const fhy = ly + 22 + spare / 2 + F * SQ; // home plate y; apex 22 below the rule
       P.push(`<path class="tc-field-grass" d="M${fcx},${fhy} L${(fcx - F).toFixed(1)},${(fhy - F).toFixed(1)} A${(F * Math.SQRT2).toFixed(1)},${(F * Math.SQRT2).toFixed(1)} 0 0 1 ${(fcx + F).toFixed(1)},${(fhy - F).toFixed(1)} Z"/>`);
       P.push(`<path class="tc-field-infield" d="M${fcx},${fhy} L${fcx + fr},${fhy - fr} L${fcx},${fhy - 2 * fr} L${fcx - fr},${fhy - fr} Z"/>`);
-      const spots = [["1", 0, -fr], ["2", 0, 12], ["3", fr + 9, -fr + 4], ["4", fr * 0.55, -fr * 1.55], ["5", -fr - 9, -fr + 4], ["6", -fr * 0.55, -fr * 1.55], ["7", -fr * 1.4, -fr * 2.25], ["8", 0, -fr * 2.6], ["9", fr * 1.4, -fr * 2.25]];
+      const spots = [["1", 0, -fr], ["2", 0, 12], ["3", fr + 9, -fr + 4], ["4", fr * 0.55, -fr * 1.78], ["5", -fr - 9, -fr + 4], ["6", -fr * 0.55, -fr * 1.78], ["7", -fr * 1.4, -fr * 2.25], ["8", 0, -fr * 2.6], ["9", fr * 1.4, -fr * 2.25]];
       const ds = Math.min(13, 10 * (fr / 24));
       for (const [n, dx, dy] of spots) P.push(text(fcx + dx, fhy + dy + ds * 0.35, n, "tc-ad-copy", ds));
       P.push(text(fcx, fhy + 34, "FIELDERS BY NUMBER", "tc-ad-small", 8.5));

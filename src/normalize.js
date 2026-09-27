@@ -124,7 +124,10 @@ function buildSide(boxTeam) {
       id: p.person.id,
       name: p.person.fullName,
       number: p.jerseyNumber || "",
-      pos: p.position?.abbreviation || "",
+      // the position he started at: `position` is the last one he held,
+      // `allPositions` lists them in order (Arias SS -> 3B mid-game)
+      pos: p.allPositions?.[0]?.abbreviation || p.position?.abbreviation || "",
+      positions: (p.allPositions || []).map((x) => x.abbreviation),
       order,
     });
   }

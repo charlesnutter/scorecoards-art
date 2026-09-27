@@ -96,13 +96,20 @@
       "name": "Rob Refsnyder",
       "number": "30",
       "pos": "DH",
+      "positions": [
+       "DH"
+      ],
       "order": 100
      },
      {
       "id": 807799,
       "name": "Masataka Yoshida",
       "number": "7",
-      "pos": "DH",
+      "pos": "PH",
+      "positions": [
+       "PH",
+       "DH"
+      ],
       "order": 101
      }
     ],
@@ -112,6 +119,9 @@
       "name": "Trevor Story",
       "number": "10",
       "pos": "SS",
+      "positions": [
+       "SS"
+      ],
       "order": 200
      }
     ],
@@ -121,6 +131,9 @@
       "name": "Alex Bregman",
       "number": "2",
       "pos": "3B",
+      "positions": [
+       "3B"
+      ],
       "order": 300
      }
     ],
@@ -130,13 +143,20 @@
       "name": "Romy Gonzalez",
       "number": "23",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 400
      },
      {
       "id": 663993,
       "name": "Nathaniel Lowe",
       "number": "37",
-      "pos": "1B",
+      "pos": "PH",
+      "positions": [
+       "PH",
+       "1B"
+      ],
       "order": 401
      }
     ],
@@ -146,6 +166,9 @@
       "name": "Carlos Narváez",
       "number": "75",
       "pos": "C",
+      "positions": [
+       "C"
+      ],
       "order": 500
      }
     ],
@@ -155,6 +178,9 @@
       "name": "Nate Eaton",
       "number": "40",
       "pos": "RF",
+      "positions": [
+       "RF"
+      ],
       "order": 600
      },
      {
@@ -162,6 +188,9 @@
       "name": "Wilyer Abreu",
       "number": "52",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 601
      }
     ],
@@ -171,6 +200,9 @@
       "name": "Jarren Duran",
       "number": "16",
       "pos": "LF",
+      "positions": [
+       "LF"
+      ],
       "order": 700
      }
     ],
@@ -180,6 +212,9 @@
       "name": "Ceddanne Rafaela",
       "number": "3",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 800
      }
     ],
@@ -189,6 +224,9 @@
       "name": "Nick Sogard",
       "number": "20",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 900
      }
     ]
@@ -643,6 +681,9 @@
       "name": "Trent Grisham",
       "number": "12",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 100
      }
     ],
@@ -652,6 +693,9 @@
       "name": "Aaron Judge",
       "number": "99",
       "pos": "RF",
+      "positions": [
+       "RF"
+      ],
       "order": 200
      }
     ],
@@ -661,6 +705,9 @@
       "name": "Cody Bellinger",
       "number": "35",
       "pos": "LF",
+      "positions": [
+       "LF"
+      ],
       "order": 300
      }
     ],
@@ -670,6 +717,9 @@
       "name": "Ben Rice",
       "number": "22",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 400
      },
      {
@@ -677,6 +727,9 @@
       "name": "Paul Goldschmidt",
       "number": "48",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 401
      }
     ],
@@ -686,6 +739,9 @@
       "name": "Giancarlo Stanton",
       "number": "27",
       "pos": "DH",
+      "positions": [
+       "DH"
+      ],
       "order": 500
      }
     ],
@@ -695,6 +751,9 @@
       "name": "Jazz Chisholm Jr.",
       "number": "13",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 600
      }
     ],
@@ -704,6 +763,9 @@
       "name": "Austin Wells",
       "number": "28",
       "pos": "C",
+      "positions": [
+       "C"
+      ],
       "order": 700
      }
     ],
@@ -713,6 +775,9 @@
       "name": "Anthony Volpe",
       "number": "11",
       "pos": "SS",
+      "positions": [
+       "SS"
+      ],
       "order": 800
      }
     ],
@@ -722,6 +787,9 @@
       "name": "Ryan McMahon",
       "number": "19",
       "pos": "3B",
+      "positions": [
+       "3B"
+      ],
       "order": 900
      }
     ]

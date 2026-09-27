@@ -96,6 +96,9 @@
       "name": "Jordan Schafer",
       "number": "1",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 100
      }
     ],
@@ -105,6 +108,9 @@
       "name": "Jose Altuve",
       "number": "27",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 200
      }
     ],
@@ -114,6 +120,9 @@
       "name": "Jed Lowrie",
       "number": "4",
       "pos": "SS",
+      "positions": [
+       "SS"
+      ],
       "order": 300
      }
     ],
@@ -123,6 +132,9 @@
       "name": "J.D. Martinez",
       "number": "14",
       "pos": "LF",
+      "positions": [
+       "LF"
+      ],
       "order": 400
      }
     ],
@@ -132,6 +144,9 @@
       "name": "Brett Wallace",
       "number": "29",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 500
      }
     ],
@@ -141,6 +156,9 @@
       "name": "Chris Johnson",
       "number": "23",
       "pos": "3B",
+      "positions": [
+       "3B"
+      ],
       "order": 600
      }
     ],
@@ -150,6 +168,9 @@
       "name": "Brian Bogusevic",
       "number": "19",
       "pos": "RF",
+      "positions": [
+       "RF"
+      ],
       "order": 700
      }
     ],
@@ -159,6 +180,9 @@
       "name": "Chris Snyder",
       "number": "18",
       "pos": "C",
+      "positions": [
+       "C"
+      ],
       "order": 800
      }
     ],
@@ -168,6 +192,9 @@
       "name": "J.A. Happ",
       "number": "30",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 900
      },
      {
@@ -175,6 +202,9 @@
       "name": "Rhiner Cruz",
       "number": "55",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 901
      },
      {
@@ -182,6 +212,9 @@
       "name": "Brian Bixler",
       "number": "12",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 902
      },
      {
@@ -189,6 +222,9 @@
       "name": "Xavier Cedeño",
       "number": "63",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 903
      },
      {
@@ -196,6 +232,9 @@
       "name": "Jason Castro",
       "number": "15",
       "pos": "PH",
+      "positions": [
+       "PH"
+      ],
       "order": 904
      }
     ]
@@ -554,6 +593,9 @@
       "name": "Grégor Blanco",
       "number": "7",
       "pos": "RF",
+      "positions": [
+       "RF"
+      ],
       "order": 100
      }
     ],
@@ -563,6 +605,9 @@
       "name": "Ryan Theriot",
       "number": "5",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 200
      },
      {
@@ -570,6 +615,9 @@
       "name": "Emmanuel Burriss",
       "number": "2",
       "pos": "2B",
+      "positions": [
+       "2B"
+      ],
       "order": 201
      }
     ],
@@ -579,6 +627,9 @@
       "name": "Melky Cabrera",
       "number": "53",
       "pos": "LF",
+      "positions": [
+       "LF"
+      ],
       "order": 300
      }
     ],
@@ -588,6 +639,9 @@
       "name": "Buster Posey",
       "number": "28",
       "pos": "C",
+      "positions": [
+       "C"
+      ],
       "order": 400
      }
     ],
@@ -597,6 +651,9 @@
       "name": "Ángel Pagán",
       "number": "16",
       "pos": "CF",
+      "positions": [
+       "CF"
+      ],
       "order": 500
      }
     ],
@@ -606,6 +663,9 @@
       "name": "Pablo Sandoval",
       "number": "48",
       "pos": "3B",
+      "positions": [
+       "3B"
+      ],
       "order": 600
      },
      {
@@ -613,6 +673,9 @@
       "name": "Brandon Crawford",
       "number": "35",
       "pos": "SS",
+      "positions": [
+       "SS"
+      ],
       "order": 601
      }
     ],
@@ -622,6 +685,9 @@
       "name": "Brandon Belt",
       "number": "9",
       "pos": "1B",
+      "positions": [
+       "1B"
+      ],
       "order": 700
      }
     ],
@@ -630,7 +696,11 @@
       "id": 435078,
       "name": "Joaquin Arias",
       "number": "13",
-      "pos": "3B",
+      "pos": "SS",
+      "positions": [
+       "SS",
+       "3B"
+      ],
       "order": 800
      }
     ],
@@ -640,6 +710,9 @@
       "name": "Matt Cain",
       "number": "18",
       "pos": "P",
+      "positions": [
+       "P"
+      ],
       "order": 900
      }
     ]
