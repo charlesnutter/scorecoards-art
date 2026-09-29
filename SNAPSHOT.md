@@ -164,29 +164,72 @@ Beyond that, no open bugs or half-finished features — every item asked
 for in this conversation was implemented, verified with a rendered
 screenshot, and left in a working state.
 
-## Addendum — September 25, 2026 session (uncommitted)
+## Addendum — September 25–29, 2026 sessions
 
-Everything below is in the working tree on `team-colors`, **not committed**.
+Everything below is committed on `team-colors` and pushed to
+https://github.com/charlesnutter/scorecoards-art (note the spelling).
+`main`, `poster-layout`, `scorecard-styles` are the earlier checkpoints,
+also pushed. **The repo's default branch is still `main`** (the original
+checkpoint); either set `team-colors` as default on GitHub or
+fast-forward `main` to it (`git checkout main && git merge --ff-only
+team-colors && git push`). History was rewritten on 2026-09-27 to replace
+placeholder identities with `Charles Nutter <cwnutter@gmail.com>`; the
+pre-rewrite history is the local tag `backup/pre-identity-rewrite` and
+`refs/original/*`, safe to delete.
 
+### Rules for this repo
+No AI/assistant mention anywhere in commits or PRs, no Co-Authored-By,
+bullet bodies, commit only when asked. Assistant files (`CLAUDE.md`,
+`.claude/`, `AGENTS.md`) are gitignored; a local `CLAUDE.md` carries
+these rules. Preview a layout change on the artifact before wiring it;
+the user chooses from rendered options.
+
+### What was built
 - **Style dropdown.** `LOOKS` in `src/app.js` pairs a layout with a
-  preset; the form shows only the chosen style's controls; other styles'
+  preset; the form shows only the chosen style's controls; every style's
   settings persist when you switch away and back.
-- **New styles** (renderer in `src/render/`, preset id = layout id,
-  colour/type block appended to `scorecard.css`):
-  Vintage + Ballpark (`vintage.js`, worn/aged/good paper, pencil/pen,
-  opt-in `vintage.words="mansalva"`), Ten Cents (`tencents.js`),
-  Spiral (`spiral.js`), Foil (`foil.js`), Agate (`agate.js`),
-  Scoreboard (`scoreboard.js`), Rings (`rings.js`), Homage (`homage.js`).
-- **Shared kit:** `hand.js` (seeded handwriting: per-glyph tilt/bounce,
-  drift, slant, strokes, hatching, name helpers) and `cardkit.js`
-  (lineup grid with style-supplied chrome, hand marks, box-score
-  arithmetic, paper canvas).
+- **Styles** (renderer in `src/render/`, preset id = layout id, colour
+  and type block in `scorecard.css`): Vintage + Ballpark (`vintage.js`),
+  Ten Cents (`tencents.js`), Spiral, Foil, Agate, Scoreboard, Rings,
+  Homage. Shared kit: `hand.js` (seeded handwriting) and `cardkit.js`
+  (lineup grid with style-supplied chrome, hand marks, box-score maths,
+  paper canvas).
+- **Ten Cents is the polished one** (many rounds with the user): two-row
+  layout; cells flex to hold one grid width from 8 to 14 innings and the
+  card lays out twice so rows grow to fill the 17x11 sheet (remainder at
+  the foot); nothing game-specific is printed (visitors, date, first
+  pitch, time, records handwritten); Bowlby One masthead and 10c
+  roundel; Paper setting (seven stocks, **natural** default); Card title
+  (moves the home club to the vs. line); illustrated how-to-score key
+  (numbered field diagram that grows into spare height, eight printed
+  example rows; `guide: "text"` still exists in the renderer, not in the
+  form); Game Notes = scoring plays two to a rule, personal note beneath;
+  Final Score box with runs and records; subs show the inning they
+  entered.
+- **Normalizer:** `meta.<side>.record` (season record; series record in
+  the postseason) and each player's starting position from
+  `allPositions[0]` plus the full `positions` list.
+- **Fixtures:** nine-innings (2025 WC G2), extra-innings (11), sixteen-
+  innings (NYM@SF 2013-07-08), perfect (Matt Cain, 2012-06-13). Presets
+  in `app.js` include the perfect game.
 - **Fonts** via @fontsource latin subsets in `src/style.css` so the PNG
-  exporter can inline them. `@fontsource/big-shoulders-display` fails
-  Vite's exports resolution; Anton stands in.
-- **Artifacts:** Scorekeeper's Hand (font/variation lab for handwritten
-  words) https://claude.ai/artifact/K3WsHFdh2KDqJHxX8hABsq and the
-  Scorecard Style Board (seven styles + both research reports).
-- **Open decisions:** which words face for handwriting (Mansalva
-  proposed); team colours for the new styles (Ten Cents first); whether
-  to build Warp and Weft / Weimar Linescore as a third poster.
+  export inlines them; `@fontsource/big-shoulders-display` fails Vite's
+  exports resolution, Anton stands in.
+
+### Artifacts (private, user's account)
+- Scorecard Style Board (seven styles, both research reports, unbuilt
+  concepts): https://claude.ai/artifact/FjCy4mo2xSivuV3Fa2DRj2
+- Ten Cents Revisions (every layout round, paper shades, masthead faces,
+  how-to-score variants): https://claude.ai/artifact/51iCSStokyoeTipsvrqxyv
+- Scorekeeper's Hand (handwriting font/variation lab):
+  https://claude.ai/artifact/K3WsHFdh2KDqJHxX8hABsq
+
+### Open items, in the user's hands
+- Default branch on GitHub (see above).
+- Which handwriting face for words on the other hand-filled cards
+  (Mansalva is wired as `--hd-font-words`; the user has not chosen).
+- Ten Cents postseason records show the series record (1-1); regular-
+  season would need a standings call.
+- Team-colour theming for the new styles (Ten Cents first); a third
+  poster (Weimar Linescore or Warp and Weft, described on the board).
+- The other six new styles have had no review rounds yet.
